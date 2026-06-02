@@ -7,7 +7,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useOrdering, CheckoutInfo } from "./OrderingSystem";
 import { addOrder } from "../../services/orderService";
-import { OrderSuccessModal } from "./OrderSuccessModal";
+import { OrderSuccessCelebration } from "./OrderSuccessCelebration";
 
 export function CheckoutModal() {
   const {
@@ -29,8 +29,6 @@ export function CheckoutModal() {
     additionalNotes: "",
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [successOrderId, setSuccessOrderId] = useState("");
-  const [successOrderType, setSuccessOrderType] = useState<"placed" | "whatsapp">("placed");
 
   if (!isCheckoutOpen) return null;
 
@@ -161,8 +159,6 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal with confetti
-      setSuccessOrderId(orderId);
-      setSuccessOrderType("placed");
       setShowSuccessModal(true);
     } catch (error: any) {
       console.error("❌ Error saving order:", error);
@@ -213,8 +209,6 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal with confetti
-      setSuccessOrderId(orderId);
-      setSuccessOrderType("whatsapp");
       setShowSuccessModal(true);
     } catch (error) {
       console.error("Error saving order:", error);
@@ -224,8 +218,6 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal anyway
-      setSuccessOrderId("N/A");
-      setSuccessOrderType("whatsapp");
       setShowSuccessModal(true);
     }
   };
@@ -517,12 +509,10 @@ export function CheckoutModal() {
       </motion.div>
     </AnimatePresence>
 
-      {/* Success Modal */}
-      <OrderSuccessModal
+      {/* Success Celebration */}
+      <OrderSuccessCelebration
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
-        orderId={successOrderId}
-        orderType={successOrderType}
       />
     </>
   );

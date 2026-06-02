@@ -53,36 +53,42 @@ export function CartModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center md:p-4 bg-[#2A1B14]/60 backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center md:p-4 bg-black/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
-          initial={{ scale: 0.95, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 20 }}
-          transition={{ type: "spring", duration: 0.4 }}
+          initial={{ scale: 0.95, opacity: 0, x: 300 }}
+          animate={{ scale: 1, opacity: 1, x: 0 }}
+          exit={{ scale: 0.95, opacity: 0, x: 300 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white md:rounded-3xl shadow-2xl max-w-2xl w-full h-full md:h-auto md:max-h-[90vh] overflow-hidden flex flex-col"
+          className="glass-strong md:rounded-3xl shadow-luxury-lg max-w-2xl w-full h-full md:h-auto md:max-h-[90vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 md:p-6 border-b border-[#A67C52]/10">
+          <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">
             <div className="flex items-center gap-2 md:gap-3">
               <div className="relative">
-                <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 text-[#A67C52]" />
+                <ShoppingBag className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                 {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-[#A67C52] text-white text-xs rounded-full flex items-center justify-center font-semibold">
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-semibold shadow-luxury"
+                  >
                     {totalItems}
-                  </span>
+                  </motion.span>
                 )}
               </div>
-              <h2 className="text-xl md:text-2xl font-semibold text-[#2A1B14]">Your Cart</h2>
+              <h2 className="text-xl md:text-2xl font-semibold text-foreground">Your Cart</h2>
             </div>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
               onClick={handleClose}
-              className="p-2 hover:bg-[#FAF7F2] rounded-full transition-colors"
+              className="p-2 hover:bg-muted rounded-full transition-colors"
             >
-              <X className="w-5 h-5 md:w-6 md:h-6 text-[#4A3A32]" />
-            </button>
+              <X className="w-5 h-5 md:w-6 md:h-6 text-secondary-foreground" />
+            </motion.button>
           </div>
 
           {/* Cart Items */}

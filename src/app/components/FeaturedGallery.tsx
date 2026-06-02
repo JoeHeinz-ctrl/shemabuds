@@ -103,7 +103,7 @@ export function FeaturedGallery() {
   }
 
   return (
-    <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FAF7F2]">
+    <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,8 +112,8 @@ export function FeaturedGallery() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-[#2A1B14] font-semibold tracking-tight">Featured Creations</h2>
-          <p className="text-sm md:text-lg text-[#4A3A32] max-w-2xl mx-auto font-light">
+          <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+          <p className="text-sm md:text-lg text-secondary-foreground max-w-2xl mx-auto font-light">
             Explore our handpicked selection of recent works
           </p>
         </motion.div>
@@ -126,9 +126,9 @@ export function FeaturedGallery() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -8 }}
             >
-              <Card className="group overflow-hidden border border-[#A67C52]/15 hover:shadow-[0_12px_32px_rgba(166,124,82,0.2)] transition-all duration-300 bg-white">
+              <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card">
                 <div className="relative overflow-hidden aspect-square md:aspect-[4/3]">
                   <motion.div
                     whileHover={{ scale: 1.08 }}
@@ -141,17 +141,17 @@ export function FeaturedGallery() {
                       className="w-full h-full object-cover"
                     />
                   </motion.div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#2A1B14]/60 via-[#2A1B14]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleLike(product.id)}
-                    className="absolute top-2 right-2 md:top-4 md:right-4 bg-white/95 backdrop-blur-sm p-1.5 md:p-2.5 rounded-full hover:bg-white transition-colors duration-200 shadow-[0_2px_8px_rgba(166,124,82,0.2)]"
+                    className="absolute top-2 right-2 md:top-4 md:right-4 glass p-1.5 md:p-2.5 rounded-full shadow-luxury"
                   >
                     <Heart 
                       className={`w-4 h-4 md:w-5 md:h-5 transition-colors duration-200 ${
-                        liked.has(product.id) ? 'fill-red-500 text-red-500' : 'text-[#6B5D52]'
+                        liked.has(product.id) ? 'fill-red-500 text-red-500' : 'text-muted-foreground'
                       }`} 
                     />
                   </motion.button>

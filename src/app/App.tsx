@@ -19,6 +19,7 @@ import { MobileHomePage } from "./components/mobile/pages/MobileHomePage";
 import { MobileCollectionsPage } from "./components/mobile/pages/MobileCollectionsPage";
 import { MobileOffersPage } from "./components/mobile/pages/MobileOffersPage";
 import { MobileSettingsPage } from "./components/mobile/pages/MobileSettingsPage";
+import { ThemeProvider } from "../contexts/ThemeContext";
 import "./components/mobile/mobile-styles.css";
 
 export default function App() {
@@ -42,63 +43,65 @@ export default function App() {
   };
 
   return (
-    <OrderingProvider>
-      <div className="min-h-screen">
-        <Header />
-        
-        {/* Desktop View - Unchanged */}
-        <main className="hidden md:block pt-[72px]">
-          <div id="home">
-            <Hero />
-          </div>
+    <ThemeProvider>
+      <OrderingProvider>
+        <div className="min-h-screen">
+          <Header />
           
-          <div id="gallery">
-            <FeaturedGallery />
-          </div>
-          
-          <div id="services">
-            <Services />
-          </div>
-          
-          <HowToOrder />
-          
-          <div id="about">
-            <About />
-          </div>
-          
-          <div id="testimonials">
-            <Testimonials />
-          </div>
-          
-          <div id="contact">
-            <Contact />
-          </div>
-        </main>
+          {/* Desktop View - Unchanged */}
+          <main className="hidden md:block pt-[72px]">
+            <div id="home">
+              <Hero />
+            </div>
+            
+            <div id="gallery">
+              <FeaturedGallery />
+            </div>
+            
+            <div id="services">
+              <Services />
+            </div>
+            
+            <HowToOrder />
+            
+            <div id="about">
+              <About />
+            </div>
+            
+            <div id="testimonials">
+              <Testimonials />
+            </div>
+            
+            <div id="contact">
+              <Contact />
+            </div>
+          </main>
 
-        {/* Mobile View - Tab-based Navigation */}
-        <main className="md:hidden pt-[60px] pb-[80px]">
-          {renderMobileContent()}
-        </main>
+          {/* Mobile View - Tab-based Navigation */}
+          <main className="md:hidden pt-[60px] pb-[80px]">
+            {renderMobileContent()}
+          </main>
 
-        {/* Desktop Footer */}
-        <div className="hidden md:block">
-          <Footer />
+          {/* Desktop Footer */}
+          <div className="hidden md:block">
+            <Footer />
+          </div>
+
+          <ScrollToTop />
+
+          {/* Ordering Modals */}
+          <ProductDetailsModal />
+          <CartModal />
+          <CheckoutModal />
+
+          {/* Mobile-only components */}
+          <MobileFloatingCart />
+          <MobileBottomNav 
+            activeTab={mobileActiveTab}
+            onTabChange={setMobileActiveTab}
+          />
         </div>
-
-        <ScrollToTop />
-
-        {/* Ordering Modals */}
-        <ProductDetailsModal />
-        <CartModal />
-        <CheckoutModal />
-
-        {/* Mobile-only components */}
-        <MobileFloatingCart />
-        <MobileBottomNav 
-          activeTab={mobileActiveTab}
-          onTabChange={setMobileActiveTab}
-        />
-      </div>
-    </OrderingProvider>
+      </OrderingProvider>
+    </ThemeProvider>
   );
 }
