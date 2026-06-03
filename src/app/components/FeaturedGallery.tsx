@@ -11,7 +11,7 @@ export function FeaturedGallery() {
   const [liked, setLiked] = useState<Set<string>>(new Set());
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const { setSelectedProduct, addToCart, setIsCartOpen } = useOrdering();
+  const { setSelectedProduct, addToCart, showToast } = useOrdering();
 
   useEffect(() => {
     loadFeaturedProducts();
@@ -63,7 +63,8 @@ export function FeaturedGallery() {
       customizations: {},
       notes: "",
     });
-    setIsCartOpen(true);
+    showToast("✓ Added to Cart");
+    // DO NOT auto-open cart
   };
 
   if (loading) {

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useOrdering } from "./OrderingSystem";
+import { useAuth } from "../../contexts/AuthContext";
+import { AuthModal } from "./AuthModal";
 
 export function CartModal() {
   const {
@@ -12,6 +15,8 @@ export function CartModal() {
     updateQuantity,
     setIsCheckoutOpen,
   } = useOrdering();
+  const { user } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   if (!isCartOpen) return null;
 
@@ -20,6 +25,10 @@ export function CartModal() {
   };
 
   const handleCheckout = () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
     setIsCartOpen(false);
     setIsCheckoutOpen(true);
   };
@@ -229,6 +238,17 @@ export function CartModal() {
           )}
         </motion.div>
       </motion.div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        onSuccess={() => {
+          setShowAuthModal(false);
+          setIsCartOpen(false);
+          setIsCheckoutOpen(true);
+        }}
+      />
     </AnimatePresence>
   );
 }

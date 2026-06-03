@@ -46,6 +46,8 @@ interface OrderingContextType {
   setSelectedProduct: (product: Product | null) => void;
   checkoutInfo: CheckoutInfo | null;
   setCheckoutInfo: (info: CheckoutInfo | null) => void;
+  showToast: (message: string, type?: "success" | "error" | "info") => void;
+  toast: { message: string; type: "success" | "error" | "info"; isVisible: boolean };
 }
 
 const OrderingContext = createContext<OrderingContextType | undefined>(undefined);
@@ -56,6 +58,15 @@ export function OrderingProvider({ children }: { children: ReactNode }) {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutInfo, setCheckoutInfo] = useState<CheckoutInfo | null>(null);
+  const [toast, setToast] = useState({ message: "", type: "success" as const, isVisible: false });
+
+  const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
+    setToast({ message, type, isVisible: true });
+  };
+
+  const hideToast = () => {
+    setToast((prev) => ({ ...prev, isVisible: false }));
+  };
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
@@ -106,9 +117,36 @@ export function OrderingProvider({ children }: { children: ReactNode }) {
         setSelectedProduct,
         checkoutInfo,
         setCheckoutInfo,
+        showToast,
+        toast,
       }}
     >
       {children}
+      {/* Global Toast */}
+      <div className="toast-container">
+        {toast.isVisible && (
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[200] max-w-md w-full px-4">
+            <div className={`glass-strong rounded-2xl shadow-luxury-lg border p-4 flex items-center gap-3 ${
+              toast.type === "success" ? "bg-primary/10 border-primary/20 text-primary" :
+              toast.type === "error" ? "bg-destructive/10 border-destructive/20 text-destructive" :
+              "bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400"
+            }`}>
+              <div className="flex-shrink-0">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  toast.type === "success" ? "bg-primary" :
+                  toast.type === "error" ? "bg-destructive" :
+                  "bg-blue-500"
+                }`}>
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              <p className="flex-1 font-medium">{toast.message}</p>
+            </div>
+          </div>
+        )}
+      </div>
     </OrderingContext.Provider>
   );
 }

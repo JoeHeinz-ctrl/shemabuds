@@ -8,6 +8,7 @@ import { Textarea } from "./ui/textarea";
 import { useOrdering, CheckoutInfo } from "./OrderingSystem";
 import { addOrder } from "../../services/orderService";
 import { OrderSuccessCelebration } from "./OrderSuccessCelebration";
+import { useAuth } from "../../contexts/AuthContext";
 
 export function CheckoutModal() {
   const {
@@ -17,6 +18,7 @@ export function CheckoutModal() {
     setIsCartOpen,
     clearCart,
   } = useOrdering();
+  const { user } = useAuth();
 
   const [step, setStep] = useState<"form" | "review">("form");
   const [formData, setFormData] = useState<CheckoutInfo>({
@@ -29,6 +31,7 @@ export function CheckoutModal() {
     additionalNotes: "",
   });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [onSuccessRedirect, setOnSuccessRedirect] = useState<(() => void) | null>(null);
 
   if (!isCheckoutOpen) return null;
 
@@ -127,6 +130,7 @@ export function CheckoutModal() {
     try {
       console.log("🔥 Attempting to save order to Firebase...");
       console.log("📦 Order data:", {
+        userId: user?.uid,
         customerName: formData.name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
@@ -137,6 +141,7 @@ export function CheckoutModal() {
       });
       
       const orderId = await addOrder({
+        userId: user?.uid || "",
         customerName: formData.name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
@@ -158,7 +163,12 @@ export function CheckoutModal() {
       clearCart();
       handleClose();
       
-      // Show success modal with confetti
+      // Show success modal with confetti and redirect to orders after
+      setOnSuccessRedirect(() => () => {
+        // This will be called when success modal closes
+        const event = new CustomEvent('navigateToOrders');
+        window.dispatchEvent(event);
+      });
       setShowSuccessModal(true);
     } catch (error: any) {
       console.error("❌ Error saving order:", error);
@@ -189,6 +199,7 @@ export function CheckoutModal() {
     // Save order to Firebase before opening WhatsApp
     try {
       const orderId = await addOrder({
+        userId: user?.uid || "",
         customerName: formData.name,
         phone: formData.phone,
         whatsapp: formData.whatsapp,
@@ -512,7 +523,13 @@ export function CheckoutModal() {
       {/* Success Celebration */}
       <OrderSuccessCelebration
         isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
+        onClose={() => {
+          setShowSuccessModal(false);
+          if (onSuccessRedirect) {
+            onSuccessRedirect();
+            setOnSuccessRedirect(null);
+          }
+        }}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import { FeaturedGallery } from "./components/FeaturedGallery";
@@ -17,13 +17,24 @@ import { MobileBottomNav } from "./components/mobile/MobileBottomNav";
 import { MobileFloatingCart } from "./components/mobile/MobileFloatingCart";
 import { MobileHomePage } from "./components/mobile/pages/MobileHomePage";
 import { MobileCollectionsPage } from "./components/mobile/pages/MobileCollectionsPage";
-import { MobileOffersPage } from "./components/mobile/pages/MobileOffersPage";
+import { MobileOrdersPage } from "./components/mobile/pages/MobileOrdersPage";
 import { MobileSettingsPage } from "./components/mobile/pages/MobileSettingsPage";
 import { ThemeProvider } from "../contexts/ThemeContext";
+import { AuthProvider } from "../contexts/AuthContext";
 import "./components/mobile/mobile-styles.css";
 
 export default function App() {
   const [mobileActiveTab, setMobileActiveTab] = useState("home");
+
+  // Listen for navigate to orders event
+  useEffect(() => {
+    const handleNavigateToOrders = () => {
+      setMobileActiveTab("orders");
+    };
+
+    window.addEventListener('navigateToOrders', handleNavigateToOrders);
+    return () => window.removeEventListener('navigateToOrders', handleNavigateToOrders);
+  }, []);
 
   const renderMobileContent = () => {
     switch (mobileActiveTab) {
@@ -31,8 +42,8 @@ export default function App() {
         return <MobileHomePage />;
       case "collections":
         return <MobileCollectionsPage />;
-      case "offers":
-        return <MobileOffersPage />;
+      case "orders":
+        return <MobileOrdersPage />;
       case "settings":
         return <MobileSettingsPage />;
       case "cart":
@@ -44,7 +55,8 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <OrderingProvider>
+      <AuthProvider>
+        <OrderingProvider>
         <div className="min-h-screen">
           <Header />
           
@@ -102,6 +114,7 @@ export default function App() {
           />
         </div>
       </OrderingProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

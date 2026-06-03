@@ -18,6 +18,7 @@ export type OrderStatus = "new" | "confirmed" | "completed" | "cancelled";
 
 export interface Order {
   id?: string;
+  userId?: string;
   customerName: string;
   phone: string;
   whatsapp: string;
@@ -28,6 +29,7 @@ export interface Order {
   items: CartItem[];
   estimatedTotal: number;
   status: OrderStatus;
+  orderNumber?: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
@@ -74,9 +76,14 @@ export const getOrder = async (id: string): Promise<Order | null> => {
 // Add new order
 export const addOrder = async (order: Omit<Order, 'id'>): Promise<string | null> => {
   try {
+    // Generate order number
+    const orderNumber = `ORD-${Date.now().toString().slice(-8)}`;
+    
     // Serialize the order data to ensure it's Firestore-compatible
     // Remove any undefined values
     const orderData = {
+      userId: order.userId || "",
+      orderNumber,
       customerName: order.customerName || "",
       phone: order.phone || "",
       whatsapp: order.whatsapp || "",
