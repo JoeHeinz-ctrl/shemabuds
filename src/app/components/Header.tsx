@@ -44,7 +44,10 @@ export function Header() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
               className="flex items-center gap-2 cursor-pointer"
-              onClick={() => scrollToSection('home')}
+              onClick={() => {
+                const event = new CustomEvent('openAboutModal');
+                window.dispatchEvent(event);
+              }}
             >
               <motion.div 
                 className="bg-primary p-2 rounded-xl shadow-luxury"
@@ -77,7 +80,10 @@ export function Header() {
                 Gallery
               </button>
               <button 
-                onClick={() => scrollToSection('about')}
+                onClick={() => {
+                  const event = new CustomEvent('openAboutModal');
+                  window.dispatchEvent(event);
+                }}
                 className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
               >
                 About
@@ -189,7 +195,10 @@ export function Header() {
 
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                 <Button 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => {
+                    const event = new CustomEvent('openContactModal');
+                    window.dispatchEvent(event);
+                  }}
                   className="font-medium"
                 >
                   Contact Us

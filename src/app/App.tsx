@@ -4,12 +4,12 @@ import { Hero } from "./components/Hero";
 import { FeaturedGallery } from "./components/FeaturedGallery";
 import { Services } from "./components/Services";
 import { HowToOrder } from "./components/HowToOrder";
-import { About } from "./components/About";
 import { Testimonials } from "./components/Testimonials";
-import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { MyOrders } from "./components/MyOrders";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { AboutModal } from "./components/AboutModal";
+import { ContactModal } from "./components/ContactModal";
 import { OrderingProvider, useOrdering } from "./components/OrderingSystem";
 import { ProductDetailsModal } from "./components/ProductDetailsModal";
 import { CartModal } from "./components/CartModal";
@@ -27,7 +27,23 @@ import "./components/mobile/mobile-styles.css";
 
 function AppContent() {
   const [mobileActiveTab, setMobileActiveTab] = useState("home");
+  const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
   const { showOrderSuccess, setShowOrderSuccess } = useOrdering();
+
+  // Listen for modal events from Header
+  useEffect(() => {
+    const handleOpenAbout = () => setShowAboutModal(true);
+    const handleOpenContact = () => setShowContactModal(true);
+
+    window.addEventListener('openAboutModal', handleOpenAbout);
+    window.addEventListener('openContactModal', handleOpenContact);
+
+    return () => {
+      window.removeEventListener('openAboutModal', handleOpenAbout);
+      window.removeEventListener('openContactModal', handleOpenContact);
+    };
+  }, []);
 
   const handleOrderSuccessClose = () => {
     setShowOrderSuccess(false);
@@ -68,7 +84,7 @@ function AppContent() {
     <div className="min-h-screen">
       <Header />
       
-      {/* Desktop View - Unchanged */}
+      {/* Desktop View - Reorganized */}
       <main className="hidden md:block pt-[72px]">
         <div id="home">
           <Hero />
@@ -84,22 +100,14 @@ function AppContent() {
         
         <HowToOrder />
         
-        <div id="about">
-          <About />
-        </div>
+        <MyOrders />
         
         <div id="testimonials">
           <Testimonials />
         </div>
-        
-        <MyOrders />
-        
-        <div id="contact">
-          <Contact />
-        </div>
       </main>
 
-      {/* Mobile View - Tab-based Navigation */}
+      {/* Mobile View - Tab-based Navigation - Unchanged */}
       <main className="md:hidden pt-[60px] pb-[80px]">
         {renderMobileContent()}
       </main>
@@ -111,10 +119,12 @@ function AppContent() {
 
       <ScrollToTop />
 
-      {/* Ordering Modals */}
+      {/* Modals */}
       <ProductDetailsModal />
       <CartModal />
       <CheckoutModal />
+      <AboutModal isOpen={showAboutModal} onClose={() => setShowAboutModal(false)} />
+      <ContactModal isOpen={showContactModal} onClose={() => setShowContactModal(false)} />
 
       {/* Global Order Success Celebration */}
       <OrderSuccessCelebration
