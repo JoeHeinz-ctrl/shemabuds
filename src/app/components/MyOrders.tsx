@@ -26,13 +26,21 @@ export function MyOrders() {
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
+    console.log("🔥 [MyOrders] useEffect triggered");
+    console.log("🔥 [MyOrders] User object:", user);
+    console.log("🔥 [MyOrders] User UID:", user?.uid);
+    console.log("🔥 [MyOrders] User email:", user?.email);
+    console.log("🔥 [MyOrders] User displayName:", user?.displayName);
+    
     if (!user) {
+      console.log("⚠️ [MyOrders] No user logged in, clearing orders");
       setLoading(false);
       setOrders([]);
       return;
     }
 
     console.log("📱 [MyOrders] Setting up orders listener for user:", user.uid);
+    console.log("📱 [MyOrders] Firestore query: orders where userId ==", user.uid);
 
     const ordersQuery = query(
       collection(db, "orders"),
@@ -40,25 +48,46 @@ export function MyOrders() {
       orderBy("createdAt", "desc")
     );
 
+    console.log("📱 [MyOrders] Query created, subscribing to snapshot...");
+
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
-      console.log("📱 [MyOrders] Received snapshot with", snapshot.docs.length, "orders");
+      console.log("📱 [MyOrders] ✅ Snapshot received!");
+      console.log("📱 [MyOrders] Snapshot size:", snapshot.size);
+      console.log("📱 [MyOrders] Snapshot empty:", snapshot.empty);
+      console.log("📱 [MyOrders] Snapshot docs:", snapshot.docs.length);
+      
       const ordersData = snapshot.docs.map((doc) => {
-        console.log("📱 [MyOrders] Order data:", doc.id, doc.data());
+        const data = doc.data();
+        console.log("📱 [MyOrders] Order document:", {
+          id: doc.id,
+          userId: data.userId,
+          orderNumber: data.orderNumber,
+          customerName: data.customerName,
+          status: data.status,
+          createdAt: data.createdAt
+        });
         return {
           id: doc.id,
-          ...doc.data(),
+          ...data,
         };
       }) as Order[];
+      
+      console.log("📱 [MyOrders] Final ordersData array:", ordersData);
       setOrders(ordersData);
       setLoading(false);
     }, (error) => {
       console.error("❌ [MyOrders] Error fetching orders:", error);
       console.error("❌ [MyOrders] Error code:", error.code);
       console.error("❌ [MyOrders] Error message:", error.message);
+      console.error("❌ [MyOrders] Error stack:", error.stack);
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    console.log("📱 [MyOrders] Snapshot listener attached");
+    return () => {
+      console.log("📱 [MyOrders] Cleaning up snapshot listener");
+      unsubscribe();
+    };
   }, [user]);
 
   const getStatusConfig = (status: string) => {

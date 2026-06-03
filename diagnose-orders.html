@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Diagnostic Tool</title>
+    <style>
+        body { 
+            font-family: system-ui; 
+            max-width: 1000px; 
+            margin: 50px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        button { 
+            background: #A67C52; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover { background: #8B6B3E; }
+        .status { 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 10px 0; 
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
+        pre { 
+            background: #f8f9fa; 
+            padding: 12px; 
+            border-radius: 8px; 
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #A67C52;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Shemabuds Order Diagnostic</h1>
+    
+    <div class="card">
+        <h2>Instructions</h2>
+        <div class="step">1. Click "Check Firebase Connection" first</div>
+        <div class="step">2. If connected, click "Check Current User"</div>
+        <div class="step">3. Then click "Check Orders Collection"</div>
+        <div class="step">4. Finally click "Try to Create Test Order"</div>
+    </div>
+
+    <div class="card">
+        <h2>Diagnostic Tests</h2>
+        <button onclick="checkConnection()">1. Check Firebase Connection</button>
+        <button onclick="checkUser()">2. Check Current User</button>
+        <button onclick="checkOrders()">3. Check Orders Collection</button>
+        <button onclick="createTestOrder()">4. Try Create Test Order</button>
+        <button onclick="clearLogs()">Clear Logs</button>
+    </div>
+
+    <div class="card">
+        <h2>Status</h2>
+        <div id="status">Ready to diagnose...</div>
+    </div>
+
+    <div class="card">
+        <h2>Diagnostic Logs</h2>
+        <div id="logs"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            getDocs, 
+            query, 
+            where,
+            orderBy, 
+            Timestamp 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { 
+            getAuth, 
+            onAuthStateChanged,
+            signInAnonymously 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        // You need to get these from your .env file
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGAHfpvZBk0xqf_kPJI0lXrPmrMk7eOQ8",
+            authDomain: "shemabuds-9c9fe.firebaseapp.com",
+            projectId: "shemabuds-9c9fe",
+            storageBucket: "shemabuds-9c9fe.firebasestorage.app",
+            messagingSenderId: "395827462043",
+            appId: "1:395827462043:web:dded78e00efa6e1e05b2fc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        window.db = db;
+        window.auth = auth;
+
+        function log(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = `status ${type}`;
+            entry.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong>: ${message}`;
+            logs.insertBefore(entry, logs.firstChild);
+        }
+
+        function setStatus(message, type = 'info') {
+            document.getElementById('status').className = `status ${type}`;
+            document.getElementById('status').innerHTML = message;
+        }
+
+        window.clearLogs = function() {
+            document.getElementById('logs').innerHTML = '';
+        };
+
+        window.checkConnection = async function() {
+            try {
+                log('🔍 Testing Firebase connection...', 'info');
+                
+                // Check if auth is working
+                const user = auth.currentUser;
+                log(`Auth Status: ${user ? 'User logged in: ' + user.uid : 'No user logged in'}`, 'info');
+                
+                // Try to access Firestore
+                const testRef = collection(db, 'orders');
+                log('✅ Firestore connection successful!', 'success');
+                
+                setStatus('✅ Firebase connected successfully', 'success');
+            } catch (error) {
+                log('❌ Connection failed: ' + error.message, 'error');
+                log('Error code: ' + error.code, 'error');
+                setStatus('❌ Connection failed', 'error');
+            }
+        };
+
+        window.checkUser = async function() {
+            try {
+                log('🔍 Checking authentication status...', 'info');
+                
+                const user = auth.currentUser;
+                
+                if (!user) {
+                    log('⚠️ No user logged in. Signing in anonymously...', 'warning');
+                    const result = await signInAnonymously(auth);
+                    log('✅ Signed in anonymously: ' + result.user.uid, 'success');
+                    log('<pre>' + JSON.stringify({
+                        uid: result.user.uid,
+                        isAnonymous: result.user.isAnonymous,
+                        email: result.user.email
+                    }, null, 2) + '</pre>', 'info');
+                } else {
+                    log('✅ User already logged in', 'success');
+                    log('<pre>' + JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName,
+                        isAnonymous: user.isAnonymous
+                    }, null, 2) + '</pre>', 'info');
+                }
+                
+                setStatus('✅ User authenticated', 'success');
+            } catch (error) {
+                log('❌ Auth check failed: ' + error.message, 'error');
+                log('Error code: ' + error.code, 'error');
+                setStatus('❌ Authentication failed', 'error');
+            }
+        };
+
+        window.checkOrders = async function() {
+            try {
+                log('🔍 Checking orders collection...', 'info');
+                
+                const user = auth.currentUser;
+                if (!user) {
+                    log('❌ No user logged in. Please run "Check Current User" first.', 'error');
+                    return;
+                }
+
+                // Try to get all orders (without userId filter to see if any exist)
+                log('📦 Fetching ALL orders from database...', 'info');
+                const allOrdersQuery = query(collection(db, 'orders'), orderBy('createdAt', 'desc'));
+                const allSnapshot = await getDocs(allOrdersQuery);
+                
+                log(`📊 Total orders in database: ${allSnapshot.size}`, allSnapshot.size > 0 ? 'success' : 'warning');
+                
+                if (allSnapshot.size > 0) {
+                    allSnapshot.forEach(doc => {
+                        const data = doc.data();
+                        log('<pre>Order ID: ' + doc.id + '\n' + JSON.stringify(data, null, 2) + '</pre>', 'info');
+                    });
+                }
+
+                // Now try to get orders for current user
+                log('👤 Fetching orders for current user: ' + user.uid, 'info');
+                const userOrdersQuery = query(
+                    collection(db, 'orders'),
+                    where('userId', '==', user.uid),
+                    orderBy('createdAt', 'desc')
+                );
+                const userSnapshot = await getDocs(userOrdersQuery);
+                
+                log(`📊 Orders for user ${user.uid}: ${userSnapshot.size}`, userSnapshot.size > 0 ? 'success' : 'warning');
+                
+                if (userSnapshot.size > 0) {
+                    userSnapshot.forEach(doc => {
+                        log('<pre>User Order: ' + doc.id + '\n' + JSON.stringify(doc.data(), null, 2) + '</pre>', 'success');
+                    });
+                } else {
+                    log('⚠️ No orders found for current user', 'warning');
+                }
+                
+                setStatus(`✅ Found ${allSnapshot.size} total orders, ${userSnapshot.size} for current user`, 'success');
+            } catch (error) {
+                log('❌ Failed to check orders: ' + error.message, 'error');
+                log('Error code: ' + error.code, 'error');
+                if (error.code === 'permission-denied') {
+                    log('🔒 PERMISSION DENIED! Update Firestore rules in Firebase Console.', 'error');
+                }
+                setStatus('❌ Failed to check orders', 'error');
+            }
+        };
+
+        window.createTestOrder = async function() {
+            try {
+                log('🔍 Attempting to create test order...', 'info');
+                
+                const user = auth.currentUser;
+                if (!user) {
+                    log('❌ No user logged in. Please run "Check Current User" first.', 'error');
+                    return;
+                }
+
+                const testOrder = {
+                    userId: user.uid,
+                    orderNumber: `TEST-${Date.now()}`,
+                    customerName: "Test Customer",
+                    phone: "+91 9999999999",
+                    whatsapp: "+91 9999999999",
+                    deliveryMethod: "pickup",
+                    address: "",
+                    eventDate: new Date().toISOString().split('T')[0],
+                    additionalNotes: "Test order from diagnostic tool",
+                    items: [{
+                        product: {
+                            id: "test-1",
+                            title: "Test Product",
+                            description: "Diagnostic test product",
+                            image: "https://via.placeholder.com/150",
+                            badge: "Test",
+                            category: "Test",
+                            price: "₹100"
+                        },
+                        quantity: 1,
+                        customizations: {},
+                        notes: ""
+                    }],
+                    estimatedTotal: 100,
+                    status: "new",
+                    createdAt: Timestamp.now(),
+                    updatedAt: Timestamp.now()
+                };
+
+                log('📦 Order data prepared:', 'info');
+                log('<pre>' + JSON.stringify(testOrder, null, 2) + '</pre>', 'info');
+
+                const docRef = await addDoc(collection(db, 'orders'), testOrder);
+                
+                log('✅ TEST ORDER CREATED SUCCESSFULLY!', 'success');
+                log('Order ID: ' + docRef.id, 'success');
+                log('Now refresh your main app and check if the order appears!', 'success');
+                
+                setStatus('✅ Test order created! ID: ' + docRef.id, 'success');
+                
+                // Automatically check orders again
+                setTimeout(() => checkOrders(), 1000);
+            } catch (error) {
+                log('❌ Failed to create test order: ' + error.message, 'error');
+                log('Error code: ' + error.code, 'error');
+                
+                if (error.code === 'permission-denied') {
+                    log('🔒 PERMISSION DENIED!', 'error');
+                    log('Solution: Update Firestore security rules in Firebase Console', 'error');
+                    log('Go to: https://console.firebase.google.com/', 'error');
+                    log('Select project → Firestore Database → Rules', 'error');
+                    log('Copy rules from firestore.rules file in your project', 'error');
+                }
+                
+                setStatus('❌ Failed to create order', 'error');
+            }
+        };
+
+        // Auto-check connection on load
+        window.addEventListener('load', () => {
+            checkConnection();
+        });
+    </script>
+</body>
+</html>
