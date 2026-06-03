@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, User, Phone, MapPin, Calendar, MessageCircle, ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "./ui/button";
@@ -7,6 +7,7 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useOrdering, CheckoutInfo } from "./OrderingSystem";
 import { addOrder } from "../../services/orderService";
+import { getUserProfile, saveUserProfile } from "../../services/userProfileService";
 import { useAuth } from "../../contexts/AuthContext";
 
 export function CheckoutModal() {
@@ -30,6 +31,39 @@ export function CheckoutModal() {
     eventDate: "",
     additionalNotes: "",
   });
+  const [profileLoaded, setProfileLoaded] = useState(false);
+
+  // Load user profile when modal opens
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      if (isCheckoutOpen && user && !profileLoaded) {
+        const profile = await getUserProfile(user.uid);
+        if (profile) {
+          setFormData(prev => ({
+            ...prev,
+            name: profile.name || user.displayName || "",
+            phone: profile.phone || "",
+            whatsapp: profile.whatsapp || "",
+            address: profile.address || "",
+          }));
+        } else {
+          // If no profile, at least set name from auth
+          setFormData(prev => ({
+            ...prev,
+            name: user.displayName || "",
+          }));
+        }
+        setProfileLoaded(true);
+      }
+      
+      // Reset when modal closes
+      if (!isCheckoutOpen) {
+        setProfileLoaded(false);
+      }
+    };
+
+    loadUserProfile();
+  }, [isCheckoutOpen, user, profileLoaded]);
 
   if (!isCheckoutOpen) return null;
 
@@ -127,16 +161,17 @@ export function CheckoutModal() {
     // Save order to Firebase without opening WhatsApp
     try {
       console.log("🔥 Attempting to save order to Firebase...");
-      console.log("📦 Order data:", {
-        userId: user?.uid,
-        customerName: formData.name,
-        phone: formData.phone,
-        whatsapp: formData.whatsapp,
-        deliveryMethod: formData.deliveryMethod,
-        eventDate: formData.eventDate,
-        itemsCount: cart.length,
-        estimatedTotal: estimatedTotal,
-      });
+      
+      // Save user profile for future auto-fill
+      if (user) {
+        await saveUserProfile({
+          userId: user.uid,
+          name: formData.name,
+          phone: formData.phone,
+          whatsapp: formData.whatsapp,
+          address: formData.address,
+        });
+      }
       
       const orderId = await addOrder({
         userId: user?.uid || "",
@@ -153,9 +188,6 @@ export function CheckoutModal() {
       });
       
       console.log("✅ Order saved successfully with ID:", orderId);
-      console.log("🎯 You can view this order in:");
-      console.log("   - Admin Dashboard: http://localhost:5174/admin/orders");
-      console.log("   - Firebase Console: https://console.firebase.google.com/");
       
       // Clear cart and close modal
       clearCart();
@@ -165,19 +197,9 @@ export function CheckoutModal() {
       triggerOrderSuccess();
     } catch (error: any) {
       console.error("❌ Error saving order:", error);
-      console.error("📋 Error details:");
-      console.error("   - Message:", error.message);
-      console.error("   - Code:", error.code);
-      console.error("   - Full error:", error);
       
       if (error.code === "permission-denied") {
-        console.error("🔒 PERMISSION DENIED!");
-        console.error("📝 Solution: Update Firestore security rules");
-        console.error("   1. Go to: https://console.firebase.google.com/");
-        console.error("   2. Select project: shemabuds-9c9fe");
-        console.error("   3. Firestore Database → Rules");
-        console.error("   4. Add: allow create: if true; for orders collection");
-        alert(`❌ Permission Denied!\n\nFirebase security rules are blocking order creation.\n\nPlease update Firestore rules:\n1. Go to Firebase Console\n2. Firestore → Rules\n3. Allow create for orders\n\nOr use "Order through WhatsApp" option.`);
+        alert(`❌ Permission Denied!\n\nFirebase security rules are blocking order creation.\n\nPlease update Firestore rules or use "Order through WhatsApp" option.`);
       } else {
         alert(`❌ Failed to place order\n\nError: ${error.message || 'Unknown error'}\n\nPlease try the "Order through WhatsApp" option instead.`);
       }
@@ -191,6 +213,17 @@ export function CheckoutModal() {
     
     // Save order to Firebase before opening WhatsApp
     try {
+      // Save user profile for future auto-fill
+      if (user) {
+        await saveUserProfile({
+          userId: user.uid,
+          name: formData.name,
+          phone: formData.phone,
+          whatsapp: formData.whatsapp,
+          address: formData.address,
+        });
+      }
+      
       const orderId = await addOrder({
         userId: user?.uid || "",
         customerName: formData.name,
