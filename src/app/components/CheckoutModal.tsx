@@ -7,7 +7,6 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { useOrdering, CheckoutInfo } from "./OrderingSystem";
 import { addOrder } from "../../services/orderService";
-import { OrderSuccessCelebration } from "./OrderSuccessCelebration";
 import { useAuth } from "../../contexts/AuthContext";
 
 export function CheckoutModal() {
@@ -17,6 +16,7 @@ export function CheckoutModal() {
     setIsCheckoutOpen,
     setIsCartOpen,
     clearCart,
+    triggerOrderSuccess,
   } = useOrdering();
   const { user } = useAuth();
 
@@ -30,8 +30,6 @@ export function CheckoutModal() {
     eventDate: "",
     additionalNotes: "",
   });
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [onSuccessRedirect, setOnSuccessRedirect] = useState<(() => void) | null>(null);
 
   if (!isCheckoutOpen) return null;
 
@@ -164,12 +162,7 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal with confetti and redirect to orders after
-      setOnSuccessRedirect(() => () => {
-        // This will be called when success modal closes
-        const event = new CustomEvent('navigateToOrders');
-        window.dispatchEvent(event);
-      });
-      setShowSuccessModal(true);
+      triggerOrderSuccess();
     } catch (error: any) {
       console.error("❌ Error saving order:", error);
       console.error("📋 Error details:");
@@ -220,7 +213,7 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal with confetti
-      setShowSuccessModal(true);
+      triggerOrderSuccess();
     } catch (error) {
       console.error("Error saving order:", error);
       // Continue with WhatsApp even if Firebase save fails
@@ -229,7 +222,7 @@ export function CheckoutModal() {
       handleClose();
       
       // Show success modal anyway
-      setShowSuccessModal(true);
+      triggerOrderSuccess();
     }
   };
 
@@ -240,7 +233,7 @@ export function CheckoutModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center md:p-4 bg-[#2A1B14]/60 backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A1B14]/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
@@ -249,7 +242,7 @@ export function CheckoutModal() {
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
           transition={{ type: "spring", duration: 0.4 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white md:rounded-3xl shadow-2xl max-w-3xl w-full h-full md:h-auto md:max-h-[90vh] overflow-hidden flex flex-col"
+          className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-3 md:p-6 border-b border-[#A67C52]/10 flex-shrink-0">
@@ -273,7 +266,7 @@ export function CheckoutModal() {
           </div>
 
           {/* Content */}
-          <div className="p-3 md:p-6 flex-1 overflow-y-auto pb-20 md:pb-6">
+          <div className="p-3 md:p-6 flex-1 overflow-y-auto">
             {step === "form" ? (
               <div className="space-y-4 md:space-y-6">
                 {/* Customer Information */}
@@ -486,7 +479,7 @@ export function CheckoutModal() {
           </div>
 
           {/* Footer */}
-          <div className="p-3 md:p-6 border-t border-[#A67C52]/10 flex-shrink-0 mb-16 md:mb-0">
+          <div className="p-3 md:p-6 border-t border-[#A67C52]/10 flex-shrink-0">
             {step === "form" ? (
               <Button
                 onClick={handleContinueToReview}
@@ -519,18 +512,6 @@ export function CheckoutModal() {
         </motion.div>
       </motion.div>
     </AnimatePresence>
-
-      {/* Success Celebration */}
-      <OrderSuccessCelebration
-        isOpen={showSuccessModal}
-        onClose={() => {
-          setShowSuccessModal(false);
-          if (onSuccessRedirect) {
-            onSuccessRedirect();
-            setOnSuccessRedirect(null);
-          }
-        }}
-      />
     </>
   );
 }

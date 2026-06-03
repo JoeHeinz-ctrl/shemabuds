@@ -64,7 +64,7 @@ export function ProductDetailsModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center md:p-4 bg-[#2A1B14]/60 backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A1B14]/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
@@ -73,7 +73,7 @@ export function ProductDetailsModal() {
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", duration: 0.5 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white md:rounded-3xl shadow-2xl max-w-4xl w-full h-full md:h-auto md:max-h-[90vh] overflow-hidden flex flex-col"
+          className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-3 md:p-6 border-b border-[#A67C52]/10 flex-shrink-0">
@@ -90,7 +90,7 @@ export function ProductDetailsModal() {
           </div>
 
           {/* Content */}
-          <div className="overflow-y-auto flex-1 pb-20 md:pb-0">
+          <div className="overflow-y-auto flex-1">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 p-3 md:p-6">
               {/* Left: Image Gallery */}
               <div className="space-y-2 md:space-y-4">
@@ -146,7 +146,7 @@ export function ProductDetailsModal() {
               </div>
 
               {/* Right: Product Info & Customization */}
-              <div className="space-y-4 md:space-y-6 pb-16 md:pb-0">
+              <div className="space-y-4 md:space-y-6">
                 <div>
                   <h3 className="text-xl md:text-3xl font-semibold text-[#2A1B14] mb-2">
                     {selectedProduct.title}

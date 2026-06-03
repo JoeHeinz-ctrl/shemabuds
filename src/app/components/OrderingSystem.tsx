@@ -48,6 +48,9 @@ interface OrderingContextType {
   setCheckoutInfo: (info: CheckoutInfo | null) => void;
   showToast: (message: string, type?: "success" | "error" | "info") => void;
   toast: { message: string; type: "success" | "error" | "info"; isVisible: boolean };
+  showOrderSuccess: boolean;
+  setShowOrderSuccess: (show: boolean) => void;
+  triggerOrderSuccess: () => void;
 }
 
 const OrderingContext = createContext<OrderingContextType | undefined>(undefined);
@@ -59,6 +62,7 @@ export function OrderingProvider({ children }: { children: ReactNode }) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [checkoutInfo, setCheckoutInfo] = useState<CheckoutInfo | null>(null);
   const [toast, setToast] = useState({ message: "", type: "success" as const, isVisible: false });
+  const [showOrderSuccess, setShowOrderSuccess] = useState(false);
 
   const showToast = (message: string, type: "success" | "error" | "info" = "success") => {
     setToast({ message, type, isVisible: true });
@@ -66,6 +70,10 @@ export function OrderingProvider({ children }: { children: ReactNode }) {
 
   const hideToast = () => {
     setToast((prev) => ({ ...prev, isVisible: false }));
+  };
+
+  const triggerOrderSuccess = () => {
+    setShowOrderSuccess(true);
   };
 
   const addToCart = (item: CartItem) => {
@@ -119,6 +127,9 @@ export function OrderingProvider({ children }: { children: ReactNode }) {
         setCheckoutInfo,
         showToast,
         toast,
+        showOrderSuccess,
+        setShowOrderSuccess,
+        triggerOrderSuccess,
       }}
     >
       {children}

@@ -10,10 +10,11 @@ import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { MyOrders } from "./components/MyOrders";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { OrderingProvider } from "./components/OrderingSystem";
+import { OrderingProvider, useOrdering } from "./components/OrderingSystem";
 import { ProductDetailsModal } from "./components/ProductDetailsModal";
 import { CartModal } from "./components/CartModal";
 import { CheckoutModal } from "./components/CheckoutModal";
+import { OrderSuccessCelebration } from "./components/OrderSuccessCelebration";
 import { MobileBottomNav } from "./components/mobile/MobileBottomNav";
 import { MobileFloatingCart } from "./components/mobile/MobileFloatingCart";
 import { MobileHomePage } from "./components/mobile/pages/MobileHomePage";
@@ -24,18 +25,27 @@ import { ThemeProvider } from "../contexts/ThemeContext";
 import { AuthProvider } from "../contexts/AuthContext";
 import "./components/mobile/mobile-styles.css";
 
-export default function App() {
+function AppContent() {
   const [mobileActiveTab, setMobileActiveTab] = useState("home");
+  const { showOrderSuccess, setShowOrderSuccess } = useOrdering();
 
-  // Listen for navigate to orders event
-  useEffect(() => {
-    const handleNavigateToOrders = () => {
+  const handleOrderSuccessClose = () => {
+    setShowOrderSuccess(false);
+    
+    // Detect if mobile or desktop
+    const isMobile = window.innerWidth < 768;
+    
+    if (isMobile) {
+      // Mobile: Switch to orders tab
       setMobileActiveTab("orders");
-    };
-
-    window.addEventListener('navigateToOrders', handleNavigateToOrders);
-    return () => window.removeEventListener('navigateToOrders', handleNavigateToOrders);
-  }, []);
+    } else {
+      // Desktop: Scroll to orders section
+      const ordersSection = document.getElementById("orders");
+      if (ordersSection) {
+        ordersSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   const renderMobileContent = () => {
     switch (mobileActiveTab) {
@@ -55,68 +65,80 @@ export default function App() {
   };
 
   return (
+    <div className="min-h-screen">
+      <Header />
+      
+      {/* Desktop View - Unchanged */}
+      <main className="hidden md:block pt-[72px]">
+        <div id="home">
+          <Hero />
+        </div>
+        
+        <div id="gallery">
+          <FeaturedGallery />
+        </div>
+        
+        <div id="services">
+          <Services />
+        </div>
+        
+        <HowToOrder />
+        
+        <div id="about">
+          <About />
+        </div>
+        
+        <div id="testimonials">
+          <Testimonials />
+        </div>
+        
+        <MyOrders />
+        
+        <div id="contact">
+          <Contact />
+        </div>
+      </main>
+
+      {/* Mobile View - Tab-based Navigation */}
+      <main className="md:hidden pt-[60px] pb-[80px]">
+        {renderMobileContent()}
+      </main>
+
+      {/* Desktop Footer */}
+      <div className="hidden md:block">
+        <Footer />
+      </div>
+
+      <ScrollToTop />
+
+      {/* Ordering Modals */}
+      <ProductDetailsModal />
+      <CartModal />
+      <CheckoutModal />
+
+      {/* Global Order Success Celebration */}
+      <OrderSuccessCelebration
+        isOpen={showOrderSuccess}
+        onClose={handleOrderSuccessClose}
+      />
+
+      {/* Mobile-only components */}
+      <MobileFloatingCart />
+      <MobileBottomNav 
+        activeTab={mobileActiveTab}
+        onTabChange={setMobileActiveTab}
+      />
+    </div>
+  );
+}
+
+export default function App() {
+  return (
     <ThemeProvider>
       <AuthProvider>
         <OrderingProvider>
-        <div className="min-h-screen">
-          <Header />
-          
-          {/* Desktop View - Unchanged */}
-          <main className="hidden md:block pt-[72px]">
-            <div id="home">
-              <Hero />
-            </div>
-            
-            <div id="gallery">
-              <FeaturedGallery />
-            </div>
-            
-            <div id="services">
-              <Services />
-            </div>
-            
-            <HowToOrder />
-            
-            <div id="about">
-              <About />
-            </div>
-            
-            <div id="testimonials">
-              <Testimonials />
-            </div>
-            
-            <MyOrders />
-            
-            <div id="contact">
-              <Contact />
-            </div>
-          </main>
-
-          {/* Mobile View - Tab-based Navigation */}
-          <main className="md:hidden pt-[60px] pb-[80px]">
-            {renderMobileContent()}
-          </main>
-
-          {/* Desktop Footer */}
-          <div className="hidden md:block">
-            <Footer />
-          </div>
-
-          <ScrollToTop />
-
-          {/* Ordering Modals */}
-          <ProductDetailsModal />
-          <CartModal />
-          <CheckoutModal />
-
-          {/* Mobile-only components */}
-          <MobileFloatingCart />
-          <MobileBottomNav 
-            activeTab={mobileActiveTab}
-            onTabChange={setMobileActiveTab}
-          />
-        </div>
-      </OrderingProvider>
+          <AppContent />
+        </OrderingProvider>
       </AuthProvider>
     </ThemeProvider>
   );

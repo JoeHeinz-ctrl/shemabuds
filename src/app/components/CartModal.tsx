@@ -62,7 +62,7 @@ export function CartModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center md:p-4 bg-black/60 backdrop-blur-md"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
@@ -71,7 +71,7 @@ export function CartModal() {
           exit={{ scale: 0.95, opacity: 0, x: 300 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           onClick={(e) => e.stopPropagation()}
-          className="glass-strong md:rounded-3xl shadow-luxury-lg max-w-2xl w-full h-full md:h-auto md:max-h-[90vh] overflow-hidden flex flex-col"
+          className="glass-strong rounded-3xl shadow-luxury-lg max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">
@@ -101,7 +101,7 @@ export function CartModal() {
           </div>
 
           {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto p-3 md:p-6 pb-20 md:pb-6">
+          <div className="flex-1 overflow-y-auto p-3 md:p-6">
             {cart.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <ShoppingBag className="w-16 h-16 text-[#A67C52]/30 mb-4" />
@@ -195,7 +195,7 @@ export function CartModal() {
 
           {/* Footer */}
           {cart.length > 0 && (
-            <div className="p-3 md:p-6 border-t border-[#A67C52]/10 space-y-3 md:space-y-4 flex-shrink-0 mb-16 md:mb-0">
+            <div className="p-3 md:p-6 border-t border-[#A67C52]/10 space-y-3 md:space-y-4 flex-shrink-0">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-base">
                   <span className="font-medium text-[#4A3A32]">Total Items:</span>
