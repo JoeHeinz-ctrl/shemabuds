@@ -64,7 +64,7 @@ export function ProductDetailsModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2A1B14]/60 backdrop-blur-md"
+        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-[#2A1B14]/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
@@ -73,7 +73,7 @@ export function ProductDetailsModal() {
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
           transition={{ type: "spring", duration: 0.5 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+          className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-3 md:p-6 border-b border-[#A67C52]/10 flex-shrink-0">

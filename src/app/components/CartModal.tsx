@@ -62,7 +62,7 @@ export function CartModal() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
+        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md"
         onClick={handleClose}
       >
         <motion.div
@@ -71,7 +71,7 @@ export function CartModal() {
           exit={{ scale: 0.95, opacity: 0, x: 300 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           onClick={(e) => e.stopPropagation()}
-          className="glass-strong rounded-3xl shadow-luxury-lg max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+          className="glass-strong rounded-3xl shadow-luxury-lg max-w-2xl w-full max-h-[80vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
           <div className="flex items-center justify-between p-4 md:p-6 border-b border-border">
