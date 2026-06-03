@@ -15,7 +15,7 @@ export function MobileCategoryRow({
   products,
   maxPreview = 6 
 }: MobileCategoryRowProps) {
-  const { setSelectedProduct, addToCart, showToast } = useOrdering();
+  const { setSelectedProduct, addToCart } = useOrdering();
   const [isExpanded, setIsExpanded] = useState(false);
 
   const displayProducts = isExpanded ? products : products.slice(0, maxPreview);
@@ -32,7 +32,6 @@ export function MobileCategoryRow({
       customizations: {},
       notes: "",
     });
-    showToast("✓ Added to Cart");
   };
 
   const toggleExpand = () => {

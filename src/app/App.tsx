@@ -8,6 +8,7 @@ import { About } from "./components/About";
 import { Testimonials } from "./components/Testimonials";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { MyOrders } from "./components/MyOrders";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { OrderingProvider } from "./components/OrderingSystem";
 import { ProductDetailsModal } from "./components/ProductDetailsModal";
@@ -83,6 +84,8 @@ export default function App() {
             <div id="testimonials">
               <Testimonials />
             </div>
+            
+            <MyOrders />
             
             <div id="contact">
               <Contact />
