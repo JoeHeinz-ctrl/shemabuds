@@ -32,6 +32,8 @@ export function MyOrders() {
       return;
     }
 
+    console.log("📱 [MyOrders] Setting up orders listener for user:", user.uid);
+
     const ordersQuery = query(
       collection(db, "orders"),
       where("userId", "==", user.uid),
@@ -39,14 +41,20 @@ export function MyOrders() {
     );
 
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
-      const ordersData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Order[];
+      console.log("📱 [MyOrders] Received snapshot with", snapshot.docs.length, "orders");
+      const ordersData = snapshot.docs.map((doc) => {
+        console.log("📱 [MyOrders] Order data:", doc.id, doc.data());
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }) as Order[];
       setOrders(ordersData);
       setLoading(false);
     }, (error) => {
-      console.error("Error fetching orders:", error);
+      console.error("❌ [MyOrders] Error fetching orders:", error);
+      console.error("❌ [MyOrders] Error code:", error.code);
+      console.error("❌ [MyOrders] Error message:", error.message);
       setLoading(false);
     });
 

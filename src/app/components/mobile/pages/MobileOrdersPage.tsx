@@ -32,6 +32,8 @@ export function MobileOrdersPage() {
       return;
     }
 
+    console.log("📱 [MobileOrdersPage] Setting up orders listener for user:", user.uid);
+
     // Listen to orders for this user
     const ordersQuery = query(
       collection(db, "orders"),
@@ -40,14 +42,20 @@ export function MobileOrdersPage() {
     );
 
     const unsubscribe = onSnapshot(ordersQuery, (snapshot) => {
-      const ordersData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      })) as Order[];
+      console.log("📱 [MobileOrdersPage] Received snapshot with", snapshot.docs.length, "orders");
+      const ordersData = snapshot.docs.map((doc) => {
+        console.log("📱 [MobileOrdersPage] Order data:", doc.id, doc.data());
+        return {
+          id: doc.id,
+          ...doc.data(),
+        };
+      }) as Order[];
       setOrders(ordersData);
       setLoading(false);
     }, (error) => {
-      console.error("Error fetching orders:", error);
+      console.error("❌ [MobileOrdersPage] Error fetching orders:", error);
+      console.error("❌ [MobileOrdersPage] Error code:", error.code);
+      console.error("❌ [MobileOrdersPage] Error message:", error.message);
       setLoading(false);
     });
 
