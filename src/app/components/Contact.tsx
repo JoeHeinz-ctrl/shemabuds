@@ -21,7 +21,7 @@ export function Contact() {
   };
 
   return (
-    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-background">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -30,8 +30,8 @@ export function Contact() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 md:mb-16"
         >
-          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-[#2A1B14] font-semibold tracking-tight">Get In Touch</h2>
-          <p className="text-xs md:text-lg text-[#4A3A32] max-w-2xl mx-auto font-light">
+          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Get In Touch</h2>
+          <p className="text-xs md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Ready to create something beautiful together? Let's chat!
           </p>
         </motion.div>
@@ -45,49 +45,49 @@ export function Contact() {
             transition={{ duration: 0.6 }}
             className="hidden lg:block"
           >
-            <Card className="p-8 border border-[#A67C52]/15 shadow-[0_4px_16px_rgba(166,124,82,0.12)] bg-white">
+            <Card className="p-8 border border-border shadow-[0_4px_16px_rgba(166,124,82,0.12)] bg-card text-card-foreground">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="name" className="text-[#2A1B14] font-medium">Your Name</Label>
+                  <Label htmlFor="name" className="text-foreground font-medium">Your Name</Label>
                   <Input
                     id="name"
                     type="text"
                     placeholder="Enter your name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52] text-[#2A1B14] placeholder:text-[#8B7D72]"
+                    className="mt-2 bg-input-background border-border focus:border-primary text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="email" className="text-[#2A1B14] font-medium">Email Address</Label>
+                  <Label htmlFor="email" className="text-foreground font-medium">Email Address</Label>
                   <Input
                     id="email"
                     type="email"
                     placeholder="your@email.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52] text-[#2A1B14] placeholder:text-[#8B7D72]"
+                    className="mt-2 bg-input-background border-border focus:border-primary text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="message" className="text-[#2A1B14] font-medium">Your Message</Label>
+                  <Label htmlFor="message" className="text-foreground font-medium">Your Message</Label>
                   <Textarea
                     id="message"
                     placeholder="Tell us about your project or idea..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52] min-h-[150px] text-[#2A1B14] placeholder:text-[#8B7D72]"
+                    className="mt-2 bg-input-background border-border focus:border-primary min-h-[150px] text-foreground placeholder:text-muted-foreground"
                     required
                   />
                 </div>
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-6 shadow-[0_4px_14px_rgba(166,124,82,0.25)] hover:shadow-[0_6px_20px_rgba(166,124,82,0.35)] transition-all duration-300 font-medium"
+                  className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-6 shadow-[0_4px_14px_rgba(166,124,82,0.25)] transition-all duration-300 font-medium"
                 >
                   Send Message
                 </Button>
@@ -104,8 +104,8 @@ export function Contact() {
             className="space-y-3 md:space-y-6 lg:col-span-1 col-span-1"
           >
             <div className="hidden md:block">
-              <h3 className="text-2xl mb-6 text-[#2A1B14] font-semibold">Connect With Us</h3>
-              <p className="text-[#4A3A32] mb-8 leading-relaxed font-light">
+              <h3 className="text-2xl mb-6 text-foreground font-semibold">Connect With Us</h3>
+              <p className="text-muted-foreground mb-8 leading-relaxed font-light">
                 We'd love to hear from you! Whether you have a question about our services, 
                 pricing, or anything else, our team is ready to answer all your questions.
               </p>
@@ -124,8 +124,8 @@ export function Contact() {
                   <MessageCircle className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm md:text-base text-[#2A1B14] font-semibold">WhatsApp</p>
-                  <p className="text-[10px] md:text-sm text-[#6B5D52] font-light">Chat with us instantly</p>
+                  <p className="text-sm md:text-base text-foreground font-semibold">WhatsApp</p>
+                  <p className="text-[10px] md:text-sm text-muted-foreground font-light">Chat with us instantly</p>
                 </div>
               </motion.a>
 
@@ -141,18 +141,18 @@ export function Contact() {
                   <Instagram className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm md:text-base text-[#2A1B14] font-semibold">Instagram</p>
-                  <p className="text-[10px] md:text-sm text-[#6B5D52] font-light">@shemabuds</p>
+                  <p className="text-sm md:text-base text-foreground font-semibold">Instagram</p>
+                  <p className="text-[10px] md:text-sm text-muted-foreground font-light">@shemabuds</p>
                 </div>
               </motion.a>
 
-              <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#FAF7F2] rounded-xl shadow-sm border border-[#A67C52]/10">
-                <div className="bg-[#A67C52] p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
-                  <Mail className="w-5 h-5 md:w-6 md:h-6 text-white" />
+              <div className="flex items-center gap-3 md:gap-4 p-3 md:p-4 glass rounded-xl shadow-sm border border-border">
+                <div className="bg-primary p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
+                  <Mail className="w-5 h-5 md:w-6 md:h-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <p className="text-sm md:text-base text-[#2A1B14] font-semibold">Email</p>
-                  <p className="text-[10px] md:text-sm text-[#6B5D52] font-light">hello@shemabuds.com</p>
+                  <p className="text-sm md:text-base text-foreground font-semibold">Email</p>
+                  <p className="text-[10px] md:text-sm text-muted-foreground font-light">hello@shemabuds.com</p>
                 </div>
               </div>
             </div>

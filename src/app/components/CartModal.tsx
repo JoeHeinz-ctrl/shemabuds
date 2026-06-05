@@ -104,9 +104,9 @@ export function CartModal() {
           <div className="flex-1 overflow-y-auto p-3 md:p-6">
             {cart.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <ShoppingBag className="w-16 h-16 text-[#A67C52]/30 mb-4" />
-                <h3 className="text-xl font-semibold text-[#2A1B14] mb-2">Your cart is empty</h3>
-                <p className="text-[#6B5D52] font-light">
+                <ShoppingBag className="w-16 h-16 text-primary/30 mb-4" />
+                <h3 className="text-xl font-semibold text-foreground mb-2">Your cart is empty</h3>
+                <p className="text-muted-foreground font-light">
                   Start adding beautiful handcrafted items to your cart
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function CartModal() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
                     transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="flex gap-3 md:gap-4 p-3 md:p-4 bg-[#FAF7F2] rounded-xl md:rounded-2xl"
+                    className="flex gap-3 md:gap-4 p-3 md:p-4 bg-muted rounded-xl md:rounded-2xl"
                   >
                     {/* Image */}
                     <div className="w-20 h-20 md:w-24 md:h-24 rounded-lg md:rounded-xl overflow-hidden flex-shrink-0">
@@ -132,13 +132,13 @@ export function CartModal() {
 
                     {/* Details */}
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-[#2A1B14] mb-1 truncate">
+                      <h4 className="font-semibold text-foreground mb-1 truncate">
                         {item.product.title}
                       </h4>
                       
                       {/* Price */}
                       {item.product.price && (
-                        <p className="text-sm font-semibold text-[#A67C52] mb-1">
+                        <p className="text-sm font-semibold text-primary mb-1">
                           {item.product.price}
                         </p>
                       )}
@@ -147,7 +147,7 @@ export function CartModal() {
                       {Object.keys(item.customizations).length > 0 && (
                         <div className="space-y-1 mb-2">
                           {Object.entries(item.customizations).map(([key, value]) => (
-                            <p key={key} className="text-xs text-[#6B5D52]">
+                            <p key={key} className="text-xs text-muted-foreground">
                               <span className="font-medium">{key}:</span> {value}
                             </p>
                           ))}
@@ -155,7 +155,7 @@ export function CartModal() {
                       )}
 
                       {item.notes && (
-                        <p className="text-xs text-[#6B5D52] italic mb-2">
+                        <p className="text-xs text-muted-foreground italic mb-2">
                           Note: {item.notes}
                         </p>
                       )}
@@ -164,18 +164,18 @@ export function CartModal() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.product.id, Math.max(1, item.quantity - 1))}
-                          className="w-7 h-7 rounded-full bg-white hover:bg-[#E8C4B4] flex items-center justify-center transition-colors"
+                          className="w-7 h-7 rounded-full bg-background hover:bg-accent flex items-center justify-center transition-colors"
                         >
-                          <Minus className="w-3 h-3 text-[#2A1B14]" />
+                          <Minus className="w-3 h-3 text-foreground" />
                         </button>
-                        <span className="text-sm font-semibold text-[#2A1B14] w-8 text-center">
+                        <span className="text-sm font-semibold text-foreground w-8 text-center">
                           {item.quantity}
                         </span>
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="w-7 h-7 rounded-full bg-white hover:bg-[#E8C4B4] flex items-center justify-center transition-colors"
+                          className="w-7 h-7 rounded-full bg-background hover:bg-accent flex items-center justify-center transition-colors"
                         >
-                          <Plus className="w-3 h-3 text-[#2A1B14]" />
+                          <Plus className="w-3 h-3 text-foreground" />
                         </button>
                       </div>
                     </div>
@@ -183,9 +183,9 @@ export function CartModal() {
                     {/* Remove Button */}
                     <button
                       onClick={() => removeFromCart(item.product.id)}
-                      className="p-2 hover:bg-white rounded-lg transition-colors self-start"
+                      className="p-2 hover:bg-background rounded-lg transition-colors self-start"
                     >
-                      <Trash2 className="w-5 h-5 text-[#A67C52]" />
+                      <Trash2 className="w-5 h-5 text-primary" />
                     </button>
                   </motion.div>
                 ))}
@@ -195,24 +195,24 @@ export function CartModal() {
 
           {/* Footer */}
           {cart.length > 0 && (
-            <div className="p-3 md:p-6 border-t border-[#A67C52]/10 space-y-3 md:space-y-4 flex-shrink-0">
+            <div className="p-3 md:p-6 border-t border-border space-y-3 md:space-y-4 flex-shrink-0">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-base">
-                  <span className="font-medium text-[#4A3A32]">Total Items:</span>
-                  <span className="font-semibold text-[#2A1B14]">{totalItems}</span>
+                  <span className="font-medium text-foreground">Total Items:</span>
+                  <span className="font-semibold text-foreground">{totalItems}</span>
                 </div>
                 
                 {hasValidPrices && (
-                  <div className="flex items-center justify-between text-lg pt-2 border-t border-[#A67C52]/10">
-                    <span className="font-semibold text-[#2A1B14]">Estimated Total:</span>
-                    <span className="font-bold text-[#A67C52] text-xl">
+                  <div className="flex items-center justify-between text-lg pt-2 border-t border-border">
+                    <span className="font-semibold text-foreground">Estimated Total:</span>
+                    <span className="font-bold text-primary text-xl">
                       ₹{estimatedTotal.toLocaleString('en-IN')}+
                     </span>
                   </div>
                 )}
                 
                 {!hasValidPrices && (
-                  <p className="text-sm text-[#6B5D52] italic">
+                  <p className="text-sm text-muted-foreground italic">
                     Final pricing will be confirmed via WhatsApp
                   </p>
                 )}
@@ -222,13 +222,13 @@ export function CartModal() {
                 <Button
                   onClick={handleClose}
                   variant="outline"
-                  className="flex-1 border-2 border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52]/10 py-4 md:py-6 text-sm md:text-base"
+                  className="flex-1 border-2 border-primary text-primary hover:bg-primary/10 py-4 md:py-6 text-sm md:text-base"
                 >
                   Continue Shopping
                 </Button>
                 <Button
                   onClick={handleCheckout}
-                  className="flex-1 bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-4 md:py-6 text-sm md:text-base shadow-[0_4px_16px_rgba(166,124,82,0.3)] hover:shadow-[0_6px_20px_rgba(166,124,82,0.4)] transition-all duration-300"
+                  className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground py-4 md:py-6 text-sm md:text-base shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300"
                 >
                   Proceed to Checkout
                   <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />

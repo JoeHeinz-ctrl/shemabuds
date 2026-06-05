@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 export function About() {
   return (
-    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-background">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-12 items-center">
           
@@ -16,13 +16,13 @@ export function About() {
             transition={{ duration: 0.6 }}
             className="order-1 lg:order-2"
           >
-            <h2 className="text-xl md:text-4xl sm:text-5xl mb-3 md:mb-6 text-[#2A1B14] font-semibold tracking-tight">About Shemabuds</h2>
-            <p className="text-xs md:text-lg text-[#4A3A32] mb-3 md:mb-6 leading-relaxed font-light">
+            <h2 className="text-xl md:text-4xl sm:text-5xl mb-3 md:mb-6 text-foreground font-semibold tracking-tight">About Shemabuds</h2>
+            <p className="text-xs md:text-lg text-muted-foreground mb-3 md:mb-6 leading-relaxed font-light">
               At Shemabuds, we believe that the most meaningful gifts are those made by hand 
               and from the heart. Our journey began with a simple passion for creating beautiful, 
               personalized items that bring joy to special moments.
             </p>
-            <p className="hidden md:block text-lg text-[#4A3A32] mb-8 leading-relaxed font-light">
+            <p className="hidden md:block text-lg text-muted-foreground mb-8 leading-relaxed font-light">
               Every bouquet, gift, and decoration we create is infused with love, attention to detail, 
               and a commitment to quality craftsmanship. We work closely with our clients to bring 
               their visions to life, ensuring each creation is as unique as the story it tells.
@@ -36,12 +36,12 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="flex items-start gap-2 md:gap-4"
               >
-                <div className="bg-[#D8B4A0] p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
-                  <Heart className="w-4 h-4 md:w-6 md:h-6 text-[#8B6B3E]" />
+                <div className="bg-secondary/35 p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
+                  <Heart className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-[#2A1B14] font-semibold">Made with Love</h4>
-                  <p className="text-[10px] md:text-base text-[#6B5D52] font-light">Every piece is crafted with genuine care and attention</p>
+                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-foreground font-semibold">Made with Love</h4>
+                  <p className="text-[10px] md:text-base text-muted-foreground font-light">Every piece is crafted with genuine care and attention</p>
                 </div>
               </motion.div>
 
@@ -52,12 +52,12 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="flex items-start gap-2 md:gap-4"
               >
-                <div className="bg-[#E8C4B4] p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
-                  <Sparkles className="w-4 h-4 md:w-6 md:h-6 text-[#8B6B3E]" />
+                <div className="bg-secondary/35 p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
+                  <Sparkles className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-[#2A1B14] font-semibold">Unique Designs</h4>
-                  <p className="text-[10px] md:text-base text-[#6B5D52] font-light">No two creations are exactly alike</p>
+                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-foreground font-semibold">Unique Designs</h4>
+                  <p className="text-[10px] md:text-base text-muted-foreground font-light">No two creations are exactly alike</p>
                 </div>
               </motion.div>
 
@@ -68,12 +68,12 @@ export function About() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="flex items-start gap-2 md:gap-4"
               >
-                <div className="bg-[#A67C52]/20 p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
-                  <Users className="w-4 h-4 md:w-6 md:h-6 text-[#8B6B3E]" />
+                <div className="bg-primary/20 p-2 md:p-3 rounded-lg md:rounded-xl shadow-sm flex-shrink-0">
+                  <Users className="w-4 h-4 md:w-6 md:h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-[#2A1B14] font-semibold">Customer First</h4>
-                  <p className="text-[10px] md:text-base text-[#6B5D52] font-light">Your satisfaction is our highest priority</p>
+                  <h4 className="text-sm md:text-lg mb-0.5 md:mb-1 text-foreground font-semibold">Customer First</h4>
+                  <p className="text-[10px] md:text-base text-muted-foreground font-light">Your satisfaction is our highest priority</p>
                 </div>
               </motion.div>
             </div>

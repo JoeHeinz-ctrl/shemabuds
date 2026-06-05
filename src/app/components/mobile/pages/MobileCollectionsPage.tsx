@@ -41,24 +41,24 @@ export function MobileCollectionsPage() {
 
   if (loading) {
     return (
-      <div className="md:hidden min-h-screen bg-gradient-to-b from-white to-[#FAF7F2] pt-4">
+      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4">
         <div className="px-4 mb-4">
-          <h1 className="text-2xl font-bold text-[#2A1B14]">Collections</h1>
-          <p className="text-sm text-[#6B5D52] mt-1">Browse our handcrafted products</p>
+          <h1 className="text-2xl font-bold text-foreground">Collections</h1>
+          <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
         </div>
         <div className="flex items-center justify-center py-12">
-          <div className="w-12 h-12 border-4 border-[#A67C52] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-white to-[#FAF7F2] pt-4 pb-4">
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 pb-4">
       {/* Page Title */}
       <div className="px-4 mb-4">
-        <h1 className="text-2xl font-bold text-[#2A1B14]">Collections</h1>
-        <p className="text-sm text-[#6B5D52] mt-1">Browse our handcrafted products</p>
+        <h1 className="text-2xl font-bold text-foreground">Collections</h1>
+        <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
       </div>
 
       {/* Category Rows */}
@@ -75,7 +75,7 @@ export function MobileCollectionsPage() {
 
       {Object.keys(categorizedProducts).length === 0 && (
         <div className="text-center py-12 px-4">
-          <p className="text-[#6B5D52]">No products available at the moment.</p>
+          <p className="text-muted-foreground">No products available at the moment.</p>
         </div>
       )}
     </div>

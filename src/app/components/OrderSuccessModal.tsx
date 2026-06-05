@@ -70,7 +70,7 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
           exit={{ scale: 0.5, opacity: 0, y: 50 }}
           transition={{ type: "spring", duration: 0.6, bounce: 0.4 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-3xl shadow-2xl max-w-md w-full overflow-hidden"
+          className="bg-card text-card-foreground rounded-3xl shadow-2xl max-w-md w-full overflow-hidden"
         >
           {/* Header with animated checkmark */}
           <div className="relative bg-gradient-to-br from-[#A67C52] to-[#8B6B3E] p-8 text-center">
@@ -78,9 +78,9 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.2, type: "spring", duration: 0.8 }}
-              className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full mb-4"
+              className="inline-flex items-center justify-center w-20 h-20 bg-background rounded-full mb-4"
             >
-              <CheckCircle className="w-12 h-12 text-[#A67C52]" />
+              <CheckCircle className="w-12 h-12 text-primary" />
             </motion.div>
             
             <motion.h2
@@ -120,9 +120,9 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
             className="p-6 space-y-4"
           >
             {/* Order ID */}
-            <div className="bg-[#FAF7F2] rounded-2xl p-4 border border-[#A67C52]/20">
-              <p className="text-xs text-[#6B5D52] mb-1">Order ID</p>
-              <p className="text-sm font-mono font-semibold text-[#2A1B14] break-all">
+            <div className="bg-muted rounded-2xl p-4 border border-border">
+              <p className="text-xs text-muted-foreground mb-1">Order ID</p>
+              <p className="text-sm font-mono font-semibold text-foreground break-all">
                 {orderId}
               </p>
             </div>
@@ -131,19 +131,19 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
             <div className="text-center space-y-2">
               {orderType === "whatsapp" ? (
                 <>
-                  <p className="text-[#4A3A32] font-medium">
+                  <p className="text-foreground font-medium">
                     Your order details have been sent to WhatsApp
                   </p>
-                  <p className="text-sm text-[#6B5D52]">
+                  <p className="text-sm text-muted-foreground">
                     We'll contact you shortly to confirm details and pricing.
                   </p>
                 </>
               ) : (
                 <>
-                  <p className="text-[#4A3A32] font-medium">
+                  <p className="text-foreground font-medium">
                     Your order has been successfully placed!
                   </p>
-                  <p className="text-sm text-[#6B5D52]">
+                  <p className="text-sm text-muted-foreground">
                     We'll contact you shortly to confirm details and pricing.
                   </p>
                 </>
@@ -153,13 +153,13 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
             {/* Action Button */}
             <Button
               onClick={onClose}
-              className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-6 text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] hover:shadow-[0_6px_20px_rgba(166,124,82,0.4)] transition-all duration-300"
+              className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-6 text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300"
             >
               Continue Shopping
             </Button>
 
             {/* Additional info */}
-            <p className="text-xs text-center text-[#6B5D52]">
+            <p className="text-xs text-center text-muted-foreground">
               You can view this order in the admin dashboard
             </p>
           </motion.div>

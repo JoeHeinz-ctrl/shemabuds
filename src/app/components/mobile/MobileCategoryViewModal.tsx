@@ -47,24 +47,24 @@ export function MobileCategoryViewModal({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="md:hidden fixed inset-0 z-[60] bg-white flex flex-col"
+        className="md:hidden fixed inset-0 z-[60] bg-background flex flex-col"
       >
         {/* Header */}
-        <div className="flex-shrink-0 bg-white border-b border-[#A67C52]/10 shadow-sm">
+        <div className="flex-shrink-0 bg-card border-b border-border shadow-sm">
           <div className="flex items-center justify-between px-4 py-3">
             <button
               onClick={onClose}
-              className="p-2 -ml-2 text-[#4A3A32] active:text-[#A67C52] transition-colors"
+              className="p-2 -ml-2 text-muted-foreground active:text-primary transition-colors"
             >
               <ArrowLeft className="w-6 h-6" />
             </button>
             <div className="flex-1 text-center">
-              <h2 className="text-lg font-semibold text-[#2A1B14]">{categoryName}</h2>
-              <p className="text-xs text-[#6B5D52]">{products.length} Products</p>
+              <h2 className="text-lg font-semibold text-foreground">{categoryName}</h2>
+              <p className="text-xs text-muted-foreground">{products.length} Products</p>
             </div>
             <button
               onClick={onClose}
-              className="p-2 -mr-2 text-[#4A3A32] active:text-[#A67C52] transition-colors"
+              className="p-2 -mr-2 text-muted-foreground active:text-primary transition-colors"
             >
               <X className="w-6 h-6" />
             </button>
@@ -81,10 +81,10 @@ export function MobileCategoryViewModal({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 onClick={() => handleViewDetails(product)}
-                className="bg-white rounded-xl overflow-hidden border border-[#A67C52]/10 shadow-sm active:shadow-md transition-shadow"
+                className="glass-strong rounded-xl overflow-hidden border border-border shadow-sm active:shadow-md transition-shadow"
               >
                 {/* Product Image */}
-                <div className="relative aspect-square bg-[#FAF7F2]">
+                <div className="relative aspect-square bg-muted">
                   <img
                     src={product.image}
                     alt={product.title}
@@ -92,7 +92,7 @@ export function MobileCategoryViewModal({
                   />
                   {product.badge && (
                     <div className="absolute top-2 left-2">
-                      <span className="px-2 py-0.5 bg-[#A67C52] text-white text-[10px] rounded-full font-semibold">
+                      <span className="px-2 py-0.5 bg-primary text-primary-foreground text-[10px] rounded-full font-semibold">
                         {product.badge}
                       </span>
                     </div>
@@ -101,12 +101,12 @@ export function MobileCategoryViewModal({
 
                 {/* Product Info */}
                 <div className="p-2.5">
-                  <h3 className="text-sm font-semibold text-[#2A1B14] line-clamp-2 mb-1 min-h-[2.5rem]">
+                  <h3 className="text-sm font-semibold text-foreground line-clamp-2 mb-1 min-h-[2.5rem]">
                     {product.title}
                   </h3>
                   
                   {product.price && (
-                    <p className="text-sm font-bold text-[#A67C52] mb-2">
+                    <p className="text-sm font-bold text-primary mb-2">
                       {product.price}
                     </p>
                   )}
@@ -115,7 +115,7 @@ export function MobileCategoryViewModal({
                   <Button
                     onClick={(e) => handleQuickAddToCart(product, e)}
                     size="sm"
-                    className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-2 text-xs"
+                    className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-2 text-xs"
                   >
                     <ShoppingCart className="w-3.5 h-3.5 mr-1" />
                     Add to Cart

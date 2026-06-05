@@ -60,7 +60,7 @@ export function MobileCategoryNav({ onCategoryChange }: MobileCategoryNavProps) 
   return (
     <div
       ref={navRef}
-      className={`md:hidden bg-white border-b border-[#A67C52]/10 transition-all duration-300 ${
+      className={`md:hidden bg-background border-b border-border transition-all duration-300 ${
         isSticky ? 'fixed top-[120px] left-0 right-0 z-40 shadow-md' : ''
       }`}
     >
@@ -73,8 +73,8 @@ export function MobileCategoryNav({ onCategoryChange }: MobileCategoryNavProps) 
               onClick={() => handleCategoryClick(category.id)}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full whitespace-nowrap text-sm font-medium transition-all ${
                 selectedCategory === category.id
-                  ? 'bg-[#A67C52] text-white shadow-md'
-                  : 'bg-[#FAF7F2] text-[#4A3A32] active:bg-[#E8C4B4]'
+                  ? 'bg-primary text-primary-foreground shadow-md'
+                  : 'bg-muted text-muted-foreground active:bg-accent'
               }`}
             >
               <span>{category.emoji}</span>

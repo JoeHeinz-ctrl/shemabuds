@@ -67,16 +67,16 @@ export function FeaturedGallery() {
 
   if (loading) {
     return (
-      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FAF7F2]">
+      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-[#2A1B14] font-semibold tracking-tight">Featured Creations</h2>
-            <p className="text-sm md:text-lg text-[#4A3A32] max-w-2xl mx-auto font-light">
+            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+            <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
               Explore our handpicked selection of recent works
             </p>
           </div>
           <div className="flex items-center justify-center py-12">
-            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-[#A67C52] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           </div>
         </div>
       </section>
@@ -85,16 +85,16 @@ export function FeaturedGallery() {
 
   if (featuredProducts.length === 0) {
     return (
-      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-[#FAF7F2]">
+      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-[#2A1B14] font-semibold tracking-tight">Featured Creations</h2>
-            <p className="text-sm md:text-lg text-[#4A3A32] max-w-2xl mx-auto font-light">
+            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+            <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
               Explore our handpicked selection of recent works
             </p>
           </div>
           <div className="text-center py-12">
-            <p className="text-[#6B5D52] text-base md:text-lg">No featured products yet. Check back soon!</p>
+            <p className="text-muted-foreground text-base md:text-lg">No featured products yet. Check back soon!</p>
           </div>
         </div>
       </section>
@@ -167,7 +167,7 @@ export function FeaturedGallery() {
                       </Button>
                       <Button
                         onClick={() => handleQuickAddToCart(product)}
-                        className="flex-1 bg-[#A67C52] hover:bg-[#8B6B3E] text-white shadow-lg"
+                        className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground shadow-lg"
                       >
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         Add to Cart
@@ -178,17 +178,17 @@ export function FeaturedGallery() {
                 
                 <div className="p-3 md:p-6">
                   <div className="flex items-start justify-between gap-1 md:gap-2 mb-2 md:mb-3">
-                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-[#D8B4A0] text-[#8B6B3E] rounded-full text-[10px] md:text-sm font-medium">
+                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-secondary text-secondary-foreground rounded-full text-[10px] md:text-sm font-medium">
                       {product.badge}
                     </span>
                     {product.price && (
-                      <span className="text-sm md:text-lg font-bold text-[#A67C52] whitespace-nowrap">
+                      <span className="text-sm md:text-lg font-bold text-primary whitespace-nowrap">
                         {product.price}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm md:text-xl text-[#2A1B14] font-semibold mb-1 md:mb-2 line-clamp-2">{product.title}</h3>
-                  <p className="hidden md:block text-sm text-[#6B5D52] line-clamp-2">{product.description}</p>
+                  <h3 className="text-sm md:text-xl text-foreground font-semibold mb-1 md:mb-2 line-clamp-2">{product.title}</h3>
+                  <p className="hidden md:block text-sm text-muted-foreground line-clamp-2">{product.description}</p>
                   
                   {/* Mobile Action Buttons */}
                   <div className="md:hidden flex gap-1.5 mt-2">
@@ -199,7 +199,7 @@ export function FeaturedGallery() {
                       }}
                       size="sm"
                       variant="outline"
-                      className="flex-1 border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52]/10 text-[10px] h-7"
+                      className="flex-1 border-primary text-primary hover:bg-primary/10 text-[10px] h-7"
                     >
                       <Eye className="w-3 h-3 mr-1" />
                       View
@@ -210,7 +210,7 @@ export function FeaturedGallery() {
                         handleQuickAddToCart(product);
                       }}
                       size="sm"
-                      className="flex-1 bg-[#A67C52] hover:bg-[#8B6B3E] text-white text-[10px] h-7"
+                      className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground text-[10px] h-7"
                     >
                       <ShoppingCart className="w-3 h-3 mr-1" />
                       Add

@@ -275,26 +275,26 @@ export function CheckoutModal() {
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
           transition={{ type: "spring", duration: 0.4 }}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col"
+          className="bg-card text-card-foreground rounded-3xl shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col"
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-3 md:p-6 border-b border-[#A67C52]/10 flex-shrink-0">
+          <div className="flex items-center justify-between p-3 md:p-6 border-b border-border flex-shrink-0">
             <div className="flex items-center gap-2 md:gap-3">
               <button
                 onClick={handleBack}
-                className="p-2 hover:bg-[#FAF7F2] rounded-full transition-colors"
+                className="p-2 hover:bg-muted rounded-full transition-colors"
               >
-                <ArrowLeft className="w-5 h-5 text-[#4A3A32]" />
+                <ArrowLeft className="w-5 h-5 text-muted-foreground" />
               </button>
-              <h2 className="text-lg md:text-2xl font-semibold text-[#2A1B14]">
+              <h2 className="text-lg md:text-2xl font-semibold text-foreground">
                 {step === "form" ? "Checkout" : "Review Your Order"}
               </h2>
             </div>
             <button
               onClick={handleClose}
-              className="p-2 hover:bg-[#FAF7F2] rounded-full transition-colors"
+              className="p-2 hover:bg-muted rounded-full transition-colors"
               >
-              <X className="w-5 h-5 md:w-6 md:h-6 text-[#4A3A32]" />
+              <X className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground" />
             </button>
           </div>
 
@@ -304,49 +304,49 @@ export function CheckoutModal() {
               <div className="space-y-4 md:space-y-6">
                 {/* Customer Information */}
                 <div className="space-y-3 md:space-y-4">
-                  <h3 className="text-base md:text-lg font-semibold text-[#2A1B14] flex items-center gap-2">
-                    <User className="w-4 h-4 md:w-5 md:h-5 text-[#A67C52]" />
+                  <h3 className="text-base md:text-lg font-semibold text-foreground flex items-center gap-2">
+                    <User className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                     Customer Information
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                     <div className="space-y-2">
-                      <Label className="text-[#4A3A32] font-medium">Full Name *</Label>
+                      <Label className="text-foreground font-medium">Full Name *</Label>
                       <Input
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Enter your name"
-                        className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                        className="bg-input-background border-border focus:border-primary text-foreground"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-[#4A3A32] font-medium">Phone Number *</Label>
+                      <Label className="text-foreground font-medium">Phone Number *</Label>
                       <Input
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         placeholder="+91 XXXXX XXXXX"
-                        className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                        className="bg-input-background border-border focus:border-primary text-foreground"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-[#4A3A32] font-medium">WhatsApp Number *</Label>
+                      <Label className="text-foreground font-medium">WhatsApp Number *</Label>
                       <Input
                         value={formData.whatsapp}
                         onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                         placeholder="+91 XXXXX XXXXX"
-                        className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                        className="bg-input-background border-border focus:border-primary text-foreground"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-[#4A3A32] font-medium">Event Date *</Label>
+                      <Label className="text-foreground font-medium">Event Date *</Label>
                       <Input
                         type="date"
                         value={formData.eventDate}
                         onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
-                        className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                        className="bg-input-background border-border focus:border-primary text-foreground"
                       />
                     </div>
                   </div>
@@ -354,8 +354,8 @@ export function CheckoutModal() {
 
                 {/* Delivery Method */}
                 <div className="space-y-3 md:space-y-4">
-                  <h3 className="text-base md:text-lg font-semibold text-[#2A1B14] flex items-center gap-2">
-                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-[#A67C52]" />
+                  <h3 className="text-base md:text-lg font-semibold text-foreground flex items-center gap-2">
+                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-primary" />
                     Delivery Method
                   </h3>
 
@@ -364,13 +364,13 @@ export function CheckoutModal() {
                       onClick={() => setFormData({ ...formData, deliveryMethod: "pickup" })}
                       className={`flex-1 p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all ${
                         formData.deliveryMethod === "pickup"
-                          ? "border-[#A67C52] bg-[#A67C52]/5"
-                          : "border-[#A67C52]/20 hover:border-[#A67C52]/40"
+                          ? "border-primary bg-primary/10"
+                          : "border-border hover:border-primary"
                       }`}
                     >
                       <div className="text-center">
-                        <div className="text-base md:text-lg font-semibold text-[#2A1B14]">Pickup</div>
-                        <div className="text-xs md:text-sm text-[#6B5D52]">Collect from store</div>
+                        <div className="text-base md:text-lg font-semibold text-foreground">Pickup</div>
+                        <div className="text-xs md:text-sm text-muted-foreground">Collect from store</div>
                       </div>
                     </button>
 
@@ -378,13 +378,13 @@ export function CheckoutModal() {
                       onClick={() => setFormData({ ...formData, deliveryMethod: "delivery" })}
                       className={`flex-1 p-4 rounded-2xl border-2 transition-all ${
                         formData.deliveryMethod === "delivery"
-                          ? "border-[#A67C52] bg-[#A67C52]/5"
-                          : "border-[#A67C52]/20 hover:border-[#A67C52]/40"
+                          ? "border-primary bg-primary/10"
+                          : "border-border hover:border-primary"
                       }`}
                     >
                       <div className="text-center">
-                        <div className="text-base md:text-lg font-semibold text-[#2A1B14]">Home Delivery</div>
-                        <div className="text-xs md:text-sm text-[#6B5D52]">Deliver to address</div>
+                        <div className="text-base md:text-lg font-semibold text-foreground">Home Delivery</div>
+                        <div className="text-xs md:text-sm text-muted-foreground">Deliver to address</div>
                       </div>
                     </button>
                   </div>
@@ -398,12 +398,12 @@ export function CheckoutModal() {
                         transition={{ duration: 0.3 }}
                         className="space-y-2 overflow-hidden"
                       >
-                        <Label className="text-[#4A3A32] font-medium">Delivery Address *</Label>
+                        <Label className="text-foreground font-medium">Delivery Address *</Label>
                         <Textarea
                           value={formData.address}
                           onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                           placeholder="Enter your complete address with landmarks"
-                          className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52] min-h-[100px]"
+                          className="bg-input-background border-border focus:border-primary text-foreground min-h-[100px]"
                         />
                       </motion.div>
                     )}
@@ -412,44 +412,44 @@ export function CheckoutModal() {
 
                 {/* Additional Notes */}
                 <div className="space-y-2">
-                  <Label className="text-[#4A3A32] font-medium">Additional Notes (Optional)</Label>
+                  <Label className="text-foreground font-medium">Additional Notes (Optional)</Label>
                   <Textarea
                     value={formData.additionalNotes}
                     onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
                     placeholder="Any special instructions or requests..."
-                    className="bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52] min-h-[100px]"
+                    className="bg-input-background border-border focus:border-primary text-foreground min-h-[100px]"
                   />
                 </div>
               </div>
             ) : (
               <div className="space-y-4 md:space-y-6">
                 {/* Customer Details Review */}
-                <div className="p-4 md:p-6 bg-[#FAF7F2] rounded-xl md:rounded-2xl space-y-3">
-                  <h3 className="text-base md:text-lg font-semibold text-[#2A1B14] mb-4">Customer Details</h3>
+                <div className="p-4 md:p-6 bg-muted rounded-xl md:rounded-2xl space-y-3">
+                  <h3 className="text-base md:text-lg font-semibold text-foreground mb-4">Customer Details</h3>
                   <div className="grid grid-cols-2 gap-3 md:gap-4 text-xs md:text-sm">
                     <div>
-                      <span className="text-[#6B5D52]">Name:</span>
-                      <p className="font-semibold text-[#2A1B14]">{formData.name}</p>
+                      <span className="text-muted-foreground">Name:</span>
+                      <p className="font-semibold text-foreground">{formData.name}</p>
                     </div>
                     <div>
-                      <span className="text-[#6B5D52]">Phone:</span>
-                      <p className="font-semibold text-[#2A1B14]">{formData.phone}</p>
+                      <span className="text-muted-foreground">Phone:</span>
+                      <p className="font-semibold text-foreground">{formData.phone}</p>
                     </div>
                     <div>
-                      <span className="text-[#6B5D52]">WhatsApp:</span>
-                      <p className="font-semibold text-[#2A1B14]">{formData.whatsapp}</p>
+                      <span className="text-muted-foreground">WhatsApp:</span>
+                      <p className="font-semibold text-foreground">{formData.whatsapp}</p>
                     </div>
                     <div>
-                      <span className="text-[#6B5D52]">Event Date:</span>
-                      <p className="font-semibold text-[#2A1B14]">{formData.eventDate}</p>
+                      <span className="text-muted-foreground">Event Date:</span>
+                      <p className="font-semibold text-foreground">{formData.eventDate}</p>
                     </div>
                     <div className="col-span-2">
-                      <span className="text-[#6B5D52]">Delivery:</span>
-                      <p className="font-semibold text-[#2A1B14]">
+                      <span className="text-muted-foreground">Delivery:</span>
+                      <p className="font-semibold text-foreground">
                         {formData.deliveryMethod === "pickup" ? "Pickup" : "Home Delivery"}
                       </p>
                       {formData.deliveryMethod === "delivery" && formData.address && (
-                        <p className="text-[#4A3A32] mt-1">{formData.address}</p>
+                        <p className="text-foreground mt-1">{formData.address}</p>
                       )}
                     </div>
                   </div>
@@ -457,28 +457,28 @@ export function CheckoutModal() {
 
                 {/* Products Review */}
                 <div className="space-y-3 md:space-y-4">
-                  <h3 className="text-base md:text-lg font-semibold text-[#2A1B14]">Your Products</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-foreground">Your Products</h3>
                   {cart.map((item, index) => (
-                    <div key={index} className="flex gap-3 md:gap-4 p-3 md:p-4 bg-[#FAF7F2] rounded-xl md:rounded-2xl">
+                    <div key={index} className="flex gap-3 md:gap-4 p-3 md:p-4 bg-muted rounded-xl md:rounded-2xl">
                       <img
                         src={item.product.image}
                         alt={item.product.title}
                         className="w-16 h-16 md:w-20 md:h-20 rounded-lg md:rounded-xl object-cover"
                       />
                       <div className="flex-1">
-                        <h4 className="text-sm md:text-base font-semibold text-[#2A1B14]">{item.product.title}</h4>
+                        <h4 className="text-sm md:text-base font-semibold text-foreground">{item.product.title}</h4>
                         {item.product.price && (
-                          <p className="text-xs md:text-sm font-semibold text-[#A67C52]">{item.product.price}</p>
+                          <p className="text-xs md:text-sm font-semibold text-primary">{item.product.price}</p>
                         )}
                         {Object.entries(item.customizations).map(([key, value]) => (
-                          <p key={key} className="text-xs text-[#6B5D52]">
+                          <p key={key} className="text-xs text-muted-foreground">
                             {key}: {value}
                           </p>
                         ))}
                         {item.notes && (
-                          <p className="text-xs text-[#6B5D52] italic">Note: {item.notes}</p>
+                          <p className="text-xs text-muted-foreground italic">Note: {item.notes}</p>
                         )}
-                        <p className="text-xs md:text-sm font-semibold text-[#4A3A32] mt-1">
+                        <p className="text-xs md:text-sm font-semibold text-foreground mt-1">
                           Quantity: {item.quantity}
                         </p>
                       </div>
@@ -487,14 +487,14 @@ export function CheckoutModal() {
                   
                   {/* Estimated Total */}
                   {hasValidPrices && (
-                    <div className="p-3 md:p-4 bg-[#A67C52]/10 rounded-xl md:rounded-2xl border-2 border-[#A67C52]/20">
+                    <div className="p-3 md:p-4 bg-primary/10 rounded-xl md:rounded-2xl border-2 border-border">
                       <div className="flex items-center justify-between">
-                        <span className="text-base md:text-lg font-semibold text-[#2A1B14]">Estimated Total:</span>
-                        <span className="text-xl md:text-2xl font-bold text-[#A67C52]">
+                        <span className="text-base md:text-lg font-semibold text-foreground">Estimated Total:</span>
+                        <span className="text-xl md:text-2xl font-bold text-primary">
                           ₹{estimatedTotal.toLocaleString('en-IN')}+
                         </span>
                       </div>
-                      <p className="text-[10px] md:text-xs text-[#6B5D52] mt-2">
+                      <p className="text-[10px] md:text-xs text-muted-foreground mt-2">
                         *Final pricing will be confirmed via WhatsApp based on customizations
                       </p>
                     </div>
@@ -502,9 +502,9 @@ export function CheckoutModal() {
                 </div>
 
                 {formData.additionalNotes && (
-                  <div className="p-3 md:p-4 bg-[#FAF7F2] rounded-xl md:rounded-2xl">
-                    <h4 className="text-sm md:text-base font-semibold text-[#2A1B14] mb-2">Additional Notes</h4>
-                    <p className="text-xs md:text-sm text-[#4A3A32]">{formData.additionalNotes}</p>
+                  <div className="p-3 md:p-4 bg-muted rounded-xl md:rounded-2xl">
+                    <h4 className="text-sm md:text-base font-semibold text-foreground mb-2">Additional Notes</h4>
+                    <p className="text-xs md:text-sm text-foreground">{formData.additionalNotes}</p>
                   </div>
                 )}
               </div>
@@ -512,11 +512,11 @@ export function CheckoutModal() {
           </div>
 
           {/* Footer */}
-          <div className="p-3 md:p-6 border-t border-[#A67C52]/10 flex-shrink-0">
+          <div className="p-3 md:p-6 border-t border-border flex-shrink-0">
             {step === "form" ? (
               <Button
                 onClick={handleContinueToReview}
-                className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-4 md:py-6 text-sm md:text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] hover:shadow-[0_6px_20px_rgba(166,124,82,0.4)] transition-all duration-300"
+                className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-4 md:py-6 text-sm md:text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300"
               >
                 Continue to Review
                 <ArrowRight className="w-4 h-4 md:w-5 md:h-5 ml-2" />
@@ -525,7 +525,7 @@ export function CheckoutModal() {
               <div className="flex flex-col md:flex-row gap-3">
                 <Button
                   onClick={handlePlaceOrder}
-                  className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-4 md:py-6 text-sm md:text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] hover:shadow-[0_6px_20px_rgba(166,124,82,0.4)] transition-all duration-300"
+                  className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-4 md:py-6 text-sm md:text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300"
                 >
                   <CheckCircle className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   Place Order
