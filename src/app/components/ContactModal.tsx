@@ -11,7 +11,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   if (!isOpen) return null;
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/919363962399?text=Hello%20Shemabuds!%20I'd%20like%20to%20know%20more%20about%20your%20services.", "_blank");
+    window.open("https://wa.me/919363962399?text=Hello%20Shema%20Buds!%20I'd%20like%20to%20know%20more%20about%20your%20services.", "_blank");
   };
 
   return (

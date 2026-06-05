@@ -85,7 +85,7 @@ export function Services() {
 
   const handleWhatsAppInquiry = (product: Product) => {
     const message = encodeURIComponent(
-      `Hello Shemabuds 😊\n\nI'm interested in:\n${product.title}\n\nCould you please provide more details?\n\nThank you! 🌸`
+      `Hello Shema Buds 😊\n\nI'm interested in:\n${product.title}\n\nCould you please provide more details?\n\nThank you! 🌸`
     );
     const whatsappNumber = "919363962399";
     window.open(`https://wa.me/${whatsappNumber}?text=${message}`, "_blank");

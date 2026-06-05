@@ -30,7 +30,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
           <div className="flex items-center justify-between p-6 border-b border-border">
             <div className="flex items-center gap-3">
               <Sparkles className="w-6 h-6 text-primary" />
-              <h2 className="text-2xl font-semibold text-foreground">About Shemabuds</h2>
+              <h2 className="text-2xl font-semibold text-foreground">About Shema Buds</h2>
             </div>
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
@@ -52,7 +52,7 @@ export function AboutModal({ isOpen, onClose }: AboutModalProps) {
                   Our Story
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Shemabuds is where artistry meets celebration. We craft handmade floral arrangements 
+                  Shema Buds is where artistry meets celebration. We craft handmade floral arrangements 
                   and custom bouquets that transform moments into memories. Each piece is thoughtfully 
                   designed to capture emotions and celebrate life's special occasions.
                 </p>

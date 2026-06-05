@@ -117,7 +117,7 @@ export function CheckoutModal() {
   };
 
   const generateWhatsAppMessage = () => {
-    let message = `Hello Shemabuds 😊\n\nI would like to place an order.\n\n`;
+    let message = `Hello Shema Buds 😊\n\nI would like to place an order.\n\n`;
     message += `*CUSTOMER DETAILS*\n`;
     message += `Name: ${formData.name}\n`;
     message += `Phone: ${formData.phone}\n`;
