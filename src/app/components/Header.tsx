@@ -41,23 +41,36 @@ export function Header() {
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             {/* Logo on Left */}
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-              className="cursor-pointer"
-              onClick={() => {
-                const event = new CustomEvent('openAboutModal');
-                window.dispatchEvent(event);
-              }}
-            >
+            <div className="flex items-center gap-6">
               <motion.div 
-                className="bg-primary p-2 rounded-xl shadow-luxury"
-                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="cursor-pointer"
+                onClick={() => {
+                  const event = new CustomEvent('openAboutModal');
+                  window.dispatchEvent(event);
+                }}
               >
-                <Heart className="w-6 h-6 text-primary-foreground fill-primary-foreground" />
+                <motion.div 
+                  className="bg-primary p-2 rounded-xl shadow-luxury"
+                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Heart className="w-6 h-6 text-primary-foreground fill-primary-foreground" />
+                </motion.div>
               </motion.div>
-            </motion.div>
+
+              {/* Contact Button */}
+              <button 
+                onClick={() => {
+                  const event = new CustomEvent('openContactModal');
+                  window.dispatchEvent(event);
+                }}
+                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
+              >
+                Contact
+              </button>
+            </div>
 
             {/* Centered Title - Elegant & Eye-catching */}
             <motion.div 
@@ -134,130 +147,54 @@ export function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-full mt-2 w-48 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+                        className="absolute right-0 top-full mt-2 w-56 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
                       >
                         <div className="p-2">
+                          {/* Theme Toggle */}
                           <button
                             onClick={() => {
+                              toggleTheme();
                               setShowSettingsMenu(false);
-                              scrollToSection('home');
                             }}
                             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
                           >
-                            <span className="font-medium text-foreground">Home</span>
+                            <motion.div
+                              initial={false}
+                              animate={{ rotate: theme === "dark" ? 180 : 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              {theme === "dark" ? (
+                                <Sun className="w-5 h-5 text-primary" />
+                              ) : (
+                                <Moon className="w-5 h-5 text-primary" />
+                              )}
+                            </motion.div>
+                            <span className="font-medium text-foreground">
+                              {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                            </span>
                           </button>
-                          <button
-                            onClick={() => {
-                              setShowSettingsMenu(false);
-                              scrollToSection('services');
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                          >
-                            <span className="font-medium text-foreground">Services</span>
-                          </button>
-                          <button
-                            onClick={() => {
-                              setShowSettingsMenu(false);
-                              scrollToSection('gallery');
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                          >
-                            <span className="font-medium text-foreground">Gallery</span>
-                          </button>
-                        </div>
-                      </motion.div>
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
 
-              <button 
-                onClick={() => {
-                  const event = new CustomEvent('openContactModal');
-                  window.dispatchEvent(event);
-                }}
-                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
-              >
-                Contact
-              </button>
-              
-              {/* Theme Toggle */}
-              <motion.button
-                whileHover={{ scale: 1.1, rotate: 180 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleTheme}
-                className="relative p-2 text-secondary-foreground hover:text-primary transition-colors duration-200"
-                aria-label="Toggle theme"
-              >
-                <motion.div
-                  initial={false}
-                  animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {theme === "dark" ? (
-                    <Sun className="w-5 h-5" />
-                  ) : (
-                    <Moon className="w-5 h-5" />
-                  )}
-                </motion.div>
-              </motion.button>
-              
-              {/* User Menu */}
-              <div className="relative">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => user ? setShowUserMenu(!showUserMenu) : setShowAuthModal(true)}
-                  className="relative p-2 text-secondary-foreground hover:text-primary transition-colors duration-200"
-                >
-                  <User className="w-6 h-6" />
-                  {user && (
-                    <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
-                  )}
-                </motion.button>
-                
-                {/* User Dropdown */}
-                <AnimatePresence>
-                  {showUserMenu && user && (
-                    <>
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40"
-                        onClick={() => setShowUserMenu(false)}
-                      />
-                      <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-full mt-2 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
-                      >
-                        <div className="p-4 border-b border-border">
-                          <p className="font-semibold text-foreground">{user.displayName || "User"}</p>
-                          <p className="text-sm text-muted-foreground truncate">{user.email}</p>
-                        </div>
-                        <div className="p-2">
+                          {/* User Menu */}
                           <button
                             onClick={() => {
-                              setShowUserMenu(false);
-                              window.location.href = "#orders";
+                              setShowSettingsMenu(false);
+                              if (user) {
+                                setShowUserMenu(true);
+                              } else {
+                                setShowAuthModal(true);
+                              }
                             }}
                             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
                           >
-                            <Package className="w-5 h-5 text-primary" />
-                            <span className="font-medium text-foreground">My Orders</span>
-                          </button>
-                          <button
-                            onClick={async () => {
-                              await signOut();
-                              setShowUserMenu(false);
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-destructive/10 transition-colors text-left text-destructive"
-                          >
-                            <LogOut className="w-5 h-5" />
-                            <span className="font-medium">Sign Out</span>
+                            <div className="relative">
+                              <User className="w-5 h-5 text-primary" />
+                              {user && (
+                                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card"></span>
+                              )}
+                            </div>
+                            <span className="font-medium text-foreground">
+                              {user ? "My Account" : "Sign In"}
+                            </span>
                           </button>
                         </div>
                       </motion.div>
@@ -265,6 +202,55 @@ export function Header() {
                   )}
                 </AnimatePresence>
               </div>
+              
+              {/* User Menu Dropdown (when opened from Settings) */}
+              <AnimatePresence>
+                {showUserMenu && user && (
+                  <>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 z-40"
+                      onClick={() => setShowUserMenu(false)}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+                    >
+                      <div className="p-4 border-b border-border">
+                        <p className="font-semibold text-foreground">{user.displayName || "User"}</p>
+                        <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+                      </div>
+                      <div className="p-2">
+                        <button
+                          onClick={() => {
+                            setShowUserMenu(false);
+                            window.location.href = "#orders";
+                          }}
+                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                        >
+                          <Package className="w-5 h-5 text-primary" />
+                          <span className="font-medium text-foreground">My Orders</span>
+                        </button>
+                        <button
+                          onClick={async () => {
+                            await signOut();
+                            setShowUserMenu(false);
+                          }}
+                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-destructive/10 transition-colors text-left text-destructive"
+                        >
+                          <LogOut className="w-5 h-5" />
+                          <span className="font-medium">Sign Out</span>
+                        </button>
+                      </div>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
               
               {/* Cart Icon */}
               <motion.button
