@@ -4,6 +4,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
+import { CloudinaryImageUpload } from "../../../components/CloudinaryImageUpload";
 import { addProduct, updateProduct, FirebaseProduct } from "../../../services/productService";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -210,32 +211,12 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
               />
             </div>
 
-            {/* Main Image */}
-            <div>
-              <Label className="text-[#4A3A32] font-medium">Main Image URL *</Label>
-              <Input
-                value={formData.image}
-                onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                placeholder="https://example.com/image.jpg"
-                className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
-                required
-              />
-              {formData.image && (
-                <div className="mt-3">
-                  <p className="text-xs text-[#6B5D52] mb-2">Preview:</p>
-                  <div className="relative w-full max-w-sm mx-auto aspect-square rounded-xl overflow-hidden bg-[#FAF7F2] border border-[#A67C52]/20">
-                    <img
-                      src={formData.image}
-                      alt="Product preview"
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = "https://via.placeholder.com/400x400?text=Invalid+Image+URL";
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* Main Image - Cloudinary Upload */}
+            <CloudinaryImageUpload
+              currentImageUrl={formData.image}
+              onImageUploaded={(url) => setFormData({ ...formData, image: url })}
+              label="Main Image"
+            />
 
             {/* Additional Images */}
             <div>
