@@ -39,11 +39,11 @@ export function Header() {
       <header className="hidden md:block fixed top-0 left-0 right-0 z-50 glass-strong shadow-luxury">
         <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            {/* Logo */}
+            {/* Logo on Left */}
             <motion.div 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-2 cursor-pointer"
+              className="cursor-pointer"
               onClick={() => {
                 const event = new CustomEvent('openAboutModal');
                 window.dispatchEvent(event);
@@ -54,13 +54,25 @@ export function Header() {
                 whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                 transition={{ duration: 0.5 }}
               >
-                <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
+                <Heart className="w-6 h-6 text-primary-foreground fill-primary-foreground" />
               </motion.div>
-              <span className="text-xl text-foreground font-semibold tracking-tight">Shemabuds</span>
             </motion.div>
 
-            {/* Desktop Navigation */}
-            <div className="flex items-center gap-8">
+            {/* Centered Title */}
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="absolute left-1/2 -translate-x-1/2 cursor-pointer"
+              onClick={() => {
+                const event = new CustomEvent('openAboutModal');
+                window.dispatchEvent(event);
+              }}
+            >
+              <span className="text-2xl text-foreground font-serif tracking-wide">Shemabuds</span>
+            </motion.div>
+
+            {/* Right Side Actions */}
+            <div className="flex items-center gap-6">
               <button 
                 onClick={() => scrollToSection('home')}
                 className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
@@ -81,12 +93,12 @@ export function Header() {
               </button>
               <button 
                 onClick={() => {
-                  const event = new CustomEvent('openAboutModal');
+                  const event = new CustomEvent('openContactModal');
                   window.dispatchEvent(event);
                 }}
                 className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
               >
-                About
+                Contact
               </button>
               
               {/* Theme Toggle */}
@@ -192,18 +204,6 @@ export function Header() {
                   </motion.span>
                 )}
               </motion.button>
-
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-                <Button 
-                  onClick={() => {
-                    const event = new CustomEvent('openContactModal');
-                    window.dispatchEvent(event);
-                  }}
-                  className="font-medium"
-                >
-                  Contact Us
-                </Button>
-              </motion.div>
             </div>
           </div>
         </nav>
