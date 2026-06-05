@@ -24,10 +24,10 @@ const stats = [
 
 // Slideshow images - Your actual product photos
 const heroImages = [
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645312/image1_zdjr2n.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645310/image2_sangqq.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645311/image3_jkq0f8.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645309/image4_hlb7um.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645309/image1_zdjr2n.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645310/image2_sangoq.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645311/image3_lkg0i8.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780645309/image1_zdjr2n.jpg",
 ];
 
 export function Hero() {
