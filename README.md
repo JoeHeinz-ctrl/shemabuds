@@ -15,7 +15,7 @@ Premium glass-like effects throughout:
 - Navigation bars with backdrop blur
 - Product cards with translucent backgrounds
 - Modal dialogs with soft blur
-- Buttons with subtle glass reflections
+- Buttons with subtle glass reflections.Joe
 - Cart and checkout interfaces
 - Settings panels
 

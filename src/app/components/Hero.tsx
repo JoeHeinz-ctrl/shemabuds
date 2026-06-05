@@ -24,10 +24,10 @@ const stats = [
 
 // Slideshow images - Your actual product photos
 const heroImages = [
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image1.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image2.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image3.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image4.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image1_zdjr2n",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image2_sangqq",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image3_jkq0f8",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image4_hib7um",
 ];
 
 export function Hero() {
