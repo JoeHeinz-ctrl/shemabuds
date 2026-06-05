@@ -10,8 +10,8 @@ interface CloudinaryImageUploadProps {
 }
 
 // Cloudinary configuration - update these with your values
-const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "d1y2kkxyu";
-const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "ml_default";
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "diy2kkxyu";
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "shemabuds_products";
 
 export function CloudinaryImageUpload({
   currentImageUrl,
@@ -51,6 +51,13 @@ export function CloudinaryImageUpload({
     setError("");
     setUploadSuccess(false);
 
+    // Debug logging
+    console.log("Cloudinary Config:", {
+      cloudName: CLOUDINARY_CLOUD_NAME,
+      uploadPreset: CLOUDINARY_UPLOAD_PRESET,
+      uploadUrl: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`
+    });
+
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -67,7 +74,9 @@ export function CloudinaryImageUpload({
       );
 
       if (!response.ok) {
-        throw new Error("Upload failed");
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Cloudinary error response:", errorData);
+        throw new Error(errorData.error?.message || `Upload failed (${response.status})`);
       }
 
       const data = await response.json();
