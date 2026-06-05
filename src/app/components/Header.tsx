@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Heart, ShoppingBag, Moon, Sun, User, LogOut, Package } from "lucide-react";
+import { Heart, ShoppingBag, Moon, Sun, User, LogOut, Package, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 import { useOrdering } from "./OrderingSystem";
@@ -14,6 +14,7 @@ export function Header() {
   const { user, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -58,7 +59,7 @@ export function Header() {
               </motion.div>
             </motion.div>
 
-            {/* Centered Title */}
+            {/* Centered Title - Elegant & Eye-catching */}
             <motion.div 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -68,29 +69,108 @@ export function Header() {
                 window.dispatchEvent(event);
               }}
             >
-              <span className="text-2xl text-foreground font-serif tracking-wide">Shemabuds</span>
+              <div className="flex items-center gap-3">
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse"
+                  }}
+                  className="w-1 h-8 bg-primary rounded-full"
+                />
+                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]" 
+                    style={{ 
+                      fontFamily: "'Playfair Display', 'Georgia', serif",
+                      letterSpacing: '0.05em',
+                      textShadow: '0 2px 15px rgba(166, 124, 82, 0.4)'
+                    }}>
+                  Shema Buds
+                </h1>
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    delay: 1
+                  }}
+                  className="w-1 h-8 bg-primary rounded-full"
+                />
+              </div>
             </motion.div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center gap-6">
-              <button 
-                onClick={() => scrollToSection('home')}
-                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
-              >
-                Home
-              </button>
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
-              >
-                Services
-              </button>
-              <button 
-                onClick={() => scrollToSection('gallery')}
-                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
-              >
-                Gallery
-              </button>
+            <div className="flex items-center gap-4">
+              {/* Settings Menu */}
+              <div className="relative">
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowSettingsMenu(!showSettingsMenu)}
+                  className="relative p-2 text-secondary-foreground hover:text-primary transition-colors duration-200"
+                  aria-label="Settings"
+                >
+                  <Settings className="w-6 h-6" />
+                </motion.button>
+                
+                {/* Settings Dropdown */}
+                <AnimatePresence>
+                  {showSettingsMenu && (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-40"
+                        onClick={() => setShowSettingsMenu(false)}
+                      />
+                      <motion.div
+                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute right-0 top-full mt-2 w-48 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+                      >
+                        <div className="p-2">
+                          <button
+                            onClick={() => {
+                              setShowSettingsMenu(false);
+                              scrollToSection('home');
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                          >
+                            <span className="font-medium text-foreground">Home</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setShowSettingsMenu(false);
+                              scrollToSection('services');
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                          >
+                            <span className="font-medium text-foreground">Services</span>
+                          </button>
+                          <button
+                            onClick={() => {
+                              setShowSettingsMenu(false);
+                              scrollToSection('gallery');
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                          >
+                            <span className="font-medium text-foreground">Gallery</span>
+                          </button>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+
               <button 
                 onClick={() => {
                   const event = new CustomEvent('openContactModal');

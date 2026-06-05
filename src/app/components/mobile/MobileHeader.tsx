@@ -42,13 +42,20 @@ export function MobileHeader() {
             </div>
           </motion.div>
 
-          {/* Centered Title */}
+          {/* Centered Title - Elegant & Eye-catching */}
           <motion.div 
             whileTap={{ scale: 0.95 }}
             className="absolute left-1/2 -translate-x-1/2 cursor-pointer"
             onClick={scrollToTop}
           >
-            <span className="text-xl text-foreground font-serif tracking-wide">Shemabuds</span>
+            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]" 
+                style={{ 
+                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  letterSpacing: '0.05em',
+                  textShadow: '0 2px 15px rgba(166, 124, 82, 0.4)'
+                }}>
+              Shema Buds
+            </h1>
           </motion.div>
 
           {/* User Button on Right */}
