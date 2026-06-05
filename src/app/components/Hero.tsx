@@ -1,8 +1,8 @@
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Sparkles, Package, Instagram, Award } from "lucide-react";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 
 const stats = [
   {
@@ -22,8 +22,19 @@ const stats = [
   }
 ];
 
+// Slideshow images - Your actual product photos
+const heroImages = [
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image1.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image2.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image3.jpg",
+  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1/shemabuds/hero/image4.jpg",
+];
+
 export function Hero() {
   const heroRef = useRef(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
@@ -33,25 +44,65 @@ export function Hero() {
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   
+  // Auto-advance slideshow
+  useEffect(() => {
+    if (isPaused) return;
+    
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000); // Change image every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, [isPaused]);
+  
   return (
     <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden bg-background">
-      {/* Background Image with Parallax */}
+      {/* Background Image Slideshow with Parallax */}
       <motion.div 
         className="absolute inset-0 z-0"
         style={{ y: imageY }}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
       >
         <motion.div
           style={{ scale: imageScale }}
-          className="w-full h-full"
+          className="w-full h-full relative"
         >
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1584461730592-5bfab6460bae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYW5kbWFkZSUyMGZsb3dlciUyMGJvdXF1ZXQlMjBhcnJhbmdlbWVudHxlbnwxfHx8fDE3ODAyMjYxOTd8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-            alt="Beautiful handmade flower bouquet"
-            className="w-full h-full object-cover object-center"
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentImageIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <ImageWithFallback
+                src={heroImages[currentImageIndex]}
+                alt={`Shema Buds handmade flower arrangement ${currentImageIndex + 1}`}
+                className="w-full h-full object-cover object-center"
+              />
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/70 to-transparent md:from-background/70 md:via-background/50"></div>
       </motion.div>
+
+      {/* Slideshow Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentImageIndex(index)}
+            className={`transition-all duration-300 rounded-full ${
+              index === currentImageIndex
+                ? 'w-8 h-2 bg-primary'
+                : 'w-2 h-2 bg-white/50 hover:bg-white/70'
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
