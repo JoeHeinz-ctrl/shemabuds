@@ -67,7 +67,7 @@ export function FeaturedGallery() {
 
   if (loading) {
     return (
-      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
@@ -85,7 +85,7 @@ export function FeaturedGallery() {
 
   if (featuredProducts.length === 0) {
     return (
-      <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
@@ -102,7 +102,7 @@ export function FeaturedGallery() {
   }
 
   return (
-    <section className="py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+    <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

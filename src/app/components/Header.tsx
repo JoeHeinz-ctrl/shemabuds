@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
 import { Heart, ShoppingBag, Moon, Sun, User, LogOut, Package, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useOrdering } from "./OrderingSystem";
 import { MobileHeader } from "./mobile/MobileHeader";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -96,138 +96,17 @@ export function Header() {
                 <Heart className="w-4 h-4 text-primary fill-primary/20" />
                 Contact
               </button>
-              {/* Settings Menu */}
-              <div className="relative">
-                <motion.button
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-                  className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
-                  aria-label="Settings"
-                >
-                  <Settings className="w-6 h-6" />
-                </motion.button>
-                
-                {/* Settings Dropdown */}
-                <AnimatePresence>
-                  {showSettingsMenu && (
-                    <>
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-40"
-                        onClick={() => setShowSettingsMenu(false)}
-                      />
-                      <motion.div
-                        initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-full mt-2 w-56 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-[9999]"
-                      >
-                        <div className="p-2">
-                          {/* Theme Toggle */}
-                          <button
-                            onClick={() => {
-                              toggleTheme();
-                              setShowSettingsMenu(false);
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                          >
-                            <motion.div
-                              initial={false}
-                              animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                              transition={{ duration: 0.3 }}
-                            >
-                              {theme === "dark" ? (
-                                <Sun className="w-5 h-5 text-primary" />
-                              ) : (
-                                <Moon className="w-5 h-5 text-primary" />
-                              )}
-                            </motion.div>
-                            <span className="font-medium text-foreground">
-                              {theme === "dark" ? "Light Mode" : "Dark Mode"}
-                            </span>
-                          </button>
-
-                          {/* User Menu */}
-                          <button
-                            onClick={() => {
-                              setShowSettingsMenu(false);
-                              if (user) {
-                                setShowUserMenu(true);
-                              } else {
-                                setShowAuthModal(true);
-                              }
-                            }}
-                            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                          >
-                            <div className="relative">
-                              <User className="w-5 h-5 text-primary" />
-                              {user && (
-                                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card"></span>
-                              )}
-                            </div>
-                            <span className="font-medium text-foreground">
-                              {user ? "My Account" : "Sign In"}
-                            </span>
-                          </button>
-                        </div>
-                      </motion.div>
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
               
-              {/* User Menu Dropdown (when opened from Settings) */}
-              <AnimatePresence>
-                {showUserMenu && user && (
-                  <>
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="fixed inset-0 z-40"
-                      onClick={() => setShowUserMenu(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-[9999]"
-                    >
-                      <div className="p-4 border-b border-border">
-                        <p className="font-semibold text-foreground">{user.displayName || "User"}</p>
-                        <p className="text-sm text-muted-foreground truncate">{user.email}</p>
-                      </div>
-                      <div className="p-2">
-                        <button
-                          onClick={() => {
-                            setShowUserMenu(false);
-                            window.location.href = "#orders";
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                        >
-                          <Package className="w-5 h-5 text-primary" />
-                          <span className="font-medium text-foreground">My Orders</span>
-                        </button>
-                        <button
-                          onClick={async () => {
-                            await signOut();
-                            setShowUserMenu(false);
-                          }}
-                          className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-destructive/10 transition-colors text-left text-destructive"
-                        >
-                          <LogOut className="w-5 h-5" />
-                          <span className="font-medium">Sign Out</span>
-                        </button>
-                      </div>
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
+              {/* Settings Menu - Button only */}
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowSettingsMenu(true)}
+                className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
+                aria-label="Settings"
+              >
+                <Settings className="w-6 h-6" />
+              </motion.button>
               
               {/* Cart Icon */}
               <motion.button
@@ -251,6 +130,126 @@ export function Header() {
           </div>
         </nav>
       </header>
+      
+      {/* Settings Modal - Renders at body level */}
+      <AnimatePresence>
+        {showSettingsMenu && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/20"
+              onClick={() => setShowSettingsMenu(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+            >
+              <div className="p-3 space-y-1">
+                {/* Theme Toggle */}
+                <button
+                  onClick={() => {
+                    toggleTheme();
+                    setShowSettingsMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                >
+                  <motion.div
+                    initial={false}
+                    animate={{ rotate: theme === "dark" ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="w-5 h-5 text-primary" />
+                    ) : (
+                      <Moon className="w-5 h-5 text-primary" />
+                    )}
+                  </motion.div>
+                  <span className="font-medium text-foreground">
+                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                  </span>
+                </button>
+
+                {/* User Menu */}
+                <button
+                  onClick={() => {
+                    setShowSettingsMenu(false);
+                    if (user) {
+                      setShowUserMenu(true);
+                    } else {
+                      setShowAuthModal(true);
+                    }
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                >
+                  <div className="relative">
+                    <User className="w-5 h-5 text-primary" />
+                    {user && (
+                      <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card"></span>
+                    )}
+                  </div>
+                  <span className="font-medium text-foreground">
+                    {user ? "My Account" : "Sign In"}
+                  </span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* User Menu Modal */}
+      <AnimatePresence>
+        {showUserMenu && user && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-40 bg-black/20"
+              onClick={() => setShowUserMenu(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+            >
+              <div className="p-4 border-b border-border">
+                <p className="font-semibold text-foreground">{user.displayName || "User"}</p>
+                <p className="text-sm text-muted-foreground truncate">{user.email}</p>
+              </div>
+              <div className="p-2">
+                <button
+                  onClick={() => {
+                    setShowUserMenu(false);
+                    window.location.href = "#orders";
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                >
+                  <Package className="w-5 h-5 text-primary" />
+                  <span className="font-medium text-foreground">My Orders</span>
+                </button>
+                <button
+                  onClick={async () => {
+                    await signOut();
+                    setShowUserMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-destructive/10 transition-colors text-left text-destructive"
+                >
+                  <LogOut className="w-5 h-5" />
+                  <span className="font-medium">Sign Out</span>
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       
       {/* Auth Modal */}
       <AuthModal
