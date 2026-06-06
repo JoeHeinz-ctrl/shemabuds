@@ -18,24 +18,21 @@ function ValueCard({ icon: Icon, title, description, delay }: ValueCardProps) {
       whileHover={{ y: -4, scale: 1.02 }}
       className="group relative"
     >
-      <div className="relative overflow-hidden rounded-xl md:rounded-2xl p-4 md:p-6 glass shadow-luxury transition-all duration-300 group-hover:shadow-luxury-lg">
+      <div className="relative overflow-hidden rounded-xl md:rounded-2xl p-4 md:p-6 glass shadow-luxury transition-all duration-300 group-hover:shadow-luxury-lg flex items-center gap-3 md:gap-4">
         
         {/* Icon Container */}
         <motion.div
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-xl bg-primary/10 border border-primary/20 mb-3 md:mb-4"
+          className="flex-shrink-0 inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-xl bg-primary/10 border border-primary/20"
         >
           <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
         </motion.div>
 
-        {/* Content */}
-        <h3 className="text-sm md:text-base lg:text-lg font-semibold text-foreground mb-1 md:mb-2">
+        {/* Title Only */}
+        <h3 className="text-sm md:text-base lg:text-lg font-semibold text-foreground">
           {title}
         </h3>
-        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed font-light">
-          {description}
-        </p>
 
         {/* Bottom accent */}
         <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 bg-gradient-to-r from-primary to-transparent transition-all duration-300"></div>
@@ -67,7 +64,7 @@ export function About() {
     <section className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Always 2-Column Layout: Left paragraph, Right cards */}
-        <div className="grid grid-cols-2 gap-4 md:gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-2 gap-4 md:gap-8 lg:gap-12 items-stretch">
           
           {/* Left Column - Story & Mission */}
           <motion.div
@@ -75,51 +72,64 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="order-1"
+            className="order-1 flex flex-col justify-between h-full"
           >
-            {/* Heading */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mb-6 md:mb-8"
-            >
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 tracking-tight leading-tight">
-                About Shema Buds
-              </h2>
-              <div className="w-12 md:w-16 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
-            </motion.div>
+            <div className="flex-grow">
+              {/* Heading */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                className="mb-6 md:mb-8"
+              >
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 tracking-tight leading-tight">
+                  About Shema Buds
+                </h2>
+                <div className="w-12 md:w-16 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
+              </motion.div>
 
-            {/* Introduction */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 md:mb-6 font-light"
-            >
-              We create beautiful handmade bouquets and personalized gifts for special moments.
-            </motion.p>
+              {/* Introduction */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 md:mb-6 font-light"
+              >
+                We create beautiful handmade bouquets and personalized gifts for special moments. At Shema Buds, we believe that the most meaningful gifts are those made by hand and from the heart.
+              </motion.p>
 
-            {/* Story & Mission */}
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-xs md:text-sm lg:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8 font-light"
-            >
-              Every creation is crafted with love and attention to detail.
-            </motion.p>
+              {/* Story & Mission */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-xs md:text-sm lg:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8 font-light"
+              >
+                Every creation is crafted with love and attention to detail. Our journey began with a simple passion for creating personalized items that bring joy to life's special celebrations. We work closely with our clients to bring their visions to life, ensuring each piece is as unique as the story it tells.
+              </motion.p>
 
-            {/* Years badge */}
+              {/* Additional content */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.25 }}
+                className="text-xs md:text-sm lg:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8 font-light"
+              >
+                From elegant wedding bouquets to custom gift arrangements, we specialize in transforming your ideas into beautiful handcrafted reality.
+              </motion.p>
+            </div>
+
+            {/* Years badge - At bottom */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center gap-3 md:gap-4"
+              className="flex items-center gap-3 md:gap-4 mt-auto"
             >
               <div className="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-2xl glass border border-primary/20 flex items-center justify-center shadow-luxury">
                 <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary">5+</span>
