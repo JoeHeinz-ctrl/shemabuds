@@ -107,10 +107,9 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
-          {/* Left Side: Text Content */}
+        <div className="max-w-2xl lg:max-w-3xl">
           <div
-            className="max-w-2xl rounded-2xl p-5 md:p-8 relative overflow-hidden"
+            className="rounded-2xl p-5 md:p-8 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
               backdropFilter: "blur(28px) saturate(180%)",
@@ -163,82 +162,44 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#3b2a1e] mb-4 md:mb-8 leading-relaxed font-medium"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#3b2a1e] leading-relaxed font-medium"
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
             </motion.p>
 
-            {/* Mobile: Horizontal Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="md:hidden grid grid-cols-3 gap-2 max-w-md"
+              className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/50"
             >
-              {stats.map((stat, index) => {
-                const Icon = stat.icon;
-                return (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                    whileHover={{ scale: 1.05, y: -4 }}
-                    className="glass rounded-xl p-3 shadow-luxury"
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <motion.div
-                        className="bg-secondary w-8 h-8 rounded-lg flex items-center justify-center mb-2"
-                        whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                        transition={{ duration: 0.5 }}
-                      >
-                        <Icon className="w-4 h-4 text-primary" />
-                      </motion.div>
-                      <p className="text-lg font-bold text-foreground">{stat.value}</p>
-                      <p className="text-[10px] text-muted-foreground font-medium">{stat.label}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
+              <div className="grid grid-cols-3 divide-x divide-white/40">
+                {stats.map((stat, index) => {
+                  const Icon = stat.icon;
+                  return (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                      className="flex flex-col items-center text-center px-3 sm:px-6"
+                    >
+                      <div className="bg-secondary/90 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
+                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      </div>
+                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-none mb-1">
+                        {stat.value}
+                      </p>
+                      <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
+                        {stat.label}
+                      </p>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </motion.div>
           </div>
-
-          {/* Desktop: Vertical Stats Cards on Right */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="hidden md:flex flex-col gap-4 items-end"
-          >
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                  whileHover={{ scale: 1.05, x: -8 }}
-                  className="glass rounded-xl p-4 shadow-luxury min-w-[180px]"
-                >
-                  <div className="flex items-center gap-3">
-                    <motion.div
-                      className="bg-secondary w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
-                      whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Icon className="w-6 h-6 text-primary" />
-                    </motion.div>
-                    <div className="text-left">
-                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
-                      <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
         </div>
       </div>
 
