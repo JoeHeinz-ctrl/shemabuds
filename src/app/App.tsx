@@ -22,7 +22,6 @@ import { MobileOrdersPage } from "./components/mobile/pages/MobileOrdersPage";
 import { MobileSettingsPage } from "./components/mobile/pages/MobileSettingsPage";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import { AuthProvider } from "../contexts/AuthContext";
-import { ScrollDepthSection } from "./components/ScrollDepthSection";
 import "./components/mobile/mobile-styles.css";
 
 function AppContent() {
@@ -84,37 +83,27 @@ function AppContent() {
     <div className="min-h-screen">
       <Header />
       
-      {/* Desktop View - Reorganized with 3D Scroll Depth */}
-      <main className="hidden md:block" style={{ perspective: "2000px", transformStyle: "preserve-3d" }}>
+      {/* Desktop View - Reorganized */}
+      <main className="hidden md:block">
         <div id="home">
           <Hero />
         </div>
         
-        <ScrollDepthSection depth={1}>
-          <div id="gallery">
-            <FeaturedGallery />
-          </div>
-        </ScrollDepthSection>
+        <div id="gallery">
+          <FeaturedGallery />
+        </div>
         
-        <ScrollDepthSection depth={2}>
-          <div id="services">
-            <Services />
-          </div>
-        </ScrollDepthSection>
+        <div id="services">
+          <Services />
+        </div>
         
-        <ScrollDepthSection depth={1}>
-          <HowToOrder />
-        </ScrollDepthSection>
+        <HowToOrder />
         
-        <ScrollDepthSection depth={2}>
-          <MyOrders />
-        </ScrollDepthSection>
+        <MyOrders />
         
-        <ScrollDepthSection depth={1}>
-          <div id="testimonials">
-            <Testimonials />
-          </div>
-        </ScrollDepthSection>
+        <div id="testimonials">
+          <Testimonials />
+        </div>
       </main>
 
       {/* Mobile View - Tab-based Navigation - Unchanged */}
