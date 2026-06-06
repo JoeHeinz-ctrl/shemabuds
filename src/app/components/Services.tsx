@@ -6,35 +6,44 @@ import { useOrdering, Product } from "./OrderingSystem";
 import { useProducts } from "../../hooks/useProducts";
 import { DesktopCategoryModal } from "./DesktopCategoryModal";
 
-const categories = [
-  { id: "bouquets", label: "Bouquets", icon: Flower2 },
-  { id: "gifts", label: "Handmade Gifts", icon: Gift },
-  { id: "events", label: "Event Decorations", icon: Sparkles },
-  { id: "wedding", label: "Wedding Accessories", icon: Heart },
-  { id: "custom", label: "Custom Orders", icon: PenTool },
-  { id: "boutique", label: "Boutique Collection", icon: ShoppingBag },
-];
-
-// Empty demo products - all products will come from Firebase
-const showcaseData: Record<string, Product[]> = {
-  bouquets: [],
-  gifts: [],
-  events: [],
-  wedding: [],
-  custom: [],
-  boutique: [],
+const categoryMeta: Record<string, { label: string; icon: typeof Flower2 }> = {
+  bouquets: { label: "Bouquets", icon: Flower2 },
+  gifts: { label: "Handmade Gifts", icon: Gift },
+  events: { label: "Event Decorations", icon: Sparkles },
+  wedding: { label: "Wedding Accessories", icon: Heart },
+  custom: { label: "Custom Orders", icon: PenTool },
+  boutique: { label: "Boutique Collection", icon: ShoppingBag },
 };
 
+const categoryLabels: Record<string, string> = Object.fromEntries(
+  Object.entries(categoryMeta).map(([id, meta]) => [id, meta.label])
+);
+
 export function Services() {
-  const [activeCategory, setActiveCategory] = useState("bouquets");
+  const [activeCategory, setActiveCategory] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
   const [showAllModal, setShowAllModal] = useState(false);
   const { setSelectedProduct, addToCart } = useOrdering();
   
-  // Load products from Firebase and merge with demo products
-  const { products: allProducts, loading } = useProducts(showcaseData);
+  const { products: allProducts, loading } = useProducts({});
 
-  const currentShowcase = allProducts[activeCategory as keyof typeof allProducts] || [];
+  const availableCategories = Object.entries(allProducts)
+    .filter(([, products]) => products.length > 0)
+    .map(([id]) => ({
+      id,
+      label: categoryLabels[id] || id,
+      icon: categoryMeta[id]?.icon ?? ShoppingBag,
+    }));
+
+  useEffect(() => {
+    if (availableCategories.length === 0) return;
+    if (!availableCategories.some((c) => c.id === activeCategory)) {
+      setActiveCategory(availableCategories[0].id);
+      setCurrentPage(0);
+    }
+  }, [allProducts, loading]);
+
+  const currentShowcase = allProducts[activeCategory] || [];
   const itemsPerPage = 4;
   const totalPages = Math.ceil(currentShowcase.length / itemsPerPage);
   const startIndex = currentPage * itemsPerPage;
@@ -132,40 +141,48 @@ export function Services() {
         </motion.div>
 
         {/* Category Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-8"
-        >
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => {
-              const Icon = category.icon;
-              return (
-                <motion.button
-                  key={category.id}
-                  onClick={() => handleCategoryChange(category.id)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`
-                    flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300
-                    ${activeCategory === category.id
-                      ? 'bg-primary text-primary-foreground shadow-luxury'
-                      : 'glass border border-border text-foreground hover:border-primary/40'
-                    }
-                  `}
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="text-sm">{category.label}</span>
-                </motion.button>
-              );
-            })}
+        {availableCategories.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-8"
+          >
+            <div className="flex flex-wrap justify-center gap-3">
+              {availableCategories.map((category) => {
+                const Icon = category.icon;
+                return (
+                  <motion.button
+                    key={category.id}
+                    onClick={() => handleCategoryChange(category.id)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`
+                      flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300
+                      ${activeCategory === category.id
+                        ? 'bg-primary text-primary-foreground shadow-luxury'
+                        : 'glass border border-border text-foreground hover:border-primary/40'
+                      }
+                    `}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="text-sm">{category.label}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {availableCategories.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">No products available at the moment.</p>
           </div>
-        </motion.div>
+        )}
 
         {/* Show All Button */}
-        {currentShowcase.length > itemsPerPage && (
+        {availableCategories.length > 0 && currentShowcase.length > itemsPerPage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -175,13 +192,13 @@ export function Services() {
               onClick={() => setShowAllModal(true)}
               className="glass border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-luxury"
             >
-              Show All {categories.find(c => c.id === activeCategory)?.label} ({currentShowcase.length})
+              Show All {availableCategories.find(c => c.id === activeCategory)?.label} ({currentShowcase.length})
             </Button>
           </motion.div>
         )}
 
         {/* Grid Showcase with Navigation */}
-        <div className="relative">
+        {availableCategories.length > 0 && <div className="relative">
           {/* Navigation Arrows */}
           {totalPages > 1 && (
             <>
@@ -312,7 +329,7 @@ export function Services() {
               ))}
             </div>
           )}
-        </div>
+        </div>}
       </div>
 
       {/* Floating Decorative Elements */}
@@ -322,7 +339,7 @@ export function Services() {
       <DesktopCategoryModal
         isOpen={showAllModal}
         onClose={() => setShowAllModal(false)}
-        categoryName={categories.find(c => c.id === activeCategory)?.label || ""}
+        categoryName={availableCategories.find(c => c.id === activeCategory)?.label || ""}
         products={currentShowcase}
       />
       <div className="absolute bottom-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />

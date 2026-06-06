@@ -1,25 +1,13 @@
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Sparkles, Package, Instagram, Award } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 
 const stats = [
-  {
-    icon: Package,
-    value: "150+",
-    label: "Creations",
-  },
-  {
-    icon: Instagram,
-    value: "300+",
-    label: "Followers",
-  },
-  {
-    icon: Award,
-    value: "100%",
-    label: "Custom",
-  }
+  "150+ Creations Delivered",
+  "300+ Happy Customers",
+  "100% Handmade",
 ];
 
 // Slideshow images - Your actual product photos
@@ -106,10 +94,10 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-2xl lg:max-w-3xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
+        <div className="w-full max-w-2xl lg:max-w-3xl text-center">
           <div
-            className="rounded-2xl p-5 md:p-8 relative overflow-hidden"
+            className="rounded-2xl p-6 md:p-10 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
               backdropFilter: "blur(28px) saturate(180%)",
@@ -130,7 +118,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="glass inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full mb-3 md:mb-6 shadow-luxury"
+              className="glass inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full mb-4 md:mb-6 shadow-luxury mx-auto"
             >
               <motion.div
                 animate={{ rotate: [0, 15, -15, 15, 0] }}
@@ -145,7 +133,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-3 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative mx-auto max-w-xl"
               style={{ textShadow: "0 1px 3px rgba(255,255,255,0.4)" }}
             >
               <span className="relative inline-block">
@@ -162,7 +150,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#3b2a1e] leading-relaxed font-medium"
+              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium mx-auto max-w-lg"
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
@@ -172,31 +160,20 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/50"
+              className="mt-6 md:mt-8 flex justify-center"
             >
-              <div className="grid grid-cols-3 divide-x divide-white/40">
-                {stats.map((stat, index) => {
-                  const Icon = stat.icon;
-                  return (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, y: 12 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col items-center text-center px-3 sm:px-6"
-                    >
-                      <div className="bg-secondary/90 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
-                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                      </div>
-                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-none mb-1">
-                        {stat.value}
-                      </p>
-                      <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
-                        {stat.label}
-                      </p>
-                    </motion.div>
-                  );
-                })}
+              <div className="w-full max-w-xs sm:max-w-sm rounded-2xl bg-[#2a2a2a]/95 px-5 py-4 sm:px-6 sm:py-5 text-left shadow-lg">
+                {stats.map((line, index) => (
+                  <motion.p
+                    key={line}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                    className="font-mono text-sm sm:text-base text-white/90 leading-relaxed"
+                  >
+                    {line}
+                  </motion.p>
+                ))}
               </div>
             </motion.div>
           </div>
