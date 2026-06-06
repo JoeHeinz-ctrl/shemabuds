@@ -124,7 +124,7 @@ export function Header() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-full mt-2 w-56 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+                        className="absolute right-0 top-full mt-2 w-56 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-[9999]"
                       >
                         <div className="p-2">
                           {/* Theme Toggle */}
@@ -196,7 +196,7 @@ export function Header() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
+                      className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-[9999]"
                     >
                       <div className="p-4 border-b border-border">
                         <p className="font-semibold text-foreground">{user.displayName || "User"}</p>
