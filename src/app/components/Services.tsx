@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { useOrdering, Product } from "./OrderingSystem";
 import { useProducts } from "../../hooks/useProducts";
 import { DesktopCategoryModal } from "./DesktopCategoryModal";
+import { ScrollDepthCard } from "./ScrollDepthSection";
 
 const categoryMeta: Record<string, { label: string; icon: typeof Flower2 }> = {
   bouquets: { label: "Bouquets", icon: Flower2 },
@@ -237,16 +238,18 @@ export function Services() {
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.4 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              style={{ transformStyle: "preserve-3d" }}
             >
               {visibleItems.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group relative rounded-3xl overflow-hidden glass shadow-luxury hover:shadow-luxury-lg transition-all duration-500"
-                >
+                <ScrollDepthCard key={index} index={index}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -8, scale: 1.02, rotateY: 2 }}
+                    className="group relative rounded-3xl overflow-hidden glass shadow-luxury hover:shadow-luxury-lg transition-all duration-500"
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
                   {/* Image */}
                   <div className="relative h-64 overflow-hidden">
                     <motion.img
@@ -309,6 +312,7 @@ export function Services() {
                   {/* Floating Gold Accent */}
                   <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </motion.div>
+                </ScrollDepthCard>
               ))}
             </motion.div>
           </AnimatePresence>
