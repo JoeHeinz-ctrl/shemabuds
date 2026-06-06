@@ -34,31 +34,31 @@ export function Hero() {
   const heroRef = useRef(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  
+
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ["start start", "end start"]
   });
-  
+
   // Parallax effect for background image
   const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  
+
   // Auto-advance slideshow
   useEffect(() => {
     if (isPaused) return;
-    
+
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000); // Change image every 5 seconds
-    
+    }, 10000); // Change image every 10 seconds
+
     return () => clearInterval(interval);
   }, [isPaused]);
-  
+
   return (
     <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden bg-background">
       {/* Background Image Slideshow with Parallax */}
-      <motion.div 
+      <motion.div
         className="absolute inset-0 z-0"
         style={{ y: imageY }}
         onMouseEnter={() => setIsPaused(true)}
@@ -85,7 +85,10 @@ export function Hero() {
             </motion.div>
           </AnimatePresence>
         </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/70 to-transparent md:from-background/70 md:via-background/50"></div>
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+        </div>
       </motion.div>
 
       {/* Slideshow Indicators */}
@@ -94,11 +97,10 @@ export function Hero() {
           <button
             key={index}
             onClick={() => setCurrentImageIndex(index)}
-            className={`transition-all duration-300 rounded-full ${
-              index === currentImageIndex
-                ? 'w-8 h-2 bg-primary'
-                : 'w-2 h-2 bg-white/50 hover:bg-white/70'
-            }`}
+            className={`transition-all duration-300 rounded-full ${index === currentImageIndex
+              ? 'w-8 h-2 bg-primary'
+              : 'w-2 h-2 bg-white/50 hover:bg-white/70'
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
@@ -123,7 +125,7 @@ export function Hero() {
               </motion.div>
               <span className="text-xs md:text-sm text-secondary-foreground font-medium tracking-wide">Crafted with Love & Care</span>
             </motion.div>
-            
+
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -151,17 +153,17 @@ export function Hero() {
                 </motion.span>
               </span>
             </motion.h1>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-sm sm:text-base md:text-lg lg:text-xl text-secondary-foreground mb-4 md:mb-8 leading-relaxed font-light"
             >
-              Discover the art of personalized gifting with our exquisite handmade bouquets, 
+              Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
             </motion.p>
-            
+
             {/* Mobile: Horizontal Stats Cards */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -181,7 +183,7 @@ export function Hero() {
                     className="glass rounded-xl p-3 shadow-luxury"
                   >
                     <div className="flex flex-col items-center text-center">
-                      <motion.div 
+                      <motion.div
                         className="bg-secondary w-8 h-8 rounded-lg flex items-center justify-center mb-2"
                         whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                         transition={{ duration: 0.5 }}
@@ -216,7 +218,7 @@ export function Hero() {
                   className="glass rounded-xl p-4 shadow-luxury min-w-[180px]"
                 >
                   <div className="flex items-center gap-3">
-                    <motion.div 
+                    <motion.div
                       className="bg-secondary w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
                       whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                       transition={{ duration: 0.5 }}
