@@ -204,35 +204,40 @@
     border: 1px solid rgba(196, 149, 111, 0.25);
   }
   
-  /* Luxury shimmer effect */
-  @keyframes shimmer {
-    0% {
-      background-position: -1000px 0;
-    }
-    100% {
-      background-position: 1000px 0;
-    }
+  /* Luxury text gradient effect (replaces pulsating shimmer) */
+  @keyframes gold-pulse {
+    0%, 100% { filter: brightness(1) drop-shadow(0 0 6px rgba(166,124,82,0.0)); }
+    50% { filter: brightness(1.15) drop-shadow(0 0 12px rgba(166,124,82,0.5)); }
   }
-  
+
   .shimmer {
     background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(166, 124, 82, 0.2) 50%,
-      transparent 100%
+      135deg,
+      #c8976a 0%,
+      #A67C52 30%,
+      #e8b97a 55%,
+      #A67C52 75%,
+      #8B6B3E 100%
     );
-    background-size: 1000px 100%;
-    animation: shimmer 3s infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gold-pulse 3s ease-in-out infinite;
   }
-  
+
   .dark .shimmer {
     background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(196, 149, 111, 0.2) 50%,
-      transparent 100%
+      135deg,
+      #e0b080 0%,
+      #C4956F 30%,
+      #f0cc90 55%,
+      #C4956F 75%,
+      #a07848 100%
     );
-    background-size: 1000px 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gold-pulse 3s ease-in-out infinite;
   }
   
   /* Smooth scroll */

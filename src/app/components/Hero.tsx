@@ -152,19 +152,7 @@ export function Hero() {
               <span className="relative inline-block">
                 Handmade Meets{" "}
                 <motion.span
-                  className="text-primary italic font-serif relative inline-block shimmer"
-                  animate={{
-                    textShadow: [
-                      "0 0 20px rgba(166,124,82,0)",
-                      "0 0 20px rgba(166,124,82,0.3)",
-                      "0 0 20px rgba(166,124,82,0)"
-                    ]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
+                  className="italic font-serif relative inline-block shimmer"
                 >
                   Heartmade
                 </motion.span>
