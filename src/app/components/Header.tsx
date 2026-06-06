@@ -37,88 +37,59 @@ export function Header() {
       </div>
 
       {/* Desktop Header - Hidden on mobile */}
-      <header className="hidden md:block fixed top-0 left-0 right-0 z-50 glass-strong shadow-luxury">
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo on Left */}
-            <div className="flex items-center gap-6">
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-                className="cursor-pointer"
-                onClick={() => {
-                  const event = new CustomEvent('openAboutModal');
-                  window.dispatchEvent(event);
-                }}
-              >
-                <motion.div 
-                  className="bg-primary p-2 rounded-xl shadow-luxury"
-                  whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Heart className="w-6 h-6 text-primary-foreground fill-primary-foreground" />
-                </motion.div>
-              </motion.div>
-
-              {/* Contact Button */}
-              <button 
-                onClick={() => {
-                  const event = new CustomEvent('openContactModal');
-                  window.dispatchEvent(event);
-                }}
-                className="text-secondary-foreground hover:text-primary transition-all duration-200 font-medium hover:scale-105"
-              >
-                Contact
-              </button>
-            </div>
-
-            {/* Centered Title - Elegant & Eye-catching */}
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
+      <header
+        className="hidden md:block fixed top-0 left-0 right-0 z-50 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,245,235,0.42) 50%, rgba(255,255,255,0.48) 100%)",
+          backdropFilter: "blur(24px) saturate(180%)",
+          WebkitBackdropFilter: "blur(24px) saturate(180%)",
+          borderBottom: "1.5px solid rgba(255,255,255,0.65)",
+          boxShadow: "0 8px 32px rgba(166,124,82,0.14), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.08) inset",
+        }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 15% 0%, rgba(255,255,255,0.6) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(166,124,82,0.12) 0%, transparent 55%)",
+          }}
+        />
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5 relative">
+          <div className="flex items-center justify-between gap-6">
+            {/* Title on Left */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="absolute left-1/2 -translate-x-1/2 cursor-pointer"
+              className="cursor-pointer shrink-0"
               onClick={() => {
                 const event = new CustomEvent('openAboutModal');
                 window.dispatchEvent(event);
               }}
             >
-              <div className="flex items-center gap-3">
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse"
-                  }}
-                  className="w-1 h-8 bg-primary rounded-full"
-                />
-                <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]" 
-                    style={{ 
-                      fontFamily: "'Playfair Display', 'Georgia', serif",
-                      letterSpacing: '0.05em',
-                      textShadow: '0 2px 15px rgba(166, 124, 82, 0.4)'
-                    }}>
-                  Shema Buds
-                </h1>
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    delay: 1
-                  }}
-                  className="w-1 h-8 bg-primary rounded-full"
-                />
-              </div>
+              <h1
+                className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]"
+                style={{
+                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  letterSpacing: "0.05em",
+                  textShadow: "0 2px 15px rgba(166, 124, 82, 0.35)",
+                }}
+              >
+                Shema Buds
+              </h1>
             </motion.div>
 
             {/* Right Side Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 lg:gap-4">
+              <button
+                onClick={() => {
+                  const event = new CustomEvent('openContactModal');
+                  window.dispatchEvent(event);
+                }}
+                className="glass inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-secondary-foreground hover:text-primary shadow-luxury transition-all duration-200 hover:scale-105"
+              >
+                <Heart className="w-4 h-4 text-primary fill-primary/20" />
+                Contact
+              </button>
               {/* Settings Menu */}
               <div className="relative">
                 <motion.button
