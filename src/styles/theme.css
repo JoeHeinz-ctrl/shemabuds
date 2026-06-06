@@ -244,6 +244,54 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Modern, compact scrollbar styling */
+  /* Webkit browsers (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(166, 124, 82, 0.4);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(166, 124, 82, 0.6);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: rgba(166, 124, 82, 0.8);
+  }
+
+  /* Dark mode scrollbar */
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(196, 149, 111, 0.35);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(196, 149, 111, 0.5);
+  }
+
+  .dark ::-webkit-scrollbar-thumb:active {
+    background: rgba(196, 149, 111, 0.7);
+  }
+
+  /* Firefox scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(166, 124, 82, 0.4) transparent;
+  }
+
+  .dark {
+    scrollbar-color: rgba(196, 149, 111, 0.35) transparent;
+  }
   
   /* Premium shadows */
   .shadow-luxury {

@@ -72,8 +72,8 @@ export function About() {
   return (
     <section className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        {/* Desktop & Tablet: 2-Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-12 lg:gap-16 xl:gap-20 items-center">
+        {/* Mobile, Tablet & Desktop: 2-Column Layout */}
+        <div className="grid grid-cols-2 lg:grid-cols-[1fr_0.8fr] gap-4 sm:gap-6 md:gap-12 lg:gap-16 xl:gap-20 items-start md:items-center">
           
           {/* Left Column - Story & Mission */}
           <motion.div
@@ -89,7 +89,7 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="mb-8 md:mb-12"
+              className="mb-8 md:mb-12 hidden md:block"
             >
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 tracking-tight leading-tight">
                 About Shema Buds
@@ -129,7 +129,7 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center gap-3 md:gap-4"
+              className="flex items-center gap-3 md:gap-4 hidden md:flex"
             >
               <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#A67C52]/30 to-[#A67C52]/10 border border-[#A67C52]/20 flex items-center justify-center">
                 <span className="text-2xl md:text-3xl font-bold text-primary">5+</span>
@@ -149,14 +149,41 @@ export function About() {
             transition={{ duration: 0.6 }}
             className="order-2 space-y-6 md:space-y-8"
           >
+            {/* Mobile: Title only, Desktop: Full cards */}
+            <div className="md:hidden">
+              <h2 className="text-2xl font-bold text-foreground mb-4">
+                About Shema Buds
+              </h2>
+            </div>
+
             {valueCards.map((card, index) => (
-              <ValueCard
-                key={index}
-                icon={card.icon}
-                title={card.title}
-                description={card.description}
-                delay={0.2 + index * 0.1}
-              />
+              <motion.div key={index}>
+                {/* Mobile: Title only */}
+                <div className="md:hidden">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                    className="text-base font-semibold text-foreground flex items-center gap-2"
+                  >
+                    {index === 0 && <span>❤️</span>}
+                    {index === 1 && <span>✨</span>}
+                    {index === 2 && <span>👥</span>}
+                    {card.title}
+                  </motion.h3>
+                </div>
+
+                {/* Desktop: Full cards */}
+                <div className="hidden md:block">
+                  <ValueCard
+                    icon={card.icon}
+                    title={card.title}
+                    description={card.description}
+                    delay={0.2 + index * 0.1}
+                  />
+                </div>
+              </motion.div>
             ))}
           </motion.div>
         </div>
