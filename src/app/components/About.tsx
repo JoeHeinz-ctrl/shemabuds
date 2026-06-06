@@ -18,33 +18,27 @@ function ValueCard({ icon: Icon, title, description, delay }: ValueCardProps) {
       whileHover={{ y: -4, scale: 1.02 }}
       className="group relative"
     >
-      {/* Glassmorphism Card */}
-      <div className="relative overflow-hidden rounded-2xl md:rounded-3xl p-6 md:p-8 backdrop-blur-md bg-white/10 border border-white/20 shadow-[0_8px_32px_rgba(166,124,82,0.12)] transition-all duration-300 group-hover:shadow-[0_12px_48px_rgba(166,124,82,0.2)] group-hover:border-white/30">
+      <div className="relative overflow-hidden rounded-xl md:rounded-2xl p-4 md:p-6 glass shadow-luxury transition-all duration-300 group-hover:shadow-luxury-lg">
         
-        {/* Glow effect on hover */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-[#A67C52]/10 rounded-full blur-3xl -z-10"></div>
-        </div>
-
         {/* Icon Container */}
         <motion.div
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.3 }}
-          className="inline-flex items-center justify-center w-16 md:w-20 h-16 md:h-20 rounded-full bg-gradient-to-br from-[#A67C52]/30 to-[#A67C52]/10 border border-[#A67C52]/20 mb-5 md:mb-6"
+          className="inline-flex items-center justify-center w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-xl bg-primary/10 border border-primary/20 mb-3 md:mb-4"
         >
-          <Icon className="w-8 md:w-10 h-8 md:h-10 text-primary" />
+          <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
         </motion.div>
 
         {/* Content */}
-        <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2 md:mb-3">
+        <h3 className="text-sm md:text-base lg:text-lg font-semibold text-foreground mb-1 md:mb-2">
           {title}
         </h3>
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light">
+        <p className="text-xs md:text-sm text-muted-foreground leading-relaxed font-light">
           {description}
         </p>
 
-        {/* Subtle bottom accent */}
-        <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 bg-gradient-to-r from-[#A67C52] to-transparent transition-all duration-300"></div>
+        {/* Bottom accent */}
+        <div className="absolute bottom-0 left-0 w-0 group-hover:w-full h-1 bg-gradient-to-r from-primary to-transparent transition-all duration-300"></div>
       </div>
     </motion.div>
   );
@@ -70,10 +64,10 @@ export function About() {
   ];
 
   return (
-    <section className="py-12 md:py-32 px-4 sm:px-6 lg:px-8 bg-background">
+    <section className="py-12 md:py-24 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
-        {/* Mobile, Tablet & Desktop: 2-Column Layout */}
-        <div className="grid grid-cols-2 lg:grid-cols-[1fr_0.8fr] gap-4 sm:gap-6 md:gap-12 lg:gap-16 xl:gap-20 items-start md:items-center">
+        {/* Always 2-Column Layout: Left paragraph, Right cards */}
+        <div className="grid grid-cols-2 gap-4 md:gap-8 lg:gap-12 items-start">
           
           {/* Left Column - Story & Mission */}
           <motion.div
@@ -89,12 +83,12 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="mb-8 md:mb-12 hidden md:block"
+              className="mb-6 md:mb-8"
             >
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 tracking-tight leading-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 tracking-tight leading-tight">
                 About Shema Buds
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-[#A67C52] to-transparent rounded-full"></div>
+              <div className="w-12 md:w-16 h-1 bg-gradient-to-r from-primary to-transparent rounded-full"></div>
             </motion.div>
 
             {/* Introduction */}
@@ -103,11 +97,9 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-8 font-light max-w-xl"
+              className="text-sm md:text-base lg:text-lg text-muted-foreground leading-relaxed mb-4 md:mb-6 font-light"
             >
-              At Shema Buds, we believe that the most meaningful gifts are those made by hand 
-              and from the heart. Our journey began with a simple passion for creating beautiful, 
-              personalized items that bring joy to special moments.
+              We create beautiful handmade bouquets and personalized gifts for special moments.
             </motion.p>
 
             {/* Story & Mission */}
@@ -116,27 +108,25 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base md:text-lg text-muted-foreground leading-relaxed mb-8 md:mb-10 font-light max-w-xl"
+              className="text-xs md:text-sm lg:text-base text-muted-foreground leading-relaxed mb-6 md:mb-8 font-light"
             >
-              Every bouquet, gift, and decoration we create is infused with love, attention to detail, 
-              and a commitment to quality craftsmanship. We work closely with our clients to bring 
-              their visions to life, ensuring each creation is as unique as the story it tells.
+              Every creation is crafted with love and attention to detail.
             </motion.p>
 
-            {/* Additional context */}
+            {/* Years badge */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex items-center gap-3 md:gap-4 hidden md:flex"
+              className="flex items-center gap-3 md:gap-4"
             >
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-[#A67C52]/30 to-[#A67C52]/10 border border-[#A67C52]/20 flex items-center justify-center">
-                <span className="text-2xl md:text-3xl font-bold text-primary">5+</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 lg:w-16 lg:h-16 rounded-2xl glass border border-primary/20 flex items-center justify-center shadow-luxury">
+                <span className="text-lg md:text-xl lg:text-2xl font-bold text-primary">5+</span>
               </div>
               <div>
-                <p className="text-sm md:text-base font-semibold text-foreground">Years of Excellence</p>
-                <p className="text-xs md:text-sm text-muted-foreground font-light">In handcrafted luxury</p>
+                <p className="text-xs md:text-sm lg:text-base font-semibold text-foreground">Years of Excellence</p>
+                <p className="text-[10px] md:text-xs lg:text-sm text-muted-foreground font-light">In handcrafted luxury</p>
               </div>
             </motion.div>
           </motion.div>
@@ -147,43 +137,16 @@ export function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="order-2 space-y-6 md:space-y-8"
+            className="order-2 space-y-4 md:space-y-6"
           >
-            {/* Mobile: Title only, Desktop: Full cards */}
-            <div className="md:hidden">
-              <h2 className="text-2xl font-bold text-foreground mb-4">
-                About Shema Buds
-              </h2>
-            </div>
-
             {valueCards.map((card, index) => (
-              <motion.div key={index}>
-                {/* Mobile: Title only */}
-                <div className="md:hidden">
-                  <motion.h3
-                    initial={{ opacity: 0, y: 8 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                    className="text-base font-semibold text-foreground flex items-center gap-2"
-                  >
-                    {index === 0 && <span>❤️</span>}
-                    {index === 1 && <span>✨</span>}
-                    {index === 2 && <span>👥</span>}
-                    {card.title}
-                  </motion.h3>
-                </div>
-
-                {/* Desktop: Full cards */}
-                <div className="hidden md:block">
-                  <ValueCard
-                    icon={card.icon}
-                    title={card.title}
-                    description={card.description}
-                    delay={0.2 + index * 0.1}
-                  />
-                </div>
-              </motion.div>
+              <ValueCard
+                key={index}
+                icon={card.icon}
+                title={card.title}
+                description={card.description}
+                delay={0.2 + index * 0.1}
+              />
             ))}
           </motion.div>
         </div>
