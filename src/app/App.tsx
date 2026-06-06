@@ -85,7 +85,7 @@ function AppContent() {
       <Header />
       
       {/* Desktop View - Reorganized */}
-      <main className="hidden md:block pt-[72px]">
+      <main className="hidden md:block">
         <div id="home">
           <Hero />
         </div>

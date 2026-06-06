@@ -94,7 +94,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full py-8 md:py-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full pt-24 pb-8 md:pt-28 md:pb-10">
         <div className="w-full max-w-3xl lg:max-w-4xl">
           <div
             className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"

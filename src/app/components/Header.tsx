@@ -38,13 +38,13 @@ export function Header() {
 
       {/* Desktop Header - Hidden on mobile */}
       <header
-        className="hidden md:block fixed top-0 left-0 right-0 z-50 relative overflow-hidden"
+        className="hidden md:block fixed top-0 left-0 right-0 z-50 overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.55) 0%, rgba(255,245,235,0.42) 50%, rgba(255,255,255,0.48) 100%)",
-          backdropFilter: "blur(24px) saturate(180%)",
-          WebkitBackdropFilter: "blur(24px) saturate(180%)",
-          borderBottom: "1.5px solid rgba(255,255,255,0.65)",
-          boxShadow: "0 8px 32px rgba(166,124,82,0.14), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.08) inset",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.38) 0%, rgba(255,245,235,0.28) 50%, rgba(255,255,255,0.34) 100%)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          borderBottom: "1px solid rgba(255,255,255,0.45)",
+          boxShadow: "0 4px 24px rgba(166,124,82,0.1)",
         }}
       >
         <div
@@ -60,12 +60,19 @@ export function Header() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="cursor-pointer shrink-0"
+              className="cursor-pointer shrink-0 flex items-center gap-3"
               onClick={() => {
                 const event = new CustomEvent('openAboutModal');
                 window.dispatchEvent(event);
               }}
             >
+              <motion.div
+                className="bg-primary p-2 rounded-xl shadow-luxury"
+                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
+                transition={{ duration: 0.5 }}
+              >
+                <Heart className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground fill-primary-foreground" />
+              </motion.div>
               <h1
                 className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]"
                 style={{
