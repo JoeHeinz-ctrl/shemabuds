@@ -266,6 +266,80 @@
                 0 4px 16px rgba(196, 149, 111, 0.16);
   }
 
+  /* Luxury hero glass */
+  .hero-glass-card {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.52) 0%,
+      rgba(255, 250, 245, 0.38) 45%,
+      rgba(255, 255, 255, 0.44) 100%
+    );
+    backdrop-filter: blur(32px) saturate(190%);
+    -webkit-backdrop-filter: blur(32px) saturate(190%);
+    border: 1.5px solid rgba(255, 255, 255, 0.72);
+    box-shadow:
+      0 24px 64px rgba(42, 27, 20, 0.14),
+      0 8px 24px rgba(166, 124, 82, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 0 rgba(166, 124, 82, 0.08);
+  }
+
+  .hero-glass-reflection {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero-glass-reflection::after {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 45%;
+    height: 200%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.08) 35%,
+      rgba(255, 255, 255, 0.35) 50%,
+      rgba(255, 255, 255, 0.08) 65%,
+      transparent 100%
+    );
+    transform: skewX(-18deg);
+    animation: hero-glass-sweep 7s ease-in-out infinite;
+  }
+
+  @keyframes hero-glass-sweep {
+    0%, 72%, 100% {
+      transform: translateX(-30%) skewX(-18deg);
+      opacity: 0;
+    }
+    78% {
+      opacity: 1;
+    }
+    92% {
+      transform: translateX(280%) skewX(-18deg);
+      opacity: 0.6;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glass-reflection::after {
+      animation: none;
+      opacity: 0;
+    }
+  }
+
+  .stat-card-glow {
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+  }
+
+  .stat-card-glow:hover {
+    box-shadow: 0 8px 32px rgba(166, 124, 82, 0.22);
+  }
+
   /**
   * Default typography styles for HTML elements (h1-h4, p, label, button, input).
   * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.

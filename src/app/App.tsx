@@ -8,6 +8,7 @@ import { Testimonials } from "./components/Testimonials";
 import { Footer } from "./components/Footer";
 import { MyOrders } from "./components/MyOrders";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { ScrollProgress } from "./components/ScrollProgress";
 import { AboutModal } from "./components/AboutModal";
 import { ContactModal } from "./components/ContactModal";
 import { OrderingProvider, useOrdering } from "./components/OrderingSystem";
@@ -82,6 +83,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen">
+      <ScrollProgress />
       <Header />
       
       {/* Desktop View - Reorganized */}
