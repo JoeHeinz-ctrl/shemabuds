@@ -40,23 +40,23 @@ export function Header() {
       <header
         className="hidden md:block fixed top-0 left-0 right-0 z-50 overflow-hidden"
         style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.38) 0%, rgba(255,245,235,0.28) 50%, rgba(255,255,255,0.34) 100%)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          borderBottom: "1px solid rgba(255,255,255,0.45)",
-          boxShadow: "0 4px 24px rgba(166,124,82,0.1)",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(255,250,245,0.65) 50%, rgba(255,255,255,0.68) 100%)",
+          backdropFilter: "blur(16px) saturate(160%)",
+          WebkitBackdropFilter: "blur(16px) saturate(160%)",
+          borderBottom: "1px solid rgba(255,255,255,0.6)",
+          boxShadow: "0 4px 20px rgba(42,27,20,0.08)",
         }}
       >
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
           style={{
-            background: "radial-gradient(ellipse at 15% 0%, rgba(255,255,255,0.6) 0%, transparent 55%), radial-gradient(ellipse at 85% 100%, rgba(166,124,82,0.12) 0%, transparent 55%)",
+            background: "radial-gradient(ellipse at 10% 50%, rgba(255,255,255,0.85) 0%, transparent 45%)",
           }}
         />
-        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-3.5 relative">
+        <nav className="w-full pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8 py-3.5 relative">
           <div className="flex items-center justify-between gap-6">
-            {/* Title on Left */}
+            {/* Logo + Title — flush left */}
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -67,18 +67,17 @@ export function Header() {
               }}
             >
               <motion.div
-                className="bg-primary p-2 rounded-xl shadow-luxury"
+                className="bg-primary p-2 rounded-xl shadow-[0_4px_16px_rgba(42,27,20,0.35)] ring-2 ring-white/90"
                 whileHover={{ rotate: [0, -10, 10, -10, 0] }}
                 transition={{ duration: 0.5 }}
               >
                 <Heart className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground fill-primary-foreground" />
               </motion.div>
               <h1
-                className="text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]"
+                className="text-3xl lg:text-4xl font-bold text-[#2A1B14] drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]"
                 style={{
                   fontFamily: "'Playfair Display', 'Georgia', serif",
-                  letterSpacing: "0.05em",
-                  textShadow: "0 2px 15px rgba(166, 124, 82, 0.35)",
+                  letterSpacing: "0.04em",
                 }}
               >
                 Shema Buds
@@ -92,7 +91,7 @@ export function Header() {
                   const event = new CustomEvent('openContactModal');
                   window.dispatchEvent(event);
                 }}
-                className="glass inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-secondary-foreground hover:text-primary shadow-luxury transition-all duration-200 hover:scale-105"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#2A1B14] bg-white/80 hover:bg-white shadow-luxury ring-1 ring-white/90 transition-all duration-200 hover:scale-105"
               >
                 <Heart className="w-4 h-4 text-primary fill-primary/20" />
                 Contact
@@ -103,7 +102,7 @@ export function Header() {
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setShowSettingsMenu(!showSettingsMenu)}
-                  className="relative p-2 text-secondary-foreground hover:text-primary transition-colors duration-200"
+                  className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
                   aria-label="Settings"
                 >
                   <Settings className="w-6 h-6" />
@@ -235,7 +234,7 @@ export function Header() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleCartClick}
-                className="relative p-2 text-secondary-foreground hover:text-primary transition-colors duration-200"
+                className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
               >
                 <ShoppingBag className="w-6 h-6" />
                 {totalItems > 0 && (

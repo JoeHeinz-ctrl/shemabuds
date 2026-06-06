@@ -44,17 +44,17 @@ export function Hero() {
   }, [isPaused]);
 
   return (
-    <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden bg-background">
+    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center overflow-hidden">
       {/* Background Image Slideshow with Parallax */}
       <motion.div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 min-h-full"
         style={{ y: imageY }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
         <motion.div
           style={{ scale: imageScale }}
-          className="w-full h-full relative"
+          className="absolute inset-0 w-full h-full"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -73,9 +73,7 @@ export function Hero() {
             </motion.div>
           </AnimatePresence>
         </motion.div>
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-white/20 rounded-lg pointer-events-none" />
-        </div>
+        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
       </motion.div>
 
       {/* Slideshow Indicators */}
