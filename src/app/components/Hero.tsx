@@ -44,7 +44,7 @@ export function Hero() {
   }, [isPaused]);
 
   return (
-    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center overflow-hidden">
+    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center overflow-visible">
       {/* Background Image Slideshow with Parallax */}
       <motion.div
         className="absolute inset-0 z-0 min-h-full"
