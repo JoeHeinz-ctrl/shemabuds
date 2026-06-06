@@ -44,7 +44,7 @@ export function Hero() {
   }, [isPaused]);
 
   return (
-    <section ref={heroRef} className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-background">
+    <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden bg-background">
       {/* Background Image Slideshow with Parallax */}
       <motion.div
         className="absolute inset-0 z-0"
@@ -94,10 +94,10 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center w-full py-16 md:py-20">
-        <div className="w-full max-w-2xl lg:max-w-3xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full py-8 md:py-10">
+        <div className="w-full max-w-3xl lg:max-w-4xl">
           <div
-            className="rounded-2xl p-6 md:p-10 relative overflow-hidden"
+            className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
               backdropFilter: "blur(28px) saturate(180%)",
@@ -160,7 +160,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/50"
+              className="mt-7 md:mt-9 pt-7 md:pt-9 pb-1 border-t border-white/50"
             >
               <div className="grid grid-cols-3 divide-x divide-white/40">
                 {stats.map((stat, index) => {
@@ -171,7 +171,7 @@ export function Hero() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col items-center text-center px-3 sm:px-6"
+                      className="flex flex-col items-center text-center px-3 sm:px-6 py-2"
                     >
                       <div className="bg-secondary/90 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
                         <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
