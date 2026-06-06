@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signOutUser } from "../../../services/authService";
-import { Heart, LayoutDashboard, Package, ShoppingCart, LogOut, Menu, X } from "lucide-react";
+import { Heart, LayoutDashboard, Package, ShoppingCart, LogOut, Menu, X, Tag } from "lucide-react";
 import { Button } from "../../components/ui/button";
 
 interface AdminLayoutProps {
@@ -22,6 +22,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
     { path: "/admin", label: "Dashboard", icon: LayoutDashboard },
     { path: "/admin/products", label: "Products", icon: Package },
     { path: "/admin/orders", label: "Orders", icon: ShoppingCart },
+    { path: "/admin/categories", label: "Categories", icon: Tag },
   ];
 
   return (

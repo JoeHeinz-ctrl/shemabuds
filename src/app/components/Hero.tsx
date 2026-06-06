@@ -109,7 +109,7 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
           {/* Left Side: Text Content */}
-          <div className="max-w-2xl bg-white/30 rounded-xl p-4">
+          <div className="max-w-2xl rounded-xl p-4" style={{ background: "rgba(255,255,255,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

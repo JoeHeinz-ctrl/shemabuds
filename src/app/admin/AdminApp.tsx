@@ -5,6 +5,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { Products } from "./pages/Products";
 import { Orders } from "./pages/Orders";
 import { Featured } from "./pages/Featured";
+import { Categories } from "./pages/Categories";
 
 export function AdminApp() {
   return (
@@ -35,6 +36,14 @@ export function AdminApp() {
           element={
             <ProtectedRoute>
               <Orders />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            <ProtectedRoute>
+              <Categories />
             </ProtectedRoute>
           }
         />

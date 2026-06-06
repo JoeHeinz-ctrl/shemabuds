@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, Plus, Trash2 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
@@ -7,6 +7,10 @@ import { Textarea } from "../../components/ui/textarea";
 import { CloudinaryImageUpload } from "../../../components/CloudinaryImageUpload";
 import { addProduct, updateProduct, FirebaseProduct } from "../../../services/productService";
 import { motion, AnimatePresence } from "motion/react";
+
+// Cloudinary config for additional images upload
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || "diy2kkxyu";
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || "shemabuds_products";
 
 interface ProductModalProps {
   product: FirebaseProduct | null;
@@ -85,14 +89,48 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
     });
   };
 
-  const addImage = () => {
-    const url = prompt("Enter image URL:");
-    if (url) {
-      setFormData({
-        ...formData,
-        images: [...(formData.images || []), url],
+  // Upload additional image(s) via Cloudinary
+  const hiddenFileInputRef = useRef<HTMLInputElement>(null);
+
+  const uploadAdditionalImage = async (file: File) => {
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      formDataUpload.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      formDataUpload.append('cloud_name', CLOUDINARY_CLOUD_NAME);
+      formDataUpload.append('folder', 'shemabuds/products');
+      const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+        method: 'POST',
+        body: formDataUpload,
       });
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({}));
+        throw new Error(err.error?.message || `Upload failed (${response.status})`);
+      }
+      const data = await response.json();
+      const imageUrl = data.secure_url;
+      setFormData(prev => ({
+        ...prev,
+        images: [...(prev.images || []), imageUrl],
+      }));
+    } catch (e: any) {
+      console.error('Additional image upload error:', e);
+      setError(e.message || 'Failed to upload additional image');
     }
+  };
+
+  const handleAddImageClick = () => {
+    hiddenFileInputRef.current?.click();
+  };
+
+  const handleAdditionalFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    for (let i = 0; i < files.length; i++) {
+      await uploadAdditionalImage(files[i]);
+    }
+    // Reset input
+    e.target.value = '';
   };
 
   const removeImage = (index: number) => {
@@ -224,7 +262,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                 <Label className="text-[#4A3A32] font-medium">Additional Images</Label>
                 <Button
                   type="button"
-                  onClick={addImage}
+                  onClick={handleAddImageClick}
                   size="sm"
                   variant="outline"
                   className="border-[#A67C52] text-[#A67C52]"
@@ -233,6 +271,15 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   Add Image
                 </Button>
               </div>
+              {/* Hidden file input for additional images */}
+              <input
+                ref={hiddenFileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                className="hidden"
+                onChange={handleAdditionalFileSelect}
+              />
               {formData.images && formData.images.length > 0 && (
                 <div className="space-y-2">
                   {formData.images.map((img, index) => (

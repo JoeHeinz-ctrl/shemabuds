@@ -178,3 +178,19 @@ export const getCategories = async (): Promise<string[]> => {
     return [];
   }
 };
+
+// Delete a category (clears category field on related products)
+export const deleteCategory = async (category: string): Promise<void> => {
+  try {
+    const products = await getAllProducts();
+    const updates = products.filter(p => p.category === category);
+    for (const product of updates) {
+      if (product.id) {
+        await updateProduct(product.id, { category: "" });
+      }
+    }
+  } catch (error) {
+    console.error("Error deleting category:", error);
+    // Swallow error to keep UI flow; could rethrow if needed
+  }
+};
