@@ -109,7 +109,24 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
           {/* Left Side: Text Content */}
-          <div className="max-w-2xl rounded-xl p-4" style={{ background: "rgba(255,255,255,0.82)", backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)" }}>
+          <div
+            className="max-w-2xl rounded-2xl p-5 md:p-8 relative overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
+              backdropFilter: "blur(28px) saturate(180%)",
+              WebkitBackdropFilter: "blur(28px) saturate(180%)",
+              border: "1.5px solid rgba(255,255,255,0.65)",
+              boxShadow: "0 8px 32px rgba(166,124,82,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.12) inset",
+            }}
+          >
+            {/* Liquid shimmer overlay */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
+                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(166,124,82,0.10) 0%, transparent 60%)",
+              }}
+            />
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -129,7 +146,8 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-3 md:mb-6 text-foreground leading-[1.1] font-bold tracking-tight relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl mb-3 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
+              style={{ textShadow: "0 1px 3px rgba(255,255,255,0.4)" }}
             >
               <span className="relative inline-block">
                 Handmade Meets{" "}
@@ -157,7 +175,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg lg:text-xl text-secondary-foreground mb-4 md:mb-8 leading-relaxed font-light"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-[#3b2a1e] mb-4 md:mb-8 leading-relaxed font-medium"
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.

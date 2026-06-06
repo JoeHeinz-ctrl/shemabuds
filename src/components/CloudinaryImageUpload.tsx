@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Upload, X, Check, Loader2, Image as ImageIcon } from "lucide-react";
 import { Button } from "../app/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
@@ -23,6 +23,11 @@ export function CloudinaryImageUpload({
   const [error, setError] = useState("");
   const [previewUrl, setPreviewUrl] = useState(currentImageUrl || "");
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Sync preview when the parent passes in an existing image (e.g. opening Edit modal)
+  useEffect(() => {
+    setPreviewUrl(currentImageUrl || "");
+  }, [currentImageUrl]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
