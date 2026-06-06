@@ -5,7 +5,6 @@ import { FeaturedGallery } from "./components/FeaturedGallery";
 import { Services } from "./components/Services";
 import { HowToOrder } from "./components/HowToOrder";
 import { Testimonials } from "./components/Testimonials";
-import { Footer } from "./components/Footer";
 import { MyOrders } from "./components/MyOrders";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { AboutModal } from "./components/AboutModal";
@@ -111,11 +110,6 @@ function AppContent() {
       <main className="md:hidden pt-[60px] pb-[80px]">
         {renderMobileContent()}
       </main>
-
-      {/* Desktop Footer */}
-      <div className="hidden md:block">
-        <Footer />
-      </div>
 
       <ScrollToTop />
 
