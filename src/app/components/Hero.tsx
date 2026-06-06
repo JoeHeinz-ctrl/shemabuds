@@ -3,7 +3,6 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Sparkles, Package, Heart, Award } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
-import { Card3DTilt } from "./Card3DTilt";
 
 const stats = [
   { icon: Package, value: "150+", label: "Creations Delivered" },
@@ -94,18 +93,17 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full min-h-[100dvh] pt-16 pb-8 md:pt-28 md:pb-10">
-        <Card3DTilt>
-          <div className="w-full max-w-3xl lg:max-w-4xl self-center -translate-y-6">
-            <div
-              className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"
-              style={{
-                background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
-                backdropFilter: "blur(28px) saturate(180%)",
-                WebkitBackdropFilter: "blur(28px) saturate(180%)",
-                border: "1.5px solid rgba(255,255,255,0.65)",
-                boxShadow: "0 8px 32px rgba(166,124,82,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.12) inset",
-              }}
-            >
+        <div className="w-full max-w-3xl lg:max-w-4xl self-center -translate-y-6">
+          <div
+            className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
+              backdropFilter: "blur(28px) saturate(180%)",
+              WebkitBackdropFilter: "blur(28px) saturate(180%)",
+              border: "1.5px solid rgba(255,255,255,0.65)",
+              boxShadow: "0 8px 32px rgba(166,124,82,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.12) inset",
+            }}
+          >
             {/* Liquid shimmer overlay */}
             <div
               aria-hidden
@@ -187,9 +185,8 @@ export function Hero() {
                 })}
               </div>
             </motion.div>
-            </div>
+          </div>
         </div>
-        </Card3DTilt>
       </div>
 
       {/* Floating Decorative Elements */}
