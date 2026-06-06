@@ -1,13 +1,13 @@
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Sparkles } from "lucide-react";
+import { Sparkles, Package, Heart, Award } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 
 const stats = [
-  "150+ Creations Delivered",
-  "300+ Happy Customers",
-  "100% Handmade",
+  { icon: Package, value: "150+", label: "Creations Delivered" },
+  { icon: Heart, value: "300+", label: "Happy Customers" },
+  { icon: Award, value: "100%", label: "Handmade" },
 ];
 
 // Slideshow images - Your actual product photos
@@ -44,7 +44,7 @@ export function Hero() {
   }, [isPaused]);
 
   return (
-    <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[90vh] flex items-center overflow-hidden bg-background">
+    <section ref={heroRef} className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden bg-background">
       {/* Background Image Slideshow with Parallax */}
       <motion.div
         className="absolute inset-0 z-0"
@@ -94,10 +94,10 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center">
-        <div className="w-full max-w-2xl lg:max-w-3xl text-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center w-full py-16 md:py-20">
+        <div className="w-full max-w-3xl lg:max-w-4xl xl:max-w-5xl">
           <div
-            className="rounded-2xl p-6 md:p-10 relative overflow-hidden"
+            className="rounded-3xl p-8 md:p-12 lg:p-14 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
               backdropFilter: "blur(28px) saturate(180%)",
@@ -118,7 +118,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="glass inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full mb-4 md:mb-6 shadow-luxury mx-auto"
+              className="glass inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full mb-5 md:mb-8 shadow-luxury"
             >
               <motion.div
                 animate={{ rotate: [0, 15, -15, 15, 0] }}
@@ -133,7 +133,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative mx-auto max-w-xl"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-5 md:mb-8 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
               style={{ textShadow: "0 1px 3px rgba(255,255,255,0.4)" }}
             >
               <span className="relative inline-block">
@@ -150,7 +150,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium mx-auto max-w-lg"
+              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#3b2a1e] leading-relaxed font-medium max-w-3xl"
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
@@ -160,20 +160,31 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-6 md:mt-8 flex justify-center"
+              className="mt-8 md:mt-10 pt-8 md:pt-10 border-t border-white/50"
             >
-              <div className="w-full max-w-xs sm:max-w-sm rounded-2xl bg-[#2a2a2a]/95 px-5 py-4 sm:px-6 sm:py-5 text-left shadow-lg">
-                {stats.map((line, index) => (
-                  <motion.p
-                    key={line}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                    className="font-mono text-sm sm:text-base text-white/90 leading-relaxed"
-                  >
-                    {line}
-                  </motion.p>
-                ))}
+              <div className="grid grid-cols-3 divide-x divide-white/40">
+                {stats.map((stat, index) => {
+                  const Icon = stat.icon;
+                  return (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, y: 12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
+                      className="flex flex-col items-center text-center px-3 sm:px-5 md:px-8"
+                    >
+                      <div className="bg-secondary/90 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
+                      </div>
+                      <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-none mb-2">
+                        {stat.value}
+                      </p>
+                      <p className="text-[11px] sm:text-xs md:text-sm lg:text-base text-muted-foreground font-medium leading-snug max-w-[8rem] sm:max-w-none">
+                        {stat.label}
+                      </p>
+                    </motion.div>
+                  );
+                })}
               </div>
             </motion.div>
           </div>
