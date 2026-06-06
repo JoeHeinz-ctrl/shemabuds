@@ -95,9 +95,9 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center w-full py-16 md:py-20">
-        <div className="w-full max-w-3xl lg:max-w-4xl xl:max-w-5xl">
+        <div className="w-full max-w-2xl lg:max-w-3xl">
           <div
-            className="rounded-3xl p-8 md:p-12 lg:p-14 relative overflow-hidden"
+            className="rounded-2xl p-6 md:p-10 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
               backdropFilter: "blur(28px) saturate(180%)",
@@ -118,7 +118,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="glass inline-flex items-center gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full mb-5 md:mb-8 shadow-luxury"
+              className="glass inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full mb-4 md:mb-6 shadow-luxury"
             >
               <motion.div
                 animate={{ rotate: [0, 15, -15, 15, 0] }}
@@ -133,7 +133,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-5 md:mb-8 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
               style={{ textShadow: "0 1px 3px rgba(255,255,255,0.4)" }}
             >
               <span className="relative inline-block">
@@ -150,7 +150,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#3b2a1e] leading-relaxed font-medium max-w-3xl"
+              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium"
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
@@ -160,7 +160,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-8 md:mt-10 pt-8 md:pt-10 border-t border-white/50"
+              className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-white/50"
             >
               <div className="grid grid-cols-3 divide-x divide-white/40">
                 {stats.map((stat, index) => {
@@ -171,15 +171,15 @@ export function Hero() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col items-center text-center px-3 sm:px-5 md:px-8"
+                      className="flex flex-col items-center text-center px-3 sm:px-6"
                     >
-                      <div className="bg-secondary/90 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center mb-3 sm:mb-4">
-                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-primary" />
+                      <div className="bg-secondary/90 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
+                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                       </div>
-                      <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-none mb-2">
+                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-none mb-1">
                         {stat.value}
                       </p>
-                      <p className="text-[11px] sm:text-xs md:text-sm lg:text-base text-muted-foreground font-medium leading-snug max-w-[8rem] sm:max-w-none">
+                      <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
                         {stat.label}
                       </p>
                     </motion.div>
