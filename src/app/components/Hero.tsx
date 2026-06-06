@@ -86,8 +86,7 @@ export function Hero() {
           </AnimatePresence>
         </motion.div>
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/55 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/20 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-white/20 backdrop-blur-xl rounded-lg pointer-events-none" />
         </div>
       </motion.div>
 
@@ -110,7 +109,7 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
           {/* Left Side: Text Content */}
-          <div className="max-w-2xl">
+          <div className="max-w-2xl bg-white/30 backdrop-blur-lg rounded-xl p-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
