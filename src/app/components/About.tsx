@@ -160,6 +160,46 @@ export function About() {
             ))}
           </motion.div>
         </div>
+
+        {/* Full Width Content Below Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-8 md:mt-12"
+        >
+          <div className="glass rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-luxury">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
+              <div>
+                <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-4">
+                  Why Choose Shema Buds?
+                </h3>
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed font-light">
+                  We believe in creating more than just beautiful arrangements. Each piece tells a story, captures a moment, and creates lasting memories. Our commitment to quality craftsmanship and personalized service ensures that every creation exceeds your expectations.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 md:gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm md:text-base text-foreground">Premium quality materials</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm md:text-base text-foreground">Personalized consultation</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm md:text-base text-foreground">Timely delivery guaranteed</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm md:text-base text-foreground">Custom designs available</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
