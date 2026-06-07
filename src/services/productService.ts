@@ -206,15 +206,18 @@ export const deleteCategory = async (category: string): Promise<void> => {
 // Add a new category to the categories collection
 export const addCategory = async (categoryName: string): Promise<boolean> => {
   try {
-    const categoryRef = doc(db, "categories", categoryName);
+    if (!categoryName || categoryName.trim() === "") {
+      throw new Error("Category name cannot be empty");
+    }
+    const categoryRef = doc(db, "categories", categoryName.trim());
     await setDoc(categoryRef, {
-      name: categoryName,
+      name: categoryName.trim(),
       createdAt: Timestamp.now()
     });
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error adding category:", error);
-    return false;
+    throw error;
   }
 };
 

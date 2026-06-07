@@ -8,10 +8,15 @@ export function Categories() {
   const [categories, setCategories] = useState<string[]>([]);
   const [newCategory, setNewCategory] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const loadCategories = async () => {
-    const cats = await getCategories();
-    setCategories(cats);
+    try {
+      const cats = await getCategories();
+      setCategories(cats);
+    } catch (err) {
+      console.error("Error loading categories:", err);
+    }
   };
 
   useEffect(() => {
@@ -19,23 +24,37 @@ export function Categories() {
   }, []);
 
   const handleAddCategory = async () => {
-    if (!newCategory.trim()) return;
+    if (!newCategory.trim()) {
+      setError("Category name cannot be empty");
+      return;
+    }
+    setError("");
     setLoading(true);
     try {
       const success = await addCategory(newCategory.trim());
       if (success) {
         setNewCategory("");
         await loadCategories();
+      } else {
+        setError("Failed to add category. Please try again.");
       }
+    } catch (err: any) {
+      console.error("Error adding category:", err);
+      setError(err.message || "Failed to add category");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteCategory = async (cat: string) => {
-    await deleteCategory(cat);
-    // Refresh list after deletion
-    await loadCategories();
+    try {
+      await deleteCategory(cat);
+      // Refresh list after deletion
+      await loadCategories();
+    } catch (err) {
+      console.error("Error deleting category:", err);
+      setError("Failed to delete category");
+    }
   };
 
   return (
@@ -45,7 +64,10 @@ export function Categories() {
         <div className="flex gap-2">
           <input
             value={newCategory}
-            onChange={e => setNewCategory(e.target.value)}
+            onChange={e => {
+              setNewCategory(e.target.value);
+              setError("");
+            }}
             onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
             placeholder="New category"
             className="flex-1 px-3 py-2 border rounded"
@@ -58,6 +80,11 @@ export function Categories() {
             <Plus className="w-4 h-4 mr-1" /> {loading ? "Adding..." : "Add"}
           </Button>
         </div>
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded text-red-600 text-sm">
+            {error}
+          </div>
+        )}
         <ul className="space-y-2">
           {categories.map(cat => (
             <li key={cat} className="flex items-center justify-between p-2 bg-white rounded shadow">
