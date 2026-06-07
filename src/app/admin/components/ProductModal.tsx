@@ -63,17 +63,32 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
     setLoading(true);
 
     try {
+      // Validate form data
+      if (!formData.title || !formData.price || !formData.category || !formData.image || !formData.badge || !formData.description) {
+        setError("Please fill in all required fields (marked with *)");
+        setLoading(false);
+        return;
+      }
+
+      console.log("Submitting product:", formData);
+
       if (product?.id) {
         await updateProduct(product.id, formData);
+        console.log("Product updated successfully");
       } else {
-        await addProduct(formData as Omit<FirebaseProduct, 'id'>);
+        const newProductId = await addProduct(formData as Omit<FirebaseProduct, 'id'>);
+        console.log("Product added successfully with ID:", newProductId);
       }
       
       // Dispatch event to notify all listeners that products have been updated
+      console.log("Dispatching productsUpdated event");
       window.dispatchEvent(new CustomEvent('productsUpdated'));
       
-      onClose(true);
+      setTimeout(() => {
+        onClose(true);
+      }, 500);
     } catch (err: any) {
+      console.error("Error saving product:", err);
       setError(err.message || "Failed to save product");
     } finally {
       setLoading(false);

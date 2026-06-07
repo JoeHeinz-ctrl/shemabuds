@@ -12,6 +12,7 @@ export function useProducts(demoProducts: Record<string, Product[]>) {
 
     // Listen for product updates from other tabs/admin panel
     const handleProductsUpdated = () => {
+      console.log("productsUpdated event received, reloading products...");
       loadProducts();
     };
 
@@ -21,7 +22,9 @@ export function useProducts(demoProducts: Record<string, Product[]>) {
 
   const loadProducts = async () => {
     try {
+      console.log("Loading products from Firestore...");
       const firebaseProducts = await getAllProducts();
+      console.log("Loaded products from Firestore:", firebaseProducts);
       
       // Convert Firebase products to Product format
       const convertedProducts: Product[] = firebaseProducts.map((fp: FirebaseProduct) => ({
@@ -46,6 +49,8 @@ export function useProducts(demoProducts: Record<string, Product[]>) {
         groupedFirebaseProducts[categoryKey].push(product);
       });
 
+      console.log("Grouped products by category:", groupedFirebaseProducts);
+
       // Merge demo products with Firebase products
       const mergedProducts: Record<string, Product[]> = { ...demoProducts };
       
@@ -62,6 +67,7 @@ export function useProducts(demoProducts: Record<string, Product[]>) {
         }
       });
 
+      console.log("Final merged products:", mergedProducts);
       setProducts(mergedProducts);
     } catch (error) {
       console.error("Error loading products:", error);
