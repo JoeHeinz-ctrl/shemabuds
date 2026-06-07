@@ -33,21 +33,13 @@ export function CloudinaryImageUpload({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
-    const validTypes = ["image/jpeg", "image/png", "image/webp"];
-    if (!validTypes.includes(file.type)) {
-      setError("Please upload JPG, PNG, or WEBP image only");
+    // Accept any image format (Cloudinary will handle it)
+    if (!file.type.startsWith("image/")) {
+      setError("Please upload an image file");
       return;
     }
 
-    // Validate file size (10MB max)
-    const maxSize = 10 * 1024 * 1024; // 10MB in bytes
-    if (file.size > maxSize) {
-      setError("Image size must be less than 10MB");
-      return;
-    }
-
-    // Upload to Cloudinary
+    // No size limitation - upload to Cloudinary
     await uploadToCloudinary(file);
   };
 
@@ -139,7 +131,7 @@ export function CloudinaryImageUpload({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/jpeg,image/png,image/webp"
+        accept="image/*"
         onChange={handleFileSelect}
         className="hidden"
       />
@@ -168,7 +160,7 @@ export function CloudinaryImageUpload({
                     {uploading ? "Uploading..." : "Upload Main Image"}
                   </p>
                   <p className="text-xs text-[#6B5D52]">
-                    JPG, PNG or WEBP • Max 10MB
+                    Any image format supported
                   </p>
                   <p className="text-xs text-[#6B5D52] mt-1">
                     Click to select from {window.navigator.userAgent.includes('Mobile') ? 'gallery' : 'files'}
