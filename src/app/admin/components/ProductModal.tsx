@@ -68,6 +68,10 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
       } else {
         await addProduct(formData as Omit<FirebaseProduct, 'id'>);
       }
+      
+      // Dispatch event to notify all listeners that products have been updated
+      window.dispatchEvent(new CustomEvent('productsUpdated'));
+      
       onClose(true);
     } catch (err: any) {
       setError(err.message || "Failed to save product");

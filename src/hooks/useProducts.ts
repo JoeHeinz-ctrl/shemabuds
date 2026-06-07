@@ -9,6 +9,14 @@ export function useProducts(demoProducts: Record<string, Product[]>) {
 
   useEffect(() => {
     loadProducts();
+
+    // Listen for product updates from other tabs/admin panel
+    const handleProductsUpdated = () => {
+      loadProducts();
+    };
+
+    window.addEventListener('productsUpdated', handleProductsUpdated);
+    return () => window.removeEventListener('productsUpdated', handleProductsUpdated);
   }, []);
 
   const loadProducts = async () => {
