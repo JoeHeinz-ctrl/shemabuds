@@ -5,7 +5,7 @@ import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Textarea } from "../../components/ui/textarea";
 import { CloudinaryImageUpload } from "../../../components/CloudinaryImageUpload";
-import { addProduct, updateProduct, FirebaseProduct } from "../../../services/productService";
+import { addProduct, updateProduct, FirebaseProduct, getCategories } from "../../../services/productService";
 import { motion, AnimatePresence } from "motion/react";
 
 // Cloudinary config for additional images upload
@@ -17,16 +17,9 @@ interface ProductModalProps {
   onClose: (refresh: boolean) => void;
 }
 
-const SUGGESTED_CATEGORIES = [
-  "Bouquets",
-  "Handmade Gifts",
-  "Event Decorations",
-  "Wedding Accessories",
-  "Custom Orders",
-  "Boutique Collection",
-];
-
 export function ProductModal({ product, onClose }: ProductModalProps) {
+  const [dbCategories, setDbCategories] = useState<string[]>([]);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [formData, setFormData] = useState<Partial<FirebaseProduct>>({
     title: "",
     description: "",
@@ -42,6 +35,21 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [newOption, setNewOption] = useState({ label: "", options: "" });
+
+  useEffect(() => {
+    // Load categories from database
+    const loadCategories = async () => {
+      try {
+        const cats = await getCategories();
+        setDbCategories(cats);
+      } catch (err) {
+        console.error("Error loading categories:", err);
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+    loadCategories();
+  }, []);
 
   useEffect(() => {
     if (product) {
@@ -205,23 +213,15 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   className="mt-2 w-full px-3 py-2 bg-[#FEFDFB] border border-[#A67C52]/20 rounded-md focus:border-[#A67C52] focus:outline-none"
                   required
+                  disabled={categoriesLoading}
                 >
-                  <option value="">Select category</option>
-                  {SUGGESTED_CATEGORIES.map((cat) => (
+                  <option value="">{categoriesLoading ? "Loading categories..." : "Select category"}</option>
+                  {dbCategories.map((cat) => (
                     <option key={cat} value={cat}>
                       {cat}
                     </option>
                   ))}
-                  <option value="custom">Custom (type below)</option>
                 </select>
-                {formData.category === "custom" && (
-                  <Input
-                    value={formData.category === "custom" ? "" : formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    placeholder="Enter custom category"
-                    className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
-                  />
-                )}
               </div>
 
               {/* Badge */}
