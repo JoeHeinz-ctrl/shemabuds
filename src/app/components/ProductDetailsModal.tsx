@@ -4,6 +4,7 @@ import { X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useOrdering, Product } from "./OrderingSystem";
 import confetti from "canvas-confetti";
 
@@ -95,7 +96,7 @@ export function ProductDetailsModal() {
               {/* Left: Image Gallery */}
               <div className="space-y-2 md:space-y-4">
                 <div className="relative aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-muted">
-                  <img
+                  <ImageWithFallback
                     src={images[currentImageIndex]}
                     alt={selectedProduct.title}
                     className="w-full h-full object-cover"
@@ -138,7 +139,7 @@ export function ProductDetailsModal() {
                             : 'border-transparent opacity-60 hover:opacity-100'
                         }`}
                       >
-                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        <ImageWithFallback src={img} alt="" className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
