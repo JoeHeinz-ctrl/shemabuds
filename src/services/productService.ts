@@ -9,7 +9,8 @@ import {
   query,
   where,
   orderBy,
-  Timestamp
+  Timestamp,
+  setDoc
 } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -167,12 +168,19 @@ export const getRealProducts = async (): Promise<FirebaseProduct[]> => {
   }
 };
 
-// Get all unique categories
+// Get all unique categories (from both categories collection and products)
 export const getCategories = async (): Promise<string[]> => {
   try {
+    // Get categories from the categories collection
+    const dbCategories = await getAllCategoriesFromDb();
+    
+    // Get categories from products as fallback
     const products = await getAllProducts();
-    const categories = [...new Set(products.map(p => p.category))];
-    return categories.sort();
+    const productCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+    
+    // Merge and deduplicate
+    const allCategories = [...new Set([...dbCategories, ...productCategories])];
+    return allCategories.sort();
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];
@@ -192,5 +200,31 @@ export const deleteCategory = async (category: string): Promise<void> => {
   } catch (error) {
     console.error("Error deleting category:", error);
     // Swallow error to keep UI flow; could rethrow if needed
+  }
+};
+
+// Add a new category to the categories collection
+export const addCategory = async (categoryName: string): Promise<boolean> => {
+  try {
+    const categoryRef = doc(db, "categories", categoryName);
+    await setDoc(categoryRef, {
+      name: categoryName,
+      createdAt: Timestamp.now()
+    });
+    return true;
+  } catch (error) {
+    console.error("Error adding category:", error);
+    return false;
+  }
+};
+
+// Get all categories from the categories collection
+export const getAllCategoriesFromDb = async (): Promise<string[]> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, "categories"));
+    return querySnapshot.docs.map(doc => doc.id).sort();
+  } catch (error) {
+    console.error("Error fetching categories from DB:", error);
+    return [];
   }
 };

@@ -37,7 +37,7 @@ export function ProductModal({ product, onClose }: ProductModalProps) {
   const [newOption, setNewOption] = useState({ label: "", options: "" });
 
   useEffect(() => {
-    // Load categories from database
+    // Load categories from database whenever modal is opened
     const loadCategories = async () => {
       try {
         const cats = await getCategories();

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { Button } from "../../components/ui/button";
 import { Trash2, Plus } from "lucide-react";
 import { AdminLayout } from "../components/AdminLayout";
-import { getCategories, deleteCategory } from "../../../services/productService";
+import { getCategories, deleteCategory, addCategory } from "../../../services/productService";
 
 export function Categories() {
   const [categories, setCategories] = useState<string[]>([]);
   const [newCategory, setNewCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const loadCategories = async () => {
     const cats = await getCategories();
@@ -19,9 +20,16 @@ export function Categories() {
 
   const handleAddCategory = async () => {
     if (!newCategory.trim()) return;
-    // Simple client‑side addition; for persistence you would store categories separately.
-    setCategories(prev => [...prev, newCategory.trim()]);
-    setNewCategory("");
+    setLoading(true);
+    try {
+      const success = await addCategory(newCategory.trim());
+      if (success) {
+        setNewCategory("");
+        await loadCategories();
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleDeleteCategory = async (cat: string) => {
@@ -38,11 +46,16 @@ export function Categories() {
           <input
             value={newCategory}
             onChange={e => setNewCategory(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && handleAddCategory()}
             placeholder="New category"
             className="flex-1 px-3 py-2 border rounded"
           />
-          <Button onClick={handleAddCategory} className="bg-[#A67C52] text-white">
-            <Plus className="w-4 h-4 mr-1" /> Add
+          <Button 
+            onClick={handleAddCategory} 
+            disabled={loading}
+            className="bg-[#A67C52] text-white"
+          >
+            <Plus className="w-4 h-4 mr-1" /> {loading ? "Adding..." : "Add"}
           </Button>
         </div>
         <ul className="space-y-2">
