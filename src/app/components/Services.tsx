@@ -189,6 +189,7 @@ export function Services() {
             className="flex justify-center mb-8"
           >
             <Button
+              variant="outline"
               onClick={() => setShowAllModal(true)}
               className="glass border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-luxury"
             >
