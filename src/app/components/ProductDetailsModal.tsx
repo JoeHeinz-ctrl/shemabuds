@@ -6,7 +6,6 @@ import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useOrdering, Product } from "./OrderingSystem";
-import confetti from "canvas-confetti";
 
 export function ProductDetailsModal() {
   const { selectedProduct, setSelectedProduct, addToCart, setIsCartOpen } = useOrdering();
@@ -17,7 +16,9 @@ export function ProductDetailsModal() {
 
   if (!selectedProduct) return null;
 
-  const images = selectedProduct.images || [selectedProduct.image];
+  const images = selectedProduct.images && selectedProduct.images.length > 0 
+    ? selectedProduct.images 
+    : [selectedProduct.image];
 
   const handleClose = () => {
     setSelectedProduct(null);
@@ -33,14 +34,6 @@ export function ProductDetailsModal() {
       quantity,
       customizations,
       notes: notes || undefined,
-    });
-
-    // Confetti animation
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#A67C52', '#D8B4A0', '#E8C4B4'],
     });
 
     handleClose();
