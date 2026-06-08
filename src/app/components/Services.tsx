@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Flower2, Gift, Sparkles, Heart, PenTool, ShoppingBag, ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { Flower2, Gift, Sparkles, Heart, PenTool, ShoppingBag, ArrowRight, ArrowUp, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 import { useOrdering, Product } from "./OrderingSystem";
 import { useProducts } from "../../hooks/useProducts";
-import { DesktopCategoryModal } from "./DesktopCategoryModal";
 
 const categoryMeta: Record<string, { label: string; icon: typeof Flower2 }> = {
   bouquets: { label: "Bouquets", icon: Flower2 },
@@ -21,8 +20,7 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 
 export function Services() {
   const [activeCategory, setActiveCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
-  const [showAllModal, setShowAllModal] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const { setSelectedProduct, addToCart } = useOrdering();
   
   const { products: allProducts, loading } = useProducts({});
@@ -39,31 +37,17 @@ export function Services() {
     if (availableCategories.length === 0) return;
     if (!availableCategories.some((c) => c.id === activeCategory)) {
       setActiveCategory(availableCategories[0].id);
-      setCurrentPage(0);
+      setIsExpanded(false);
     }
-  }, [allProducts, loading]);
+  }, [allProducts, loading, availableCategories, activeCategory]);
 
   const currentShowcase = allProducts[activeCategory] || [];
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(currentShowcase.length / itemsPerPage);
-  const startIndex = currentPage * itemsPerPage;
-  const visibleItems = currentShowcase.slice(startIndex, startIndex + itemsPerPage);
+  const visibleItems = isExpanded ? currentShowcase : currentShowcase.slice(0, itemsPerPage);
 
   const handleCategoryChange = (categoryId: string) => {
     setActiveCategory(categoryId);
-    setCurrentPage(0);
-  };
-
-  const handleNext = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
+    setIsExpanded(false);
   };
 
   const handleViewDetails = (product: Product) => {
@@ -102,196 +86,134 @@ export function Services() {
 
   // Show loading state while fetching Firebase products
   if (loading) {
-    return (
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-muted/30 to-background overflow-hidden">
+      <section className="relative my-8 sm:my-12 px-4 sm:px-6 lg:px-8 z-0">
         <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl sm:text-6xl mb-4 text-foreground font-semibold tracking-tight">
-              Our Creations
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-              Handcrafted gifts, floral arrangements, and decorations made for life's most memorable moments.
-            </p>
-          </div>
-          <div className="flex items-center justify-center py-12">
-            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+          <div className="rounded-[36px] bg-white/60 backdrop-blur-lg border border-white/30 shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl mb-4 text-foreground font-semibold tracking-tight">
+                Our Creations
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
+                Handcrafted gifts, floral arrangements, and decorations made for life's most memorable moments.
+              </p>
+            </div>
+            <div className="flex items-center justify-center py-12">
+              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            </div>
           </div>
         </div>
       </section>
-    );
   }
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-muted/30 to-background overflow-hidden">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-5xl sm:text-6xl mb-4 text-foreground font-semibold tracking-tight">
-            Our Creations
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
-            Handcrafted gifts, floral arrangements, and decorations made for life's most memorable moments.
-          </p>
-        </motion.div>
+    <section className="relative my-8 sm:my-12 px-4 sm:px-6 lg:px-8 z-0">
+      {/* Decorative floral blobs */}
+      <div className="absolute -top-16 -left-16 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-r from-[#F8E8E0] to-[#E8C4B4] rounded-full blur-3xl opacity-40 -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute -bottom-20 -right-20 w-80 md:w-96 h-80 md:h-96 bg-gradient-to-r from-[#FFF9F5] to-[#e8cfc2] rounded-full blur-3xl opacity-40 -z-10 animate-pulse" style={{ animationDuration: '10s' }} />
 
-        {/* Category Navigation */}
-        {availableCategories.length > 0 && (
+      <div className="container mx-auto max-w-7xl">
+        {/* Showroom Container */}
+        <motion.div layout className="rounded-[36px] bg-white/60 backdrop-blur-lg border border-white/30 shadow-2xl p-5 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden">
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-8"
+            transition={{ duration: 0.5 }}
+            className="text-center mb-6"
           >
-            <div className="flex flex-wrap justify-center gap-3">
-              {availableCategories.map((category) => {
-                const Icon = category.icon;
-                return (
-                  <motion.button
-                    key={category.id}
-                    onClick={() => handleCategoryChange(category.id)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.98 }}
-                    className={`
-                      flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all duration-300
-                      ${activeCategory === category.id
-                        ? 'bg-primary text-primary-foreground shadow-luxury'
-                        : 'glass border border-border text-foreground hover:border-primary/40'
-                      }
-                    `}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-sm">{category.label}</span>
-                  </motion.button>
-                );
-              })}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground font-semibold tracking-tight">
+              Our Creations
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
+              Handcrafted gifts, floral arrangements, and decorations made for life's most memorable moments.
+            </p>
+          </motion.div>
+
+          {/* Controls Row: Category Navigation */}
+          <motion.div layout className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6">
+            {availableCategories.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="flex flex-wrap justify-center gap-2 sm:gap-3"
+              >
+                {availableCategories.map((category) => {
+                  const Icon = category.icon;
+                  return (
+                    <motion.button
+                      key={category.id}
+                      onClick={() => handleCategoryChange(category.id)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`
+                        flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-medium transition-all duration-300
+                        ${activeCategory === category.id
+                          ? 'bg-primary/20 text-primary shadow-sm border border-primary/20'
+                          : 'bg-white/60 text-muted-foreground hover:bg-white/80 border border-transparent'
+                        }
+                      `}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      <span>{category.label}</span>
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            )}
+          </motion.div>
+
+          {availableCategories.length === 0 && (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">No products available at the moment.</p>
             </div>
-          </motion.div>
-        )}
-
-        {availableCategories.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No products available at the moment.</p>
-          </div>
-        )}
-
-        {/* Show All Button */}
-        {availableCategories.length > 0 && currentShowcase.length > itemsPerPage && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex justify-center mb-8"
-          >
-            <Button
-              variant="outline"
-              onClick={() => setShowAllModal(true)}
-              className="glass border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-luxury"
-            >
-              Show All {availableCategories.find(c => c.id === activeCategory)?.label} ({currentShowcase.length})
-            </Button>
-          </motion.div>
-        )}
-
-        {/* Grid Showcase with Navigation */}
-        {availableCategories.length > 0 && <div className="relative">
-          {/* Navigation Arrows */}
-          {totalPages > 1 && (
-            <>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handlePrev}
-                disabled={currentPage === 0}
-                className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-12 h-12 rounded-full glass shadow-luxury flex items-center justify-center transition-all duration-300 ${
-                  currentPage === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-primary hover:text-primary-foreground'
-                }`}
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleNext}
-                disabled={currentPage === totalPages - 1}
-                className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-12 h-12 rounded-full glass shadow-luxury flex items-center justify-center transition-all duration-300 ${
-                  currentPage === totalPages - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-primary hover:text-primary-foreground'
-                }`}
-              >
-                <ChevronRight className="w-6 h-6" />
-              </motion.button>
-            </>
           )}
 
-          {/* Grid */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${activeCategory}-${currentPage}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            >
-              {visibleItems.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ y: -8 }}
-                  className="group relative rounded-3xl overflow-hidden glass shadow-luxury hover:shadow-luxury-lg transition-all duration-500"
+          {/* Grid Showcase */}
+          {availableCategories.length > 0 && <div className="relative">
+            {/* First row — always visible, no animation */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+              {currentShowcase.slice(0, itemsPerPage).map((item, index) => (
+                <div
+                  key={item.id || index}
+                  className="group relative rounded-2xl sm:rounded-3xl overflow-hidden glass-strong bg-white/40 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-white/40"
                 >
                   {/* Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <motion.img
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ duration: 0.6 }}
+                  <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                    <img
                       src={item.image}
                       alt={item.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    
-                    {/* Badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-block px-3 py-1.5 glass text-primary rounded-full text-xs font-semibold shadow-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                      <span className="inline-block px-2.5 py-1 bg-white/80 backdrop-blur-md text-primary rounded-full text-[10px] sm:text-xs font-semibold shadow-sm">
                         {item.badge}
                       </span>
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    {/* Title and Price Row */}
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 flex-1">
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-start justify-between gap-2 mb-1.5 sm:mb-2">
+                      <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 flex-1 line-clamp-1">
                         {item.title}
                       </h3>
                       {item.price && (
-                        <span className="text-lg font-bold text-primary whitespace-nowrap">
+                        <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">
                           {item.price}
                         </span>
                       )}
                     </div>
-                    
-                    <p className="text-muted-foreground font-light leading-relaxed text-sm mb-4 line-clamp-2">
+                    <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
                       {item.description}
                     </p>
-
-                    {/* Actions */}
                     <div className="flex gap-2">
                       <Button
                         size="sm"
                         onClick={() => handleViewDetails(item)}
                         variant="outline"
-                        className="flex-1 border-2 border-primary text-primary hover:bg-primary/10 transition-all duration-300 text-xs font-medium"
+                        className="flex-1 bg-white/50 border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
                       >
                         <Eye className="w-3 h-3 mr-1" />
                         <span>View Details</span>
@@ -299,51 +221,107 @@ export function Services() {
                       <Button
                         size="sm"
                         onClick={(e) => handleQuickAddToCart(item, e)}
-                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-luxury hover:shadow-luxury-lg transition-all duration-300 text-xs font-medium"
+                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
                       >
-                        <span className="text-lg mr-1">+</span>
+                        <span className="text-sm mr-1">+</span>
                         <span>Add to Cart</span>
                       </Button>
                     </div>
                   </div>
-
-                  {/* Floating Gold Accent */}
-                  <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-primary/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Page Indicator */}
-          {totalPages > 1 && (
-            <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentPage(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentPage === index
-                      ? 'w-8 bg-primary'
-                      : 'w-2 bg-primary/30 hover:bg-primary/50'
-                  }`}
-                />
+                </div>
               ))}
             </div>
-          )}
-        </div>}
+
+            {/* Extra rows — fade in gently, no per-card bounce */}
+            {currentShowcase.length > itemsPerPage && (
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    key="expanded-rows"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-4 sm:mt-5"
+                  >
+                    {currentShowcase.slice(itemsPerPage).map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className="group relative rounded-2xl sm:rounded-3xl overflow-hidden glass-strong bg-white/40 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-white/40"
+                      >
+                        <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                            <span className="inline-block px-2.5 py-1 bg-white/80 backdrop-blur-md text-primary rounded-full text-[10px] sm:text-xs font-semibold shadow-sm">
+                              {item.badge}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-4 sm:p-5">
+                          <div className="flex items-start justify-between gap-2 mb-1.5 sm:mb-2">
+                            <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 flex-1 line-clamp-1">
+                              {item.title}
+                            </h3>
+                            {item.price && (
+                              <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">
+                                {item.price}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
+                            {item.description}
+                          </p>
+                          <div className="flex gap-2">
+                            <Button
+                              size="sm"
+                              onClick={() => handleViewDetails(item)}
+                              variant="outline"
+                              className="flex-1 bg-white/50 border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
+                            >
+                              <Eye className="w-3 h-3 mr-1" />
+                              <span>View Details</span>
+                            </Button>
+                            <Button
+                              size="sm"
+                              onClick={(e) => handleQuickAddToCart(item, e)}
+                              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
+                            >
+                              <span className="text-sm mr-1">+</span>
+                              <span>Add to Cart</span>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
+
+            {/* Expand CTA */}
+            {currentShowcase.length > itemsPerPage && (
+              <motion.div layout className="flex justify-center mt-8">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="bg-white/80 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-400 shadow-sm group"
+                >
+                  {isExpanded ? (
+                    <>Show Less <ArrowUp className="w-4 h-4 ml-1.5 group-hover:-translate-y-0.5 transition-transform" /></>
+                  ) : (
+                    <>View All Collection <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform" /></>
+                  )}
+                </Button>
+              </motion.div>
+            )}
+          </div>}
+        </motion.div>
       </div>
-
-      {/* Floating Decorative Elements */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Desktop Category Modal */}
-      <DesktopCategoryModal
-        isOpen={showAllModal}
-        onClose={() => setShowAllModal(false)}
-        categoryName={availableCategories.find(c => c.id === activeCategory)?.label || ""}
-        products={currentShowcase}
-      />
-      <div className="absolute bottom-20 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
     </section>
   );
 }
