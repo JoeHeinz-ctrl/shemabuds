@@ -50,7 +50,7 @@ export function MobileHeader() {
           >
             <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]" 
                 style={{ 
-                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  fontFamily: "'Relona', serif",
                   letterSpacing: '0.05em',
                   textShadow: '0 2px 15px rgba(166, 124, 82, 0.4)'
                 }}>

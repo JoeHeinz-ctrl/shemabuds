@@ -76,7 +76,7 @@ export function Header() {
               <h1
                 className="text-3xl lg:text-4xl font-bold text-[#2A1B14] drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]"
                 style={{
-                  fontFamily: "'Playfair Display', 'Georgia', serif",
+                  fontFamily: "'Relona', serif",
                   letterSpacing: "0.04em",
                 }}
               >
