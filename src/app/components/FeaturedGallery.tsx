@@ -146,6 +146,7 @@ export function FeaturedGallery() {
                     <ImageWithFallback
                       src={product.image}
                       alt={product.title}
+                      loading="lazy"
                       className="w-full h-full object-cover"
                     />
                   </motion.div>

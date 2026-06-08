@@ -197,6 +197,7 @@ export function Services() {
                   {/* Image */}
                   <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                     <img
+                      loading="lazy"
                       src={item.image}
                       alt={item.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -265,6 +266,7 @@ export function Services() {
                       >
                         <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
                           <img
+                            loading="lazy"
                             src={item.image}
                             alt={item.title}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
