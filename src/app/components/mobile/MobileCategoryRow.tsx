@@ -60,19 +60,20 @@ export function MobileCategoryRow({
         )}
       </div>
 
-      {/* Products Grid - Horizontal scroll or Grid */}
-      {!isExpanded ? (
-        // Horizontal Scrolling (Preview)
-        <div className="overflow-x-auto scrollbar-hide snap-x">
-          <div className="flex gap-3 px-4 pb-2">
+      {/* Products Grid */}
+      <div className="px-4">
+        <motion.div layout className="grid grid-cols-3 gap-2">
+          <AnimatePresence>
             {displayProducts.map((product, index) => (
               <motion.div
+                layout
                 key={product.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.3, delay: (index % 3) * 0.05 }}
                 onClick={() => handleViewDetails(product)}
-                className="flex-shrink-0 w-[140px] glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow snap-start"
+                className="glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow flex flex-col"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square bg-muted">
@@ -82,8 +83,8 @@ export function MobileCategoryRow({
                     className="w-full h-full object-cover"
                   />
                   {product.badge && (
-                    <div className="absolute top-1.5 left-1.5">
-                      <span className="px-1.5 py-0.5 bg-primary text-primary-foreground text-[9px] rounded-full font-semibold">
+                    <div className="absolute top-1 left-1">
+                      <span className="px-1 py-0.5 bg-primary text-primary-foreground text-[8px] rounded-full font-semibold">
                         {product.badge}
                       </span>
                     </div>
@@ -91,73 +92,14 @@ export function MobileCategoryRow({
                 </div>
 
                 {/* Product Info */}
-                <div className="p-2">
-                  <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1 min-h-[2rem]">
-                    {product.title}
-                  </h3>
-                  
-                  {product.price && (
-                    <p className="text-xs font-bold text-primary mb-1.5">
-                      {product.price}
-                    </p>
-                  )}
-
-                  {/* Add to Cart Button */}
-                  <Button
-                    onClick={(e) => handleQuickAddToCart(product, e)}
-                    size="sm"
-                    className="w-full py-1.5 text-[10px] h-auto"
-                  >
-                    <ShoppingCart className="w-3 h-3 mr-1" />
-                    Add
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      ) : (
-        // Expanded Grid (3 columns)
-        <AnimatePresence>
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="px-4"
-          >
-            <div className="grid grid-cols-3 gap-2">
-              {displayProducts.map((product, index) => (
-                <motion.div
-                  key={product.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                  onClick={() => handleViewDetails(product)}
-                  className="glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow"
-                >
-                  {/* Product Image */}
-                  <div className="relative aspect-square bg-muted">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-full object-cover"
-                    />
-                    {product.badge && (
-                      <div className="absolute top-1 left-1">
-                        <span className="px-1 py-0.5 bg-primary text-primary-foreground text-[8px] rounded-full font-semibold">
-                          {product.badge}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Product Info */}
-                  <div className="p-2">
+                <div className="p-2 flex flex-col flex-1 justify-between">
+                  <div>
                     <h3 className="text-[10px] font-semibold text-foreground line-clamp-2 mb-1 min-h-[2rem]">
                       {product.title}
                     </h3>
-                    
+                  </div>
+                  
+                  <div className="mt-1">
                     {product.price && (
                       <p className="text-[10px] font-bold text-primary mb-1">
                         {product.price}
@@ -174,12 +116,12 @@ export function MobileCategoryRow({
                       Add
                     </Button>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      )}
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </div>
     </div>
   );
 }
