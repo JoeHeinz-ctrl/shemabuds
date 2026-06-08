@@ -94,7 +94,7 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full min-h-[100dvh] pt-16 pb-8 md:pt-28 md:pb-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full min-h-[100dvh] pt-20 pb-8 md:pt-28 md:pb-10">
         {/* Floating background leaf motifs in empty margins */}
         <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[28%] pointer-events-none hidden lg:block text-sage" delay={0} duration={7} />
         <FloatingLeaf size={60} opacity={0.12} className="absolute right-[8%] top-[50%] pointer-events-none hidden lg:block text-olive" delay={2} duration={9} />

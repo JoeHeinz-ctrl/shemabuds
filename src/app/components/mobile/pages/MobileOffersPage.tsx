@@ -6,7 +6,7 @@ export function MobileOffersPage() {
   const hasOffers = false;
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 px-4">
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4">
       {/* Page Title */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-foreground">Special Offers</h1>

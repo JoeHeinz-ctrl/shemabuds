@@ -27,8 +27,16 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 glass-strong shadow-luxury">
-      <div className="grid grid-cols-5 gap-1 px-2 py-2">
+    <div 
+      className="md:hidden fixed bottom-0 left-0 right-0 z-50 shadow-luxury"
+      style={{
+        background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
+        backdropFilter: "blur(20px) saturate(120%)",
+        WebkitBackdropFilter: "blur(20px) saturate(120%)",
+        borderTop: "1px solid rgba(255,255,255,0.3)",
+      }}
+    >
+      <div className="grid grid-cols-5 gap-1 px-2 py-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -38,11 +46,11 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
               key={item.id}
               whileTap={{ scale: 0.95 }}
               onClick={() => item.id === "cart" ? handleCartClick() : onTabChange(item.id)}
-              className="relative flex flex-col items-center justify-center py-2 px-1 rounded-lg transition-colors"
+              className="relative flex flex-col items-center justify-center py-1.5 px-1 rounded-lg transition-colors"
             >
               <motion.div 
                 className="relative"
-                animate={isActive ? { y: [0, -4, 0] } : {}}
+                animate={isActive ? { y: [0, -3, 0] } : {}}
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
@@ -66,7 +74,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
                 )}
               </motion.div>
               <span 
-                className={`text-[10px] mt-1 font-medium transition-colors ${
+                className={`text-[9px] mt-0.5 font-medium transition-colors ${
                   isActive ? 'text-primary' : 'text-muted-foreground'
                 }`}
               >

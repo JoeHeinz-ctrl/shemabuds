@@ -28,27 +28,35 @@ export function MobileHeader() {
 
   return (
     <>
-      <div className="md:hidden fixed top-0 left-0 right-0 z-50 glass-strong shadow-luxury">
+      <div 
+        className="md:hidden fixed top-0 left-0 right-0 z-50 shadow-luxury"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
+          backdropFilter: "blur(20px) saturate(120%)",
+          WebkitBackdropFilter: "blur(20px) saturate(120%)",
+          borderBottom: "1px solid rgba(255,255,255,0.3)",
+        }}
+      >
         {/* Centered Logo Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-          {/* Logo on Left */}
-          <motion.div
+        <div className="flex items-center justify-between px-4 py-3">
+          {/* Contact Button on Left */}
+          <motion.button
             whileTap={{ scale: 0.95 }}
-            className="cursor-pointer flex items-center"
-            onClick={scrollToTop}
+            onClick={() => {
+              const event = new CustomEvent('openContactModal');
+              window.dispatchEvent(event);
+            }}
+            className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
           >
-            <img
-              src="/Brand/logomark.svg"
-              alt="Shema Buds Logomark"
-              className="w-8 h-8 object-contain"
-            />
-          </motion.div>
+            Contact
+          </motion.button>
 
           {/* Centered Title - Elegant logo image */}
           <motion.div 
             whileTap={{ scale: 0.95 }}
             className="absolute left-1/2 -translate-x-1/2 cursor-pointer flex items-center"
             onClick={scrollToTop}
+            style={{ marginLeft: '20px' }}
           >
               <img
                 src="/Brand/logo.svg"

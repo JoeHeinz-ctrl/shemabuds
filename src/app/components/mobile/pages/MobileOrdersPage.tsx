@@ -97,7 +97,7 @@ export function MobileOrdersPage() {
 
   if (loading) {
     return (
-      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 px-4 pb-24">
+      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-foreground">My Orders</h1>
           <p className="text-sm text-muted-foreground mt-1">Track your orders</p>
@@ -113,7 +113,7 @@ export function MobileOrdersPage() {
   if (!user) {
     return (
       <>
-        <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 px-4 pb-24 flex items-center justify-center">
+        <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24 flex items-center justify-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export function MobileOrdersPage() {
   }
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 px-4 pb-24">
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24">
       {/* Page Title */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-foreground">My Orders</h1>

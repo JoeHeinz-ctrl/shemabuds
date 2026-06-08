@@ -41,7 +41,7 @@ export function MobileCollectionsPage() {
 
   if (loading) {
     return (
-      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4">
+      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px]">
         <div className="px-4 mb-4">
           <h1 className="text-2xl font-bold text-foreground">Collections</h1>
           <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
@@ -54,7 +54,7 @@ export function MobileCollectionsPage() {
   }
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 pb-4">
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] pb-4">
       {/* Page Title */}
       <div className="px-4 mb-4">
         <h1 className="text-2xl font-bold text-foreground">Collections</h1>

@@ -38,14 +38,31 @@ export function Header() {
 
       {/* Desktop Header - Hidden on mobile */}
       <header
-        className="hidden md:block fixed top-4 left-0 right-0 z-50 overflow-visible px-6"
+        className="hidden md:block fixed top-0 left-0 right-0 z-50 overflow-visible shadow-luxury"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
+          backdropFilter: "blur(20px) saturate(120%)",
+          WebkitBackdropFilter: "blur(20px) saturate(120%)",
+          borderBottom: "1px solid rgba(255,255,255,0.3)",
+        }}
       >
-        <nav className="w-full flex items-center justify-between gap-8 relative">
-          {/* Left Section — Logo */}
+        <nav className="container mx-auto px-6 py-2 flex items-center justify-between relative">
+          {/* Contact Button - Left */}
+          <button
+            onClick={() => {
+              const event = new CustomEvent('openContactModal');
+              window.dispatchEvent(event);
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-foreground/80 bg-muted/60 hover:bg-muted/80 backdrop-blur-sm transition-all duration-200 hover:scale-105"
+          >
+            Contact
+          </button>
+
+          {/* Logo - Center (no background pill, bigger) */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="cursor-pointer shrink-0 flex items-center justify-center -translate-y-10"
+            className="absolute left-1/2 -translate-x-1/2 cursor-pointer shrink-0 flex items-center justify-center"
             onClick={() => {
               const event = new CustomEvent('openAboutModal');
               window.dispatchEvent(event);
@@ -54,87 +71,36 @@ export function Header() {
             <img
               src="/Brand/logo.svg"
               alt="Shema Buds Logo"
-              className="h-32 lg:h-36 w-auto object-contain select-none"
+              className="h-20 lg:h-24 w-auto object-contain select-none"
             />
           </motion.div>
 
-          {/* Right Section — Actions */}
-          <motion.div
-            className="flex items-center gap-3 lg:gap-4 px-5 py-2 ml-auto -translate-y-12"
-            style={{
-              background: "linear-gradient(135deg, rgba(205,232,139,0.15) 0%, rgba(205,232,139,0.08) 50%, rgba(205,232,139,0.15) 100%)",
-              backdropFilter: "blur(15px)",
-              WebkitBackdropFilter: "blur(15px)",
-              border: "1px solid rgba(205,232,139,0.25)",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
-              borderRadius: "40px",
-            }}
-          >
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 rounded-full"
-              style={{
-                background: "radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+          {/* Right Side - Action Buttons */}
+          <div className="flex items-center gap-2">
+            {/* Explore Collection Button */}
+            <button
+              onClick={() => {
+                const element = document.getElementById("services");
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
               }}
-            />
-            <div className="relative z-10 flex items-center gap-3 lg:gap-4">
-              <button
-                onClick={() => {
-                  const event = new CustomEvent('openContactModal');
-                  window.dispatchEvent(event);
-                }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-black bg-gradient-to-r from-[#efbf43] to-[#e5b42d] hover:from-[#e5b42d] hover:to-[#d9a820] shadow-luxury ring-1 ring-white/30 transition-all duration-200 hover:scale-105 backdrop-blur-sm"
-                style={{
-                  boxShadow: "inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.1)",
-                }}
-              >
-                Contact
-              </button>
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-foreground/80 bg-primary/10 hover:bg-primary/20 backdrop-blur-sm transition-all duration-200 hover:scale-105"
+            >
+              Explore Collection
+            </button>
 
-              {/* Explore Collection Button */}
-              <button
-                onClick={() => {
-                  const element = document.getElementById("services");
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth", block: "start" });
-                  }
-                }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-black bg-gradient-to-r from-[#d0744a] to-[#c8664f] hover:from-[#c8664f] hover:to-[#b85a45] shadow-luxury ring-1 ring-white/20 transition-all duration-200 hover:scale-105"
-              >
-                Explore Collection
-              </button>
-
-              {/* Settings Menu - Button only */}
-              <motion.button
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowSettingsMenu(true)}
-                className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
-                aria-label="Settings"
-              >
-                <Settings className="w-6 h-6" />
-              </motion.button>
-              
-              {/* Cart Icon */}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleCartClick}
-                className="relative p-2 text-[#2A1B14] hover:text-primary transition-colors duration-200"
-              >
-                <ShoppingBag className="w-6 h-6" />
-                {totalItems > 0 && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-semibold shadow-luxury"
-                  >
-                    {totalItems}
-                  </motion.span>
-                )}
-              </motion.button>
-            </div>
-          </motion.div>
+            {/* Settings Menu - Button only */}
+            <motion.button
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowSettingsMenu(true)}
+              className="relative p-2.5 text-foreground/70 hover:text-primary transition-colors duration-200 rounded-full hover:bg-muted/40"
+              aria-label="Settings"
+            >
+              <Settings className="w-5 h-5" />
+            </motion.button>
+          </div>
         </nav>
       </header>
       
@@ -157,28 +123,21 @@ export function Header() {
               className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
             >
               <div className="p-3 space-y-1">
-                {/* Theme Toggle */}
+                {/* Cart */}
                 <button
                   onClick={() => {
-                    toggleTheme();
+                    setIsCartOpen(true);
                     setShowSettingsMenu(false);
                   }}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
                 >
-                  <motion.div
-                    initial={false}
-                    animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {theme === "dark" ? (
-                      <Sun className="w-5 h-5 text-primary" />
-                    ) : (
-                      <Moon className="w-5 h-5 text-primary" />
+                  <div className="relative">
+                    <ShoppingBag className="w-5 h-5 text-primary" />
+                    {totalItems > 0 && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] rounded-full flex items-center justify-center font-semibold"></span>
                     )}
-                  </motion.div>
-                  <span className="font-medium text-foreground">
-                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
-                  </span>
+                  </div>
+                  <span className="font-medium text-foreground">Cart {totalItems > 0 && `(${totalItems})`}</span>
                 </button>
 
                 {/* User Menu */}
@@ -201,6 +160,32 @@ export function Header() {
                   </div>
                   <span className="font-medium text-foreground">
                     {user ? "My Account" : "Sign In"}
+                  </span>
+                </button>
+
+                <div className="border-t border-border my-1"></div>
+
+                {/* Theme Toggle */}
+                <button
+                  onClick={() => {
+                    toggleTheme();
+                    setShowSettingsMenu(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
+                >
+                  <motion.div
+                    initial={false}
+                    animate={{ rotate: theme === "dark" ? 180 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {theme === "dark" ? (
+                      <Sun className="w-5 h-5 text-primary" />
+                    ) : (
+                      <Moon className="w-5 h-5 text-primary" />
+                    )}
+                  </motion.div>
+                  <span className="font-medium text-foreground">
+                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
                   </span>
                 </button>
               </div>

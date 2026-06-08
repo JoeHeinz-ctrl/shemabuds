@@ -107,7 +107,7 @@ function AppContent() {
       </main>
 
       {/* Mobile View - Tab-based Navigation - Unchanged */}
-      <main className="md:hidden pt-[60px] pb-[80px]">
+      <main className="md:hidden pb-[80px]">
         {renderMobileContent()}
       </main>
 

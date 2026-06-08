@@ -37,7 +37,7 @@ export function MobileSettingsPage() {
   ];
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-4 px-4 pb-24 transition-colors duration-400">
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24 transition-colors duration-400">
       {/* Page Title */}
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
