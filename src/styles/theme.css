@@ -1,5 +1,16 @@
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: 'Relona';
+  src: url('/fonts/Relona.woff2') format('woff2'),
+       url('/fonts/Relona.woff') format('woff'),
+       url('/fonts/Relona.ttf') format('truetype'),
+       url('/fonts/Relona.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font-size: 16px;
   
@@ -321,6 +332,11 @@
 
   html {
     font-size: var(--font-size);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Relona', serif;
+    font-weight: normal;
   }
 
   h1 {
