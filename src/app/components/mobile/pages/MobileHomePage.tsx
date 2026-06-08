@@ -3,7 +3,6 @@ import { FeaturedGallery } from "../../FeaturedGallery";
 import { HowToOrder } from "../../HowToOrder";
 import { About } from "../../About";
 import { Testimonials } from "../../Testimonials";
-import { Contact } from "../../Contact";
 import { Footer } from "../../Footer";
 
 export function MobileHomePage() {
@@ -32,11 +31,6 @@ export function MobileHomePage() {
       {/* Customer Reviews */}
       <div id="testimonials">
         <Testimonials />
-      </div>
-      
-      {/* Contact Information */}
-      <div id="contact">
-        <Contact />
       </div>
 
       {/* Footer */}

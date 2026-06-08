@@ -9,14 +9,9 @@ interface MobileBottomNavProps {
 }
 
 export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps) {
-  const { cart, setIsCartOpen } = useOrdering();
+  const { cart } = useOrdering();
 
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-
-  const handleCartClick = () => {
-    onTabChange("cart");
-    setIsCartOpen(true);
-  };
 
   const navItems = [
     { id: "home", label: "Home", icon: Home },
@@ -45,7 +40,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
             <motion.button
               key={item.id}
               whileTap={{ scale: 0.95 }}
-              onClick={() => item.id === "cart" ? handleCartClick() : onTabChange(item.id)}
+              onClick={() => onTabChange(item.id)}
               className="relative flex flex-col items-center justify-center py-1.5 px-1 rounded-lg transition-colors"
             >
               <motion.div 

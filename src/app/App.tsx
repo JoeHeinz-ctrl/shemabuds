@@ -18,6 +18,7 @@ import { MobileBottomNav } from "./components/mobile/MobileBottomNav";
 import { MobileFloatingCart } from "./components/mobile/MobileFloatingCart";
 import { MobileHomePage } from "./components/mobile/pages/MobileHomePage";
 import { MobileCollectionsPage } from "./components/mobile/pages/MobileCollectionsPage";
+import { MobileCartPage } from "./components/mobile/pages/MobileCartPage";
 import { MobileOrdersPage } from "./components/mobile/pages/MobileOrdersPage";
 import { MobileSettingsPage } from "./components/mobile/pages/MobileSettingsPage";
 import { ThemeProvider } from "../contexts/ThemeContext";
@@ -35,15 +36,21 @@ function AppContent() {
     const handleOpenAbout = () => setShowAboutModal(true);
     const handleOpenContact = () => setShowContactModal(true);
     const handleNavigateToCollections = () => setMobileActiveTab("collections");
+    const handleNavigateToOrders = () => setMobileActiveTab("orders");
+    const handleNavigateToHome = () => setMobileActiveTab("home");
 
     window.addEventListener('openAboutModal', handleOpenAbout);
     window.addEventListener('openContactModal', handleOpenContact);
     window.addEventListener('navigateToCollections', handleNavigateToCollections);
+    window.addEventListener('navigateToOrders', handleNavigateToOrders);
+    window.addEventListener('navigateToHome', handleNavigateToHome);
 
     return () => {
       window.removeEventListener('openAboutModal', handleOpenAbout);
       window.removeEventListener('openContactModal', handleOpenContact);
       window.removeEventListener('navigateToCollections', handleNavigateToCollections);
+      window.removeEventListener('navigateToOrders', handleNavigateToOrders);
+      window.removeEventListener('navigateToHome', handleNavigateToHome);
     };
   }, []);
 
@@ -71,12 +78,12 @@ function AppContent() {
         return <MobileHomePage />;
       case "collections":
         return <MobileCollectionsPage />;
+      case "cart":
+        return <MobileCartPage />;
       case "orders":
         return <MobileOrdersPage />;
       case "settings":
         return <MobileSettingsPage />;
-      case "cart":
-        return <MobileHomePage />; // Cart is handled by modal
       default:
         return <MobileHomePage />;
     }
