@@ -200,6 +200,7 @@
 
   body {
     @apply bg-background text-foreground;
+    background: linear-gradient(135deg, rgba(205,232,139,0.1) 0%, rgba(205,232,139,0.05) 100%);
   }
 
   /* Glassmorphism utilities */

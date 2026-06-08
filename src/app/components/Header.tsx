@@ -38,54 +38,72 @@ export function Header() {
 
       {/* Desktop Header - Hidden on mobile */}
       <header
-        className="hidden md:block fixed top-0 left-0 right-0 z-50 overflow-hidden"
-        style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.72) 0%, rgba(255,250,245,0.65) 50%, rgba(255,255,255,0.68) 100%)",
-          backdropFilter: "blur(16px) saturate(160%)",
-          WebkitBackdropFilter: "blur(16px) saturate(160%)",
-          borderBottom: "1px solid rgba(255,255,255,0.6)",
-          boxShadow: "0 4px 20px rgba(42,27,20,0.08)",
-        }}
+        className="hidden md:block fixed top-4 left-0 right-0 z-50 overflow-visible px-6"
       >
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background: "radial-gradient(ellipse at 10% 50%, rgba(255,255,255,0.85) 0%, transparent 45%)",
-          }}
-        />
-        <nav className="w-full pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8 py-3.5 relative">
-          <div className="flex items-center justify-between gap-6">
-            {/* Logo — flush left */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="cursor-pointer shrink-0 flex items-center"
-              onClick={() => {
-                const event = new CustomEvent('openAboutModal');
-                window.dispatchEvent(event);
-              }}
-            >
-              <img
-                src="/Brand/logo.svg"
-                alt="Shema Buds Logo"
-                className="h-10 lg:h-12 w-auto object-contain select-none scale-[2.5] lg:scale-[3] origin-left translate-x-4"
-              />
-            </motion.div>
+        <nav className="w-full flex items-center justify-between gap-8 relative">
+          {/* Left Section — Logo */}
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer shrink-0 flex items-center justify-center -translate-y-10"
+            onClick={() => {
+              const event = new CustomEvent('openAboutModal');
+              window.dispatchEvent(event);
+            }}
+          >
+            <img
+              src="/Brand/logo.svg"
+              alt="Shema Buds Logo"
+              className="h-32 lg:h-36 w-auto object-contain select-none"
+            />
+          </motion.div>
 
-            {/* Right Side Actions */}
-            <div className="flex items-center gap-3 lg:gap-4">
+          {/* Right Section — Actions */}
+          <motion.div
+            className="flex items-center gap-3 lg:gap-4 px-5 py-2 ml-auto -translate-y-12"
+            style={{
+              background: "linear-gradient(135deg, rgba(205,232,139,0.15) 0%, rgba(205,232,139,0.08) 50%, rgba(205,232,139,0.15) 100%)",
+              backdropFilter: "blur(15px)",
+              WebkitBackdropFilter: "blur(15px)",
+              border: "1px solid rgba(205,232,139,0.25)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.04)",
+              borderRadius: "40px",
+            }}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 rounded-full"
+              style={{
+                background: "radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%)",
+              }}
+            />
+            <div className="relative z-10 flex items-center gap-3 lg:gap-4">
               <button
                 onClick={() => {
                   const event = new CustomEvent('openContactModal');
                   window.dispatchEvent(event);
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[#2A1B14] bg-white/80 hover:bg-white shadow-luxury ring-1 ring-white/90 transition-all duration-200 hover:scale-105"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-black bg-gradient-to-r from-[#efbf43] to-[#e5b42d] hover:from-[#e5b42d] hover:to-[#d9a820] shadow-luxury ring-1 ring-white/30 transition-all duration-200 hover:scale-105 backdrop-blur-sm"
+                style={{
+                  boxShadow: "inset 0 1px 2px rgba(255,255,255,0.3), 0 4px 12px rgba(0,0,0,0.1)",
+                }}
               >
-                <Heart className="w-4 h-4 text-primary fill-primary/20" />
                 Contact
               </button>
-              
+
+              {/* Explore Collection Button */}
+              <button
+                onClick={() => {
+                  const element = document.getElementById("services");
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-black bg-gradient-to-r from-[#d0744a] to-[#c8664f] hover:from-[#c8664f] hover:to-[#b85a45] shadow-luxury ring-1 ring-white/20 transition-all duration-200 hover:scale-105"
+              >
+                Explore Collection
+              </button>
+
               {/* Settings Menu - Button only */}
               <motion.button
                 whileHover={{ scale: 1.1, rotate: 90 }}
@@ -116,7 +134,7 @@ export function Header() {
                 )}
               </motion.button>
             </div>
-          </div>
+          </motion.div>
         </nav>
       </header>
       
