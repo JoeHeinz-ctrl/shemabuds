@@ -58,7 +58,7 @@ export function Header() {
             Contact
           </button>
 
-          {/* Logo - Center (no background pill, bigger) */}
+          {/* Logo - Center (no background pill, bigger with scale) */}
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -71,7 +71,7 @@ export function Header() {
             <img
               src="/Brand/logo.svg"
               alt="Shema Buds Logo"
-              className="h-20 lg:h-24 w-auto object-contain select-none"
+              className="h-20 lg:h-24 w-auto object-contain select-none scale-150"
             />
           </motion.div>
 

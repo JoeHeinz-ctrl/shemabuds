@@ -38,7 +38,7 @@ export function MobileHeader() {
         }}
       >
         {/* Centered Logo Header */}
-        <div className="flex items-center justify-between px-4 py-3">
+        <div className="flex items-center justify-between px-4 py-3 relative">
           {/* Contact Button on Left */}
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -46,35 +46,33 @@ export function MobileHeader() {
               const event = new CustomEvent('openContactModal');
               window.dispatchEvent(event);
             }}
-            className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
+            className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors z-10"
           >
             Contact
           </motion.button>
 
           {/* Centered Title - Elegant logo image */}
-          <motion.div 
-            whileTap={{ scale: 0.95 }}
-            className="absolute left-1/2 -translate-x-1/2 cursor-pointer flex items-center"
+          <div 
+            className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 cursor-pointer flex items-center"
             onClick={scrollToTop}
-            style={{ marginLeft: '20px' }}
           >
               <img
                 src="/Brand/logo.svg"
                 alt="Shema Buds"
-                className="h-9 md:h-11 w-auto object-contain select-none scale-[2.5] md:scale-[2.8] origin-center"
+                className="h-9 w-auto object-contain select-none scale-[2.5] origin-center"
               />
-          </motion.div>
+          </div>
 
-          {/* User Button on Right */}
+          {/* Explore Deals Button on Right */}
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={handleUserClick}
-            className="relative p-2 text-secondary-foreground active:text-primary transition-colors"
+            onClick={() => {
+              // Navigate to collections tab
+              window.dispatchEvent(new CustomEvent('navigateToCollections'));
+            }}
+            className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors z-10"
           >
-            <User className="w-6 h-6" />
-            {user && (
-              <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
-            )}
+            Explore Deals
           </motion.button>
         </div>
 

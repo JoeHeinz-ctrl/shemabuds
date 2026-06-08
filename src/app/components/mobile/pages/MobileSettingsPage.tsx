@@ -1,9 +1,14 @@
-import { MapPin, Truck, Phone, Mail, Shield, FileText, Heart, Moon, Sun, Palette } from "lucide-react";
+import { MapPin, Truck, Phone, Mail, Shield, FileText, Heart, Moon, Sun, Palette, User, LogOut } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "../../../../contexts/ThemeContext";
+import { useAuth } from "../../../../contexts/AuthContext";
+import { useState } from "react";
+import { AuthModal } from "../../AuthModal";
 
 export function MobileSettingsPage() {
   const { theme, toggleTheme } = useTheme();
+  const { user, signOut } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const settingsSections = [
     {
       title: "Business Information",
@@ -43,6 +48,45 @@ export function MobileSettingsPage() {
         <h1 className="text-2xl font-bold text-foreground">Settings</h1>
         <p className="text-sm text-muted-foreground mt-1">Information & preferences</p>
       </div>
+
+      {/* User Account Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-strong rounded-2xl p-5 shadow-luxury mb-4"
+      >
+        {user ? (
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-primary/20 p-2.5 rounded-lg relative">
+                <User className="w-5 h-5 text-primary" />
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
+              </div>
+              <div>
+                <h2 className="font-semibold text-foreground">{user.displayName || "User"}</h2>
+                <p className="text-xs text-muted-foreground">{user.email}</p>
+              </div>
+            </div>
+            <motion.button
+              whileTap={{ scale: 0.95 }}
+              onClick={() => signOut()}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-destructive/10 hover:bg-destructive/20 text-destructive font-medium transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </motion.button>
+          </div>
+        ) : (
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setShowAuthModal(true)}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary font-medium transition-colors"
+          >
+            <User className="w-5 h-5" />
+            Sign In
+          </motion.button>
+        )}
+      </motion.div>
 
       {/* Theme Toggle - Premium Feature */}
       <motion.div
@@ -190,6 +234,12 @@ export function MobileSettingsPage() {
         <p className="text-xs text-muted-foreground">Shemabuds Mobile</p>
         <p className="text-xs text-primary font-medium">Version 1.0.0</p>
       </motion.div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </div>
   );
 }

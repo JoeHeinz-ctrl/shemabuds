@@ -34,13 +34,16 @@ function AppContent() {
   useEffect(() => {
     const handleOpenAbout = () => setShowAboutModal(true);
     const handleOpenContact = () => setShowContactModal(true);
+    const handleNavigateToCollections = () => setMobileActiveTab("collections");
 
     window.addEventListener('openAboutModal', handleOpenAbout);
     window.addEventListener('openContactModal', handleOpenContact);
+    window.addEventListener('navigateToCollections', handleNavigateToCollections);
 
     return () => {
       window.removeEventListener('openAboutModal', handleOpenAbout);
       window.removeEventListener('openContactModal', handleOpenContact);
+      window.removeEventListener('navigateToCollections', handleNavigateToCollections);
     };
   }, []);
 
