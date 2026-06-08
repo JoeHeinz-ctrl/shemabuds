@@ -5,12 +5,12 @@
 
 export const theme = {
   colors: {
-    // Primary Gold Palette
+    // Primary Brand Palette (Mapped to Gold for compatibility)
     gold: {
-      primary: '#A67C52',
-      hover: '#8B6B3E',
-      light: '#C4956F',
-      dark: '#7A5A3C',
+      primary: '#d4744a',  // Brand Terracotta
+      hover: '#b8572d',    // Brand Terracotta Dark
+      light: '#94b38a',    // Brand Sage
+      dark: '#9e431f',     // Dark Terracotta
     },
     
     // Brown Palette
@@ -23,7 +23,7 @@ export const theme = {
     
     // Background & Neutral
     background: {
-      cream: '#FAF7F2',
+      cream: '#faf7f0',     // Brand Sand Light
       white: '#FFFFFF',
       lightCream: '#FFF9F5',
       warmWhite: '#FEFDFB',
@@ -31,44 +31,44 @@ export const theme = {
     
     // Accent Colors
     accent: {
-      rose: '#D8B4A0',
-      softPink: '#E8C4B4',
-      lightRose: '#F3D7CA',
-      paleRose: '#F8E8E0',
+      rose: '#d4744a',      // Brand Terracotta
+      softPink: '#94b38a',  // Brand Sage
+      lightRose: '#f2e7cb',  // Brand Sand
+      paleRose: '#faf7f0',   // Brand Sand Light
     },
     
     // Semantic Colors
     text: {
       primary: '#2A1B14',
       secondary: '#4A3A32',
-      tertiary: '#6B5D52',
+      textTertiary: '#6B5D52',
       muted: '#8B7D72',
     },
     
     // Interactive States
     interactive: {
-      hover: '#8B6B3E',
-      active: '#7A5A3C',
-      focus: '#A67C52',
+      hover: '#b8572d',
+      active: '#9e431f',
+      focus: '#d4744a',
     },
     
     // Shadows (warm tones)
     shadow: {
-      sm: 'rgba(166, 124, 82, 0.08)',
-      md: 'rgba(166, 124, 82, 0.12)',
-      lg: 'rgba(166, 124, 82, 0.16)',
+      sm: 'rgba(212, 116, 74, 0.08)',
+      md: 'rgba(212, 116, 74, 0.12)',
+      lg: 'rgba(212, 116, 74, 0.16)',
       xl: 'rgba(42, 27, 20, 0.15)',
     },
   },
   
   shadows: {
-    sm: '0 1px 2px 0 rgba(166, 124, 82, 0.08)',
-    md: '0 4px 6px -1px rgba(166, 124, 82, 0.12), 0 2px 4px -1px rgba(166, 124, 82, 0.06)',
-    lg: '0 10px 15px -3px rgba(166, 124, 82, 0.16), 0 4px 6px -2px rgba(166, 124, 82, 0.08)',
+    sm: '0 1px 2px 0 rgba(212, 116, 74, 0.08)',
+    md: '0 4px 6px -1px rgba(212, 116, 74, 0.12), 0 2px 4px -1px rgba(212, 116, 74, 0.06)',
+    lg: '0 10px 15px -3px rgba(212, 116, 74, 0.16), 0 4px 6px -2px rgba(212, 116, 74, 0.08)',
     xl: '0 20px 25px -5px rgba(42, 27, 20, 0.15), 0 10px 10px -5px rgba(42, 27, 20, 0.08)',
     '2xl': '0 25px 50px -12px rgba(42, 27, 20, 0.25)',
-    card: '0 2px 8px rgba(166, 124, 82, 0.1)',
-    cardHover: '0 8px 24px rgba(166, 124, 82, 0.18)',
+    card: '0 2px 8px rgba(212, 116, 74, 0.1)',
+    cardHover: '0 8px 24px rgba(212, 116, 74, 0.18)',
   },
   
   transitions: {
@@ -79,10 +79,10 @@ export const theme = {
   },
   
   gradients: {
-    goldShimmer: 'linear-gradient(135deg, #A67C52 0%, #C4956F 50%, #A67C52 100%)',
-    warmBackground: 'linear-gradient(180deg, #FFFFFF 0%, #FAF7F2 100%)',
-    roseGold: 'linear-gradient(135deg, #D8B4A0 0%, #A67C52 100%)',
-    subtleGlow: 'linear-gradient(180deg, rgba(166, 124, 82, 0.05) 0%, rgba(166, 124, 82, 0) 100%)',
+    goldShimmer: 'linear-gradient(135deg, #d4744a 0%, #94b38a 50%, #d4744a 100%)',
+    warmBackground: 'linear-gradient(180deg, #FFFFFF 0%, #faf7f0 100%)',
+    roseGold: 'linear-gradient(135deg, #f2e7cb 0%, #d4744a 100%)',
+    subtleGlow: 'linear-gradient(180deg, rgba(212, 116, 74, 0.05) 0%, rgba(212, 116, 74, 0) 100%)',
   },
 } as const;
 

@@ -73,7 +73,7 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
           className="bg-card text-card-foreground rounded-3xl shadow-2xl max-w-md w-full overflow-hidden"
         >
           {/* Header with animated checkmark */}
-          <div className="relative bg-gradient-to-br from-[#A67C52] to-[#8B6B3E] p-8 text-center">
+          <div className="relative bg-gradient-to-br from-primary to-accent p-8 text-center">
             <motion.div
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
@@ -87,7 +87,7 @@ export function OrderSuccessModal({ isOpen, onClose, orderId, orderType }: Order
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-2xl md:text-3xl font-bold text-white mb-2"
+              className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2 font-serif"
             >
               {orderType === "whatsapp" ? "Order Sent!" : "Order Placed!"}
             </motion.h2>

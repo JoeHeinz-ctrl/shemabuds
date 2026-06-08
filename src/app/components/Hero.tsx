@@ -4,6 +4,8 @@ import { Sparkles, Package, Heart, Award } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "motion/react";
 
+import { LogomarkWatermark, LogomarkCorner, FloatingLeaf } from "./BrandDecoration";
+
 const stats = [
   { icon: Package, value: "150+", label: "Creations Delivered" },
   { icon: Heart, value: "300+", label: "Happy Customers" },
@@ -44,7 +46,7 @@ export function Hero() {
   }, [isPaused]);
 
   return (
-    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center overflow-visible z-0">
+    <section ref={heroRef} className="relative min-h-[100dvh] flex items-center overflow-hidden z-0">
       {/* Background Image Slideshow with Parallax */}
       <motion.div
         className="absolute inset-0 z-0 min-h-full"
@@ -93,6 +95,12 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex justify-center w-full min-h-[100dvh] pt-16 pb-8 md:pt-28 md:pb-10">
+        {/* Floating background leaf motifs in empty margins */}
+        <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[28%] pointer-events-none hidden lg:block text-sage" delay={0} duration={7} />
+        <FloatingLeaf size={60} opacity={0.12} className="absolute right-[8%] top-[50%] pointer-events-none hidden lg:block text-olive" delay={2} duration={9} />
+        <FloatingLeaf size={45} opacity={0.08} className="absolute left-[15%] bottom-[15%] pointer-events-none hidden lg:block text-accent" delay={1.5} duration={8} />
+        <FloatingLeaf size={50} opacity={0.10} className="absolute right-[12%] top-[18%] pointer-events-none hidden lg:block text-primary" delay={3} duration={6} />
+        
         <div className="w-full max-w-3xl lg:max-w-4xl self-center -translate-y-6">
           <div
             className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"
@@ -101,15 +109,19 @@ export function Hero() {
               backdropFilter: "blur(28px) saturate(180%)",
               WebkitBackdropFilter: "blur(28px) saturate(180%)",
               border: "1.5px solid rgba(255,255,255,0.65)",
-              boxShadow: "0 8px 32px rgba(166,124,82,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(166,124,82,0.12) inset",
+              boxShadow: "0 8px 32px rgba(212,116,74,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(212,116,74,0.12) inset",
             }}
           >
+            {/* Subtle Brand Logomark Corner Accents */}
+            <LogomarkCorner size={90} position="top-right" opacity={0.10} colorClass="text-primary" />
+            <LogomarkCorner size={90} position="bottom-left" opacity={0.10} colorClass="text-primary" />
+
             {/* Liquid shimmer overlay */}
             <div
               aria-hidden
               style={{
                 position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
-                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(166,124,82,0.10) 0%, transparent 60%)",
+                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(212,116,74,0.10) 0%, transparent 60%)",
               }}
             />
             <motion.div
@@ -217,6 +229,7 @@ export function Hero() {
         }}
         className="absolute top-20 right-0 w-96 h-96 bg-accent/15 dark:bg-primary/10 rounded-full blur-3xl -z-10"
       />
+      <LogomarkWatermark size={280} opacity={0.06} className="absolute bottom-[8%] right-[6%] pointer-events-none hidden md:block" />
     </section>
   );
 }

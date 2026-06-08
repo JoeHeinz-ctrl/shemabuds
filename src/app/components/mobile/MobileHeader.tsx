@@ -34,28 +34,27 @@ export function MobileHeader() {
           {/* Logo on Left */}
           <motion.div
             whileTap={{ scale: 0.95 }}
-            className="cursor-pointer"
+            className="cursor-pointer flex items-center"
             onClick={scrollToTop}
           >
-            <div className="bg-primary p-1.5 rounded-lg shadow-sm">
-              <Heart className="w-5 h-5 text-primary-foreground fill-primary-foreground" />
-            </div>
+            <img
+              src="/Brand/logomark.svg"
+              alt="Shema Buds Logomark"
+              className="w-8 h-8 object-contain"
+            />
           </motion.div>
 
-          {/* Centered Title - Elegant & Eye-catching */}
+          {/* Centered Title - Elegant logo image */}
           <motion.div 
             whileTap={{ scale: 0.95 }}
-            className="absolute left-1/2 -translate-x-1/2 cursor-pointer"
+            className="absolute left-1/2 -translate-x-1/2 cursor-pointer flex items-center"
             onClick={scrollToTop}
           >
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#A67C52] via-[#D4A574] to-[#A67C52]" 
-                style={{ 
-                  fontFamily: "'Relona', serif",
-                  letterSpacing: '0.05em',
-                  textShadow: '0 2px 15px rgba(166, 124, 82, 0.4)'
-                }}>
-              Shema Buds
-            </h1>
+              <img
+                src="/Brand/logo.svg"
+                alt="Shema Buds"
+                className="h-9 md:h-11 w-auto object-contain select-none scale-[2.5] md:scale-[2.8] origin-center"
+              />
           </motion.div>
 
           {/* User Button on Right */}

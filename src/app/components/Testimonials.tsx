@@ -1,6 +1,7 @@
 import { Card } from "./ui/card";
 import { Star, Quote, User } from "lucide-react";
 import { motion } from "motion/react";
+import { LogomarkWatermark, FloatingLeaf } from "./BrandDecoration";
 
 const testimonials = [
   {
@@ -23,10 +24,22 @@ const testimonials = [
   }
 ];
 
+const avatarColors = [
+  "bg-primary/20 border-primary/30 text-primary",
+  "bg-sage/20 border-sage/30 text-sage",
+  "bg-accent/40 border-accent/50 text-[#2A1B14]",
+  "bg-olive/50 border-olive/60 text-[#2A1B14]",
+];
+
 export function Testimonials() {
   return (
-    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-muted/30">
-      <div className="container mx-auto">
+    <section className="relative py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-muted/30 overflow-hidden">
+      <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[15%] pointer-events-none hidden lg:block text-sage" delay={0} duration={7} />
+      <FloatingLeaf size={60} opacity={0.12} className="absolute right-[6%] bottom-[15%] pointer-events-none hidden lg:block text-olive" delay={2} duration={9} />
+      <FloatingLeaf size={45} opacity={0.08} className="absolute left-[15%] top-[55%] pointer-events-none hidden lg:block text-primary" delay={1.5} duration={8} />
+      <FloatingLeaf size={50} opacity={0.10} className="absolute right-[10%] top-[25%] pointer-events-none hidden lg:block text-accent" delay={3} duration={6} />
+      <LogomarkWatermark size={280} opacity={0.06} className="absolute bottom-[10%] left-[5%] pointer-events-none hidden md:block" />
+      <div className="container mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +47,7 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 md:mb-16"
         >
-          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">What Our Clients Say</h2>
+          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">What Our Clients Say</h2>
           <p className="text-xs md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Don't just take our word for it - hear from our happy customers
           </p>
@@ -54,9 +67,9 @@ export function Testimonials() {
                 <Quote className="absolute top-3 right-3 md:top-6 md:right-6 w-8 h-8 md:w-12 md:h-12 text-primary/20" />
                 
                 <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-6">
-                  {/* Placeholder Avatar */}
-                  <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30 shadow-sm flex-shrink-0">
-                    <User className="w-5 h-5 md:w-8 md:h-8 text-primary" />
+                  {/* Avatar */}
+                  <div className={`w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center border-2 shadow-sm flex-shrink-0 ${avatarColors[index % avatarColors.length]}`}>
+                    <User className="w-5 h-5 md:w-8 md:h-8" />
                   </div>
                   <div>
                     <h4 className="text-sm md:text-base text-foreground font-semibold">{testimonial.name}</h4>
@@ -66,7 +79,7 @@ export function Testimonials() {
 
                 <div className="flex gap-0.5 md:gap-1 mb-2 md:mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
-                    <Star key={i} className="w-3 h-3 md:w-4 md:h-4 fill-primary text-primary" />
+                    <Star key={i} className="w-3 h-3 md:w-4 md:h-4 fill-accent text-accent" />
                   ))}
                 </div>
 

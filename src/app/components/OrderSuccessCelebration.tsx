@@ -155,7 +155,7 @@ export function OrderSuccessCelebration({ isOpen, onClose }: OrderSuccessCelebra
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-[#2A1B14] dark:text-[#F5F1ED] mb-3">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3 font-serif">
                 Order Received!
               </h2>
               
@@ -166,7 +166,7 @@ export function OrderSuccessCelebration({ isOpen, onClose }: OrderSuccessCelebra
                 className="flex items-center justify-center gap-2 mb-4"
               >
                 <Sparkles className="w-5 h-5 text-[#A67C52] dark:text-[#C4956F]" />
-                <p className="text-lg text-[#4A3A32] dark:text-[#D4C7BB] font-medium">
+                <p className="text-lg text-muted-foreground font-medium">
                   We'll craft something beautiful for you
                 </p>
                 <Sparkles className="w-5 h-5 text-[#A67C52] dark:text-[#C4956F]" />
@@ -176,9 +176,9 @@ export function OrderSuccessCelebration({ isOpen, onClose }: OrderSuccessCelebra
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.5 }}
-                className="text-[#6B5D52] dark:text-[#A39286]"
+                className="text-muted-foreground"
               >
-                Thank you for choosing Shemabuds. We'll contact you soon to confirm your order details.
+                Thank you for choosing Shema Buds. We'll contact you soon to confirm your order details.
               </motion.p>
             </motion.div>
 

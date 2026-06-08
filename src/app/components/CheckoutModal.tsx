@@ -286,7 +286,7 @@ export function CheckoutModal() {
               >
                 <ArrowLeft className="w-5 h-5 text-muted-foreground" />
               </button>
-              <h2 className="text-lg md:text-2xl font-semibold text-foreground">
+              <h2 className="text-lg md:text-2xl font-semibold text-foreground font-serif">
                 {step === "form" ? "Checkout" : "Review Your Order"}
               </h2>
             </div>

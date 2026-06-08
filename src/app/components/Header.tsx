@@ -56,32 +56,21 @@ export function Header() {
         />
         <nav className="w-full pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-8 lg:pr-8 py-3.5 relative">
           <div className="flex items-center justify-between gap-6">
-            {/* Logo + Title — flush left */}
+            {/* Logo — flush left */}
             <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="cursor-pointer shrink-0 flex items-center gap-3"
+              className="cursor-pointer shrink-0 flex items-center"
               onClick={() => {
                 const event = new CustomEvent('openAboutModal');
                 window.dispatchEvent(event);
               }}
             >
-              <motion.div
-                className="bg-primary p-2 rounded-xl shadow-[0_4px_16px_rgba(42,27,20,0.35)] ring-2 ring-white/90"
-                whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
-              >
-                <Heart className="w-5 h-5 lg:w-6 lg:h-6 text-primary-foreground fill-primary-foreground" />
-              </motion.div>
-              <h1
-                className="text-3xl lg:text-4xl font-bold text-[#2A1B14] drop-shadow-[0_1px_2px_rgba(255,255,255,0.9)]"
-                style={{
-                  fontFamily: "'Relona', serif",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                Shema Buds
-              </h1>
+              <img
+                src="/Brand/logo.svg"
+                alt="Shema Buds Logo"
+                className="h-10 lg:h-12 w-auto object-contain select-none scale-[2.5] lg:scale-[3] origin-left translate-x-4"
+              />
             </motion.div>
 
             {/* Right Side Actions */}

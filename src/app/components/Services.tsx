@@ -4,6 +4,7 @@ import { Flower2, Gift, Sparkles, Heart, PenTool, ShoppingBag, ArrowRight, Arrow
 import { Button } from "./ui/button";
 import { useOrdering, Product } from "./OrderingSystem";
 import { useProducts } from "../../hooks/useProducts";
+import { LogomarkSpinner, LogomarkWatermark, FloatingLeaf } from "./BrandDecoration";
 
 const categoryMeta: Record<string, { label: string; icon: typeof Flower2 }> = {
   bouquets: { label: "Bouquets", icon: Flower2 },
@@ -86,11 +87,14 @@ export function Services() {
 
   // Show loading state while fetching Firebase products
   if (loading) {
-      <section className="relative my-8 sm:my-12 px-4 sm:px-6 lg:px-8 z-0">
+    return (
+      <section className="relative px-4 sm:px-6 lg:px-8 z-0 overflow-hidden">
+
         <div className="container mx-auto max-w-7xl">
-          <div className="rounded-[36px] bg-white/60 backdrop-blur-lg border border-white/30 shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden">
+          <div className="relative overflow-hidden py-10 px-6 sm:px-10">
+            <LogomarkWatermark size={400} className="absolute -bottom-20 -right-20 text-primary pointer-events-none" opacity={0.03} />
             <div className="text-center mb-12">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl mb-4 text-foreground font-semibold tracking-tight">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl mb-4 text-foreground font-semibold tracking-tight font-serif">
                 Our Creations
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto font-light leading-relaxed">
@@ -98,22 +102,32 @@ export function Services() {
               </p>
             </div>
             <div className="flex items-center justify-center py-12">
-              <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+              <LogomarkSpinner size={64} />
             </div>
           </div>
         </div>
+
       </section>
+    );
   }
 
   return (
-    <section className="relative my-8 sm:my-12 px-4 sm:px-6 lg:px-8 z-0">
-      {/* Decorative floral blobs */}
-      <div className="absolute -top-16 -left-16 w-72 md:w-96 h-72 md:h-96 bg-gradient-to-r from-[#F8E8E0] to-[#E8C4B4] rounded-full blur-3xl opacity-40 -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
-      <div className="absolute -bottom-20 -right-20 w-80 md:w-96 h-80 md:h-96 bg-gradient-to-r from-[#FFF9F5] to-[#e8cfc2] rounded-full blur-3xl opacity-40 -z-10 animate-pulse" style={{ animationDuration: '10s' }} />
+    <section className="relative px-4 sm:px-6 lg:px-8 z-0 overflow-hidden">
+      {/* Ambient background blobs */}
+      <div className="absolute -top-16 -left-16 w-72 md:w-96 h-72 md:h-96 bg-primary/15 rounded-full blur-3xl opacity-50 -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute -bottom-20 -right-20 w-80 md:w-96 h-80 md:h-96 bg-accent/15 rounded-full blur-3xl opacity-50 -z-10 animate-pulse" style={{ animationDuration: '10s' }} />
+
+      <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[15%] pointer-events-none hidden lg:block text-sage" delay={0} duration={7} />
+      <FloatingLeaf size={60} opacity={0.12} className="absolute right-[6%] bottom-[15%] pointer-events-none hidden lg:block text-olive" delay={2} duration={9} />
+      <FloatingLeaf size={45} opacity={0.08} className="absolute left-[15%] top-[55%] pointer-events-none hidden lg:block text-accent" delay={1.5} duration={8} />
+      <FloatingLeaf size={50} opacity={0.10} className="absolute right-[10%] top-[25%] pointer-events-none hidden lg:block text-secondary" delay={3} duration={6} />
+      <LogomarkWatermark size={280} opacity={0.06} className="absolute bottom-[10%] left-[5%] pointer-events-none hidden md:block" />
+
+
 
       <div className="container mx-auto max-w-7xl">
-        {/* Showroom Container */}
-        <motion.div layout className="rounded-[36px] bg-white/60 backdrop-blur-lg border border-white/30 shadow-2xl p-5 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden">
+        {/* Showroom — no hard border, no card-shadow; blends into page */}
+        <motion.div layout className="relative overflow-hidden py-6 sm:py-8 px-2 sm:px-4">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -122,7 +136,7 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="text-center mb-6"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground font-semibold tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground font-semibold tracking-tight font-serif">
               Our Creations
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">
@@ -188,10 +202,10 @@ export function Services() {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
-                      <span className="inline-block px-2.5 py-1 bg-white/80 backdrop-blur-md text-primary rounded-full text-[10px] sm:text-xs font-semibold shadow-sm">
-                        {item.badge}
-                      </span>
+                    <div className="absolute top-3 right-3 flex gap-2">
+                    <span className="bg-sage text-[#2A1B14] text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10">
+                      {item.badge}
+                    </span>
                     </div>
                   </div>
                   <div className="p-4 sm:p-5">
@@ -322,6 +336,8 @@ export function Services() {
           </div>}
         </motion.div>
       </div>
+
+
     </section>
   );
 }

@@ -73,7 +73,7 @@ export function ProductDetailsModal() {
           <div className="flex items-center justify-between p-3 md:p-6 border-b border-border flex-shrink-0">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-              <h2 className="text-lg md:text-2xl font-semibold text-foreground">Product Details</h2>
+              <h2 className="text-lg md:text-2xl font-semibold text-foreground font-serif">Product Details</h2>
             </div>
             <button
               onClick={handleClose}

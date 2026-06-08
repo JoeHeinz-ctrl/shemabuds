@@ -88,7 +88,7 @@ export function CartModal() {
                   </motion.span>
                 )}
               </div>
-              <h2 className="text-xl md:text-2xl font-semibold text-foreground">Your Cart</h2>
+              <h2 className="text-xl md:text-2xl font-semibold text-foreground font-serif">Your Cart</h2>
             </div>
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}

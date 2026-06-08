@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { Button } from "./ui/button";
 import { getFeaturedProducts, FirebaseProduct } from "../../services/productService";
 import { useOrdering, Product } from "./OrderingSystem";
+import { LogomarkSpinner, FloatingLeaf, LogomarkWatermark } from "./BrandDecoration";
 
 export function FeaturedGallery() {
   const [liked, setLiked] = useState<Set<string>>(new Set());
@@ -67,16 +68,17 @@ export function FeaturedGallery() {
 
   if (loading) {
     return (
-      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted overflow-hidden">
+        <FloatingLeaf delay={0} size={60} className="absolute top-10 left-10 text-primary" opacity={0.12} />
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">Featured Creations</h2>
             <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
               Explore our handpicked selection of recent works
             </p>
           </div>
           <div className="flex items-center justify-center py-12">
-            <div className="w-12 h-12 md:w-16 md:h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+            <LogomarkSpinner size={64} />
           </div>
         </div>
       </section>
@@ -85,10 +87,11 @@ export function FeaturedGallery() {
 
   if (featuredProducts.length === 0) {
     return (
-      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+      <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted overflow-hidden">
+        <FloatingLeaf delay={0} size={60} className="absolute top-10 left-10 text-primary" opacity={0.12} />
         <div className="container mx-auto">
           <div className="text-center mb-8 md:mb-16">
-            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+            <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">Featured Creations</h2>
             <p className="text-sm md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
               Explore our handpicked selection of recent works
             </p>
@@ -102,7 +105,13 @@ export function FeaturedGallery() {
   }
 
   return (
-    <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted">
+    <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted overflow-hidden">
+      <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[20%] pointer-events-none hidden lg:block text-olive" delay={0} duration={7} />
+      <FloatingLeaf size={60} opacity={0.12} className="absolute right-[6%] bottom-[15%] pointer-events-none hidden lg:block text-sage" delay={2} duration={9} />
+      <FloatingLeaf size={45} opacity={0.08} className="absolute left-[12%] bottom-[20%] pointer-events-none hidden lg:block text-secondary" delay={1.5} duration={8} />
+      <FloatingLeaf size={50} opacity={0.10} className="absolute right-[15%] top-[55%] pointer-events-none hidden lg:block text-primary" delay={3} duration={6} />
+      <LogomarkWatermark size={280} opacity={0.06} className="absolute top-[10%] right-[5%] pointer-events-none hidden md:block" />
+      
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -111,7 +120,7 @@ export function FeaturedGallery() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">Featured Creations</h2>
+          <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">Featured Creations</h2>
           <p className="text-sm md:text-lg text-secondary-foreground max-w-2xl mx-auto font-light">
             Explore our handpicked selection of recent works
           </p>
@@ -177,8 +186,9 @@ export function FeaturedGallery() {
                 </div>
                 
                 <div className="p-3 md:p-6">
+
                   <div className="flex items-start justify-between gap-1 md:gap-2 mb-2 md:mb-3">
-                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-secondary text-secondary-foreground rounded-full text-[10px] md:text-sm font-medium">
+                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-olive text-[#2A1B14] rounded-full text-[10px] md:text-sm font-semibold">
                       {product.badge}
                     </span>
                     {product.price && (

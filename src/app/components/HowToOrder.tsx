@@ -1,37 +1,51 @@
 import { Search, ShoppingCart, Palette, Package } from "lucide-react";
 import { motion } from "motion/react";
+import { FloatingLeaf, LogomarkWatermark } from "./BrandDecoration";
 
 const steps = [
   {
     number: "1",
     icon: Search,
     title: "Browse our creations",
-    description: "Explore our gallery of handmade bouquets, gifts, and decorations to find inspiration for your perfect creation."
+    description: "Explore our gallery of handmade bouquets, gifts, and decorations to find inspiration for your perfect creation.",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
   {
     number: "2",
     icon: ShoppingCart,
     title: "Add to cart & customize",
-    description: "Select your favorite items, customize colors, styles, and details to match your vision perfectly."
+    description: "Select your favorite items, customize colors, styles, and details to match your vision perfectly.",
+    color: "text-sage",
+    bg: "bg-sage/20",
   },
   {
     number: "3",
     icon: Palette,
     title: "Complete checkout",
-    description: "Fill in your details, delivery preferences, and event date. We'll generate a personalized order for you."
+    description: "Fill in your details, delivery preferences, and event date. We'll generate a personalized order for you.",
+    color: "text-[#2A1B14]",
+    bg: "bg-accent/40",
   },
   {
     number: "4",
     icon: Package,
     title: "Receive your handmade creation",
-    description: "We'll carefully craft your order and deliver it with care, ready to make your moment special."
+    description: "We'll carefully craft your order and deliver it with care, ready to make your moment special.",
+    color: "text-[#2A1B14]",
+    bg: "bg-olive/50",
   }
 ];
 
 export function HowToOrder() {
   return (
-    <section className="py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="container mx-auto">
+    <section className="relative py-8 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-background overflow-hidden z-10">
+      <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[15%] pointer-events-none hidden lg:block text-olive" delay={0} duration={7} />
+      <FloatingLeaf size={60} opacity={0.12} className="absolute right-[6%] bottom-[15%] pointer-events-none hidden lg:block text-sage" delay={2} duration={9} />
+      <FloatingLeaf size={45} opacity={0.08} className="absolute left-[12%] bottom-[20%] pointer-events-none hidden lg:block text-secondary" delay={1.5} duration={8} />
+      <FloatingLeaf size={50} opacity={0.10} className="absolute right-[15%] top-[55%] pointer-events-none hidden lg:block text-primary" delay={3} duration={6} />
+      <LogomarkWatermark size={280} opacity={0.06} className="absolute top-[10%] right-[5%] pointer-events-none hidden md:block" />
+      <div className="container mx-auto relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,7 +53,7 @@ export function HowToOrder() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 md:mb-16"
         >
-          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight">How Ordering Works</h2>
+          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">How Ordering Works</h2>
           <p className="text-xs md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Getting your perfect handmade creation is simple and personalized
           </p>
@@ -65,8 +79,8 @@ export function HowToOrder() {
                   </div>
                   
                   {/* Icon */}
-                  <div className="bg-primary/10 w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-6 mt-2 md:mt-4 shadow-sm">
-                    <Icon className="w-5 h-5 md:w-8 md:h-8 text-primary" />
+                  <div className={`${step.bg} w-10 h-10 md:w-16 md:h-16 rounded-lg md:rounded-xl flex items-center justify-center mb-2 md:mb-6 mt-2 md:mt-4 shadow-sm`}>
+                    <Icon className={`w-5 h-5 md:w-8 md:h-8 ${step.color}`} />
                   </div>
                   
                   {/* Content */}
