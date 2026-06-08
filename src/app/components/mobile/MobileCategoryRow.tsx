@@ -62,7 +62,7 @@ export function MobileCategoryRow({
 
       {/* Products Grid */}
       <div className="px-4">
-        <motion.div layout className="grid grid-cols-3 gap-2">
+        <motion.div layout className="grid grid-cols-2 gap-3">
           <AnimatePresence>
             {displayProducts.map((product, index) => (
               <motion.div
@@ -71,20 +71,20 @@ export function MobileCategoryRow({
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: (index % 3) * 0.05 }}
+                transition={{ duration: 0.3, delay: (index % 2) * 0.05 }}
                 onClick={() => handleViewDetails(product)}
                 className="glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow flex flex-col"
               >
                 {/* Product Image */}
-                <div className="relative aspect-square bg-muted">
+                <div className="relative aspect-square bg-muted overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-center"
                   />
                   {product.badge && (
-                    <div className="absolute top-1 left-1">
-                      <span className="px-1 py-0.5 bg-primary text-primary-foreground text-[8px] rounded-full font-semibold">
+                    <div className="absolute top-2 left-2">
+                      <span className="px-2 py-1 bg-[#2D5F3F] text-white text-[10px] rounded-full font-semibold shadow-md">
                         {product.badge}
                       </span>
                     </div>
@@ -92,17 +92,17 @@ export function MobileCategoryRow({
                 </div>
 
                 {/* Product Info */}
-                <div className="p-2 flex flex-col flex-1 justify-between">
+                <div className="p-3 flex flex-col flex-1 justify-between">
                   <div>
-                    <h3 className="text-[10px] font-semibold text-foreground line-clamp-2 mb-1 min-h-[2rem]">
+                    <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1.5 min-h-[2.5rem]">
                       {product.title}
                     </h3>
                   </div>
                   
-                  <div className="mt-1">
+                  <div className="mt-2">
                     {product.price && (
-                      <p className="text-[10px] font-bold text-primary mb-1">
-                        {product.price}
+                      <p className="text-sm font-bold text-primary mb-2">
+                        ₹{product.price}
                       </p>
                     )}
 
@@ -110,9 +110,9 @@ export function MobileCategoryRow({
                     <Button
                       onClick={(e) => handleQuickAddToCart(product, e)}
                       size="sm"
-                      className="w-full py-1 text-[9px] h-auto"
+                      className="w-full py-2 text-[11px] h-auto"
                     >
-                      <ShoppingCart className="w-2.5 h-2.5 mr-0.5" />
+                      <ShoppingCart className="w-3.5 h-3.5 mr-1" />
                       Add
                     </Button>
                   </div>

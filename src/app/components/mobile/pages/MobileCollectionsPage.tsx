@@ -68,7 +68,7 @@ export function MobileCollectionsPage() {
             key={categoryKey}
             categoryName={categoryLabels[categoryKey] || categoryKey}
             products={categorizedProducts[categoryKey]}
-            maxPreview={3}
+            maxPreview={4}
           />
         ))}
       </div>

@@ -76,7 +76,21 @@ export function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
       handleClose();
     } catch (err: any) {
       console.error("Google sign in error:", err);
-      setError(err.message || "Google sign in failed");
+      
+      // User-friendly error messages
+      if (err.code === 'auth/popup-blocked') {
+        setError("Popup was blocked. Please allow popups and try again.");
+      } else if (err.code === 'auth/popup-closed-by-user') {
+        setError("Sign-in was cancelled.");
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError("This domain is not authorized. Please contact support.");
+      } else if (err.code === 'auth/cancelled-popup-request') {
+        setError("Only one popup request is allowed at a time.");
+      } else if (err.code === 'auth/operation-not-allowed') {
+        setError("Google sign-in is not enabled. Please contact support.");
+      } else {
+        setError(err.message || "Google sign in failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
