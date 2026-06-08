@@ -4,6 +4,8 @@ import { ArrowLeft, ShoppingBag, Trash2, Plus, Minus, Package } from "lucide-rea
 import { useOrdering } from "../../OrderingSystem";
 import { useAuth } from "../../../../contexts/AuthContext";
 import { AuthModal } from "../../AuthModal";
+import { addOrder } from "../../../../services/orderService";
+import { rateLimiter, RATE_LIMITS } from "../../../../utils/rateLimiter";
 
 type CartView = "cart" | "checkout" | "success";
 
@@ -37,9 +39,50 @@ export function MobileCartPage() {
     setCurrentView("checkout");
   };
 
-  const handlePlaceOrder = () => {
-    // Place order logic here
-    setCurrentView("success");
+  const handlePlaceOrder = async () => {
+    if (!user) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    // Rate limiting check
+    const rateLimitKey = `order:${user.uid}`;
+    const rateCheck = rateLimiter.check(rateLimitKey, RATE_LIMITS.ORDER_PLACEMENT);
+    
+    if (!rateCheck.allowed) {
+      alert(`Too many order attempts. Please wait ${rateCheck.resetIn} seconds before trying again.`);
+      return;
+    }
+
+    try {
+      // Calculate total
+      const total = cart.reduce((sum, item) => {
+        const price = parseFloat(item.product.price || "0");
+        return sum + (price * item.quantity);
+      }, 0);
+
+      // Create order
+      await addOrder({
+        userId: user.uid,
+        customerName: formData.name,
+        phone: formData.phone,
+        whatsapp: formData.phone,
+        deliveryMethod: "delivery",
+        address: formData.address,
+        eventDate: new Date().toISOString().split('T')[0],
+        additionalNotes: formData.notes,
+        items: cart,
+        estimatedTotal: total,
+        status: "new"
+      });
+
+      // Clear cart and show success
+      cart.forEach(item => removeFromCart(item.product.id));
+      setCurrentView("success");
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place order. Please try again.");
+    }
   };
 
   const handleBackToHome = () => {

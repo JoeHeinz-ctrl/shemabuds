@@ -16,7 +16,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
   const navItems = [
     { id: "home", label: "Home", icon: Home },
     { id: "collections", label: "Collections", icon: Grid3x3 },
-    { id: "cart", label: "Cart", icon: ShoppingBag, badge: totalItems },
+    { id: "cart", label: "Cart", icon: ShoppingBag, badge: totalItems > 0 ? totalItems : null },
     { id: "orders", label: "Orders", icon: Package },
     { id: "settings", label: "Settings", icon: Settings },
   ];

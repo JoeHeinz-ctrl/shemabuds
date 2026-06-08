@@ -9,6 +9,7 @@ import { useOrdering, CheckoutInfo } from "./OrderingSystem";
 import { addOrder } from "../../services/orderService";
 import { getUserProfile, saveUserProfile } from "../../services/userProfileService";
 import { useAuth } from "../../contexts/AuthContext";
+import { rateLimiter, RATE_LIMITS } from "../../utils/rateLimiter";
 
 export function CheckoutModal() {
   const {
@@ -158,6 +159,15 @@ export function CheckoutModal() {
   };
 
   const handlePlaceOrder = async () => {
+    // Rate limiting check
+    const rateLimitKey = `order:${user?.uid || 'guest'}`;
+    const rateCheck = rateLimiter.check(rateLimitKey, RATE_LIMITS.ORDER_PLACEMENT);
+    
+    if (!rateCheck.allowed) {
+      alert(`Too many order attempts. Please wait ${rateCheck.resetIn} seconds before trying again.`);
+      return;
+    }
+
     // Save order to Firebase without opening WhatsApp
     try {
       console.log("🔥 Attempting to save order to Firebase...");

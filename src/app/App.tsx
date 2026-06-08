@@ -28,6 +28,7 @@ import "./components/mobile/mobile-styles.css";
 
 function AppContent() {
   const [mobileActiveTab, setMobileActiveTab] = useState("home");
+  const [prevTabIndex, setPrevTabIndex] = useState(0);
   const [showAboutModal, setShowAboutModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const { showOrderSuccess, setShowOrderSuccess } = useOrdering();
@@ -35,7 +36,6 @@ function AppContent() {
   // Swipe navigation state
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
   const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
-  const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -76,11 +76,11 @@ function AppContent() {
       
       if (isLeftSwipe && currentIndex < tabOrder.length - 1) {
         // Swipe left: go to next tab
-        setSwipeDirection('left');
+        setPrevTabIndex(currentIndex);
         setMobileActiveTab(tabOrder[currentIndex + 1]);
       } else if (isRightSwipe && currentIndex > 0) {
         // Swipe right: go to previous tab
-        setSwipeDirection('right');
+        setPrevTabIndex(currentIndex);
         setMobileActiveTab(tabOrder[currentIndex - 1]);
       }
     }
@@ -90,9 +90,18 @@ function AppContent() {
   useEffect(() => {
     const handleOpenAbout = () => setShowAboutModal(true);
     const handleOpenContact = () => setShowContactModal(true);
-    const handleNavigateToCollections = () => setMobileActiveTab("collections");
-    const handleNavigateToOrders = () => setMobileActiveTab("orders");
-    const handleNavigateToHome = () => setMobileActiveTab("home");
+    const handleNavigateToCollections = () => {
+      setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
+      setMobileActiveTab("collections");
+    };
+    const handleNavigateToOrders = () => {
+      setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
+      setMobileActiveTab("orders");
+    };
+    const handleNavigateToHome = () => {
+      setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
+      setMobileActiveTab("home");
+    };
 
     window.addEventListener('openAboutModal', handleOpenAbout);
     window.addEventListener('openContactModal', handleOpenContact);
@@ -107,7 +116,7 @@ function AppContent() {
       window.removeEventListener('navigateToOrders', handleNavigateToOrders);
       window.removeEventListener('navigateToHome', handleNavigateToHome);
     };
-  }, []);
+  }, [mobileActiveTab]);
 
   const handleOrderSuccessClose = () => {
     setShowOrderSuccess(false);
@@ -117,6 +126,7 @@ function AppContent() {
     
     if (isMobile) {
       // Mobile: Switch to orders tab
+      setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
       setMobileActiveTab("orders");
     } else {
       // Desktop: Scroll to orders section
@@ -125,6 +135,11 @@ function AppContent() {
         ordersSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
+  };
+
+  const handleTabChange = (newTab: string) => {
+    setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
+    setMobileActiveTab(newTab);
   };
 
   const renderMobileContent = () => {
@@ -168,7 +183,7 @@ function AppContent() {
 
       {/* Mobile View - Tab-based Navigation with Swipe Support */}
       <main 
-        className="md:hidden pb-[80px] relative"
+        className="md:hidden pb-[80px] relative overflow-hidden"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -177,15 +192,22 @@ function AppContent() {
           <motion.div
             key={mobileActiveTab}
             initial={{ 
-              x: swipeDirection === 'left' ? 100 : swipeDirection === 'right' ? -100 : 0,
-              opacity: 0
+              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '100%' : '-100%',
+              opacity: 0.8
             }}
-            animate={{ x: 0, opacity: 1 }}
+            animate={{ 
+              x: 0,
+              opacity: 1
+            }}
             exit={{ 
-              x: swipeDirection === 'left' ? -100 : swipeDirection === 'right' ? 100 : 0,
-              opacity: 0
+              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '-100%' : '100%',
+              opacity: 0.8
             }}
-            transition={{ type: "tween", duration: 0.3 }}
+            transition={{ 
+              type: "tween",
+              ease: "easeInOut",
+              duration: 0.25
+            }}
           >
             {renderMobileContent()}
           </motion.div>
@@ -225,7 +247,7 @@ function AppContent() {
       <MobileFloatingCart />
       <MobileBottomNav 
         activeTab={mobileActiveTab}
-        onTabChange={setMobileActiveTab}
+        onTabChange={handleTabChange}
       />
     </div>
   );

@@ -10,10 +10,25 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [user, setUser] = useState<User | null | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthChange((currentUser) => {
       setUser(currentUser);
+      
+      // Admin email whitelist
+      const ADMIN_EMAILS = [
+        import.meta.env.VITE_ADMIN_EMAIL || "admin@shemabuds.com"
+      ];
+      
+      // Check if user email is in whitelist
+      if (currentUser && currentUser.email) {
+        const isAdmin = ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim());
+        setIsAuthorized(isAdmin);
+      } else {
+        setIsAuthorized(false);
+      }
+      
       setLoading(false);
     });
 
@@ -31,7 +46,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
-  if (!user) {
+  if (!user || !isAuthorized) {
     return <Navigate to="/admin/login" replace />;
   }
 
