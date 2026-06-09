@@ -186,7 +186,7 @@ export function MyOrders() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-foreground mb-4">My Orders</h2>
+          <h2 className="section-title text-4xl mb-4 text-foreground tracking-tight">My Orders</h2>
           <p className="text-lg text-muted-foreground">Track and manage your orders</p>
         </motion.div>
 

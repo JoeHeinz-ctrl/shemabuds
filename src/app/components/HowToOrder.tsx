@@ -53,7 +53,7 @@ export function HowToOrder() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 md:mb-16"
         >
-          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">How Ordering Works</h2>
+          <h2 className="section-title text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground tracking-tight">How Ordering Works</h2>
           <p className="text-xs md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Getting your perfect handmade creation is simple and personalized
           </p>

@@ -113,14 +113,14 @@ export function FeaturedGallery() {
       <LogomarkWatermark size={280} opacity={0.06} className="absolute top-[10%] right-[5%] pointer-events-none hidden md:block" />
       
       <div className="container mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-8 md:mb-16"
-        >
-          <h2 className="text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">Featured Creations</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-8 md:mb-16"
+          >
+            <h2 className="section-title text-2xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground tracking-tight">Featured Creations</h2>
           <p className="text-sm md:text-lg text-secondary-foreground max-w-2xl mx-auto font-light">
             Explore our handpicked selection of recent works
           </p>

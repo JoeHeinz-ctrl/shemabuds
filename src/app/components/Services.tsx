@@ -136,7 +136,7 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="text-center mb-6"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground font-semibold tracking-tight font-serif">
+            <h2 className="section-title text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground tracking-tight">
               Our Creations
             </h2>
             <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto font-light leading-relaxed">

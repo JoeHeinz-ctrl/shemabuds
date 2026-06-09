@@ -47,7 +47,7 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-6 md:mb-16"
         >
-          <h2 className="text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground font-semibold tracking-tight font-serif">What Our Clients Say</h2>
+          <h2 className="section-title text-xl md:text-4xl sm:text-5xl mb-2 md:mb-4 text-foreground tracking-tight">What Our Clients Say</h2>
           <p className="text-xs md:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
             Don't just take our word for it - hear from our happy customers
           </p>

@@ -99,7 +99,7 @@ export function MobileOrdersPage() {
     return (
       <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-foreground">My Orders</h1>
+          <h1 className="section-title text-2xl text-foreground">My Orders</h1>
           <p className="text-sm text-muted-foreground mt-1">Track your orders</p>
         </div>
         <div className="flex items-center justify-center py-12">
@@ -147,7 +147,7 @@ export function MobileOrdersPage() {
     <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] px-4 pb-24">
       {/* Page Title */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-foreground">My Orders</h1>
+        <h1 className="section-title text-2xl text-foreground">My Orders</h1>
         <p className="text-sm text-muted-foreground mt-1">Track your orders</p>
       </div>
 
