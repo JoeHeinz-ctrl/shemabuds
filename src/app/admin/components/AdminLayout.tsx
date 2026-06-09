@@ -26,20 +26,18 @@ export function AdminLayout({ children }: AdminLayoutProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2]">
+    <div className="min-h-screen bg-[#f2e7cb]">
       {/* Header */}
-      <header className="bg-white border-b border-[#A67C52]/15 shadow-sm sticky top-0 z-50">
+      <header className="bg-white border-b border-[#94b38a]/15 shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <Link to="/admin" className="flex items-center gap-2">
-              <div className="bg-[#A67C52] p-2 rounded-xl shadow-sm">
-                <Heart className="w-5 h-5 text-white fill-white" />
-              </div>
-              <div>
-                <span className="text-lg text-[#2A1B14] font-semibold">Shemabuds</span>
-                <span className="text-xs text-[#6B5D52] ml-2">Admin</span>
-              </div>
+            <Link to="/admin" className="flex items-center">
+              <img 
+                src="/Brand/logo.png" 
+                alt="Shemabuds" 
+                className="h-16 scale-150"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -53,8 +51,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                     to={item.path}
                     className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                       isActive
-                        ? "bg-[#A67C52] text-white"
-                        : "text-[#4A3A32] hover:bg-[#A67C52]/10"
+                        ? "bg-[#d47448] text-white"
+                        : "text-[#4A3A32] hover:bg-[#d47448]/10"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -69,7 +67,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
               <Button
                 onClick={handleSignOut}
                 variant="outline"
-                className="hidden md:flex items-center gap-2 border-[#A67C52] text-[#A67C52] hover:bg-[#A67C52]/10"
+                className="hidden md:flex items-center gap-2 border-[#d47448] text-[#d47448] hover:bg-[#d47448]/10"
               >
                 <LogOut className="w-4 h-4" />
                 Sign Out
@@ -87,7 +85,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
 
           {/* Mobile Navigation */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-[#A67C52]/15">
+            <div className="md:hidden py-4 border-t border-[#94b38a]/15">
               <nav className="space-y-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
@@ -99,8 +97,8 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-colors ${
                         isActive
-                          ? "bg-[#A67C52] text-white"
-                          : "text-[#4A3A32] hover:bg-[#A67C52]/10"
+                          ? "bg-[#d47448] text-white"
+                          : "text-[#4A3A32] hover:bg-[#d47448]/10"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -110,7 +108,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 })}
                 <button
                   onClick={handleSignOut}
-                  className="w-full flex items-center gap-2 px-4 py-3 rounded-lg text-[#4A3A32] hover:bg-[#A67C52]/10 transition-colors"
+                  className="w-full flex items-center gap-2 px-4 py-3 rounded-lg text-[#4A3A32] hover:bg-[#d47448]/10 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
                   <span className="font-medium">Sign Out</span>

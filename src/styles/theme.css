@@ -23,36 +23,6 @@
   --brand-sand: #f2e7cb;
   --brand-sand-light: #faf7f0;
 
-  /* Premium Gold Palette (Mapped to brand terracotta & sage) */
-  --gold-primary: var(--brand-terracotta);
-  --gold-hover: var(--brand-terracotta-dark);
-  --gold-light: var(--brand-sage);
-  --gold-dark: #9e431f;
-
-  /* Brown Palette */
-  --brown-dark: #2A1B14;
-  --brown-medium: #4A3A32;
-  --brown-light: #6B5D52;
-  --brown-warm: #8B6F47;
-
-  /* Background & Neutral */
-  --bg-cream: var(--brand-sand-light);
-  --bg-white: #FFFFFF;
-  --bg-light-cream: #FFF9F5;
-  --bg-warm-white: #FEFDFB;
-
-  /* Accent Colors (Mapped to new brand colors) */
-  --accent-rose: var(--brand-terracotta);
-  --accent-soft-pink: var(--brand-sage);
-  --accent-light-rose: var(--brand-sand);
-  --accent-pale-rose: var(--brand-sand-light);
-
-  /* Semantic Colors */
-  --text-primary: #2A1B14;
-  --text-secondary: #4A3A32;
-  --text-tertiary: #6B5D52;
-  --text-muted: #8B7D72;
-
   /* Component Variables */
   --background: #FCFAF7;
   --foreground: #2A1B14;
@@ -73,78 +43,51 @@
   --border: rgba(212, 116, 74, 0.2);
   --input: transparent;
   --input-background: #FEFDFB;
-  --switch-background: var(--brand-sage);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
   --ring: var(--brand-terracotta);
+  
+  /* Text colors */
+  --text-primary: #2A1B14;
+  --text-secondary: #4A3A32;
+  --text-tertiary: #6B5D52;
+  --text-muted: #8B7D72;
+
+  --radius: 0.75rem;
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: #030213;
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  /* Pure black background for deep contrast */
-  --background: #000000;
-  --foreground: #F5F1ED;
-  /* Light foreground for readability */
-  --card: rgba(0, 0, 0, 0.85);
-  --card-foreground: #F5F1ED;
-  --popover: rgba(0, 0, 0, 0.95);
-  --popover-foreground: #F5F1ED;
-  /* Primary accent – terracotta */
-  --primary: var(--brand-terracotta);
-  --primary-foreground: #000000;
-  /* Secondary accent – sage */
-  --secondary: var(--brand-sage);
-  --secondary-foreground: #F5F1ED;
-  /* Muted background – subtle dark */
-  --muted: #1A1A1A;
-  --muted-foreground: #A39286;
-  /* Accent – mustard for highlights */
+  /* Pure dark backgrounds */
+  --background: #0A0A0A;
+  --foreground: #F5F5F5;
+  --card: #1A1A1A;
+  --card-foreground: #F5F5F5;
+  --popover: #151515;
+  --popover-foreground: #F5F5F5;
+  
+  /* Brand colors remain the same */
+  --primary: var(--brand-sage);
+  --primary-foreground: #0A0A0A;
+  --secondary: var(--brand-olive);
+  --secondary-foreground: #F5F5F5;
+  --muted: #252525;
+  --muted-foreground: #A0A0A0;
   --accent: var(--brand-mustard);
-  --accent-foreground: #000000;
-  --destructive: #d4183d;
+  --accent-foreground: #0A0A0A;
+  --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: rgba(255, 255, 255, 0.2);
+  --border: rgba(148, 179, 138, 0.15);
   --input: transparent;
-  --input-background: rgba(0, 0, 0, 0.6);
-  --switch-background: var(--brand-sage);
-  --ring: var(--brand-terracotta);
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: #000000;
-  --sidebar-foreground: #F5F1ED;
-  --sidebar-primary: var(--brand-terracotta);
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #F5F1ED;
-  --sidebar-border: rgba(255, 255, 255, 0.2);
-  --sidebar-ring: var(--brand-terracotta);
-
-  /* Dark mode specific colors */
-  --gold-primary: var(--brand-terracotta);
-  --gold-hover: #f09f7a;
-  --gold-light: var(--brand-sage);
-  --brown-dark: #F5F1ED;
-  --text-primary: #F5F1ED;
-  --text-secondary: #D4C7BB;
-  --text-tertiary: #A39286;
+  --input-background: rgba(255, 255, 255, 0.05);
+  --ring: var(--brand-sage);
+  
+  /* Text colors - no brown */
+  --text-primary: #F5F5F5;
+  --text-secondary: #D0D0D0;
+  --text-tertiary: #A0A0A0;
 }
 
 @theme inline {
@@ -211,10 +154,10 @@
   }
 
   .dark .glass {
-    background: rgba(42, 35, 30, 0.85);
+    background: rgba(26, 26, 26, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(196, 149, 111, 0.2);
+    border: 1px solid rgba(148, 179, 138, 0.15);
   }
 
   .glass-strong {
@@ -225,10 +168,10 @@
   }
 
   .dark .glass-strong {
-    background: rgba(42, 35, 30, 0.95);
+    background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(196, 149, 111, 0.25);
+    border: 1px solid rgba(148, 179, 138, 0.2);
   }
 
   /* Luxury text gradient effect (replaces pulsating shimmer) */
@@ -304,15 +247,15 @@
 
   /* Dark mode scrollbar */
   .dark ::-webkit-scrollbar-thumb {
-    background: rgba(196, 149, 111, 0.35);
+    background: rgba(148, 179, 138, 0.35);
   }
 
   .dark ::-webkit-scrollbar-thumb:hover {
-    background: rgba(196, 149, 111, 0.5);
+    background: rgba(148, 179, 138, 0.5);
   }
 
   .dark ::-webkit-scrollbar-thumb:active {
-    background: rgba(196, 149, 111, 0.7);
+    background: rgba(148, 179, 138, 0.7);
   }
 
   /* Firefox scrollbar styling */
@@ -322,7 +265,7 @@
   }
 
   .dark {
-    scrollbar-color: rgba(196, 149, 111, 0.35) transparent;
+    scrollbar-color: rgba(148, 179, 138, 0.35) transparent;
   }
 
   /* Premium shadows */
@@ -332,8 +275,8 @@
   }
 
   .dark .shadow-luxury {
-    box-shadow: 0 4px 24px rgba(196, 149, 111, 0.2),
-      0 2px 8px rgba(196, 149, 111, 0.12);
+    box-shadow: 0 4px 24px rgba(148, 179, 138, 0.2),
+      0 2px 8px rgba(148, 179, 138, 0.12);
   }
 
   .shadow-luxury-lg {
@@ -342,8 +285,8 @@
   }
 
   .dark .shadow-luxury-lg {
-    box-shadow: 0 12px 48px rgba(196, 149, 111, 0.24),
-      0 4px 16px rgba(196, 149, 111, 0.16);
+    box-shadow: 0 12px 48px rgba(148, 179, 138, 0.24),
+      0 4px 16px rgba(148, 179, 138, 0.16);
   }
 
   /**

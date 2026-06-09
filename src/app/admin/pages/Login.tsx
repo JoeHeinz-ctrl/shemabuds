@@ -66,18 +66,17 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FAF7F2] to-[#E8C4B4] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f2e7cb] to-[#d0d488] px-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           {/* Logo */}
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <div className="bg-[#A67C52] p-3 rounded-xl shadow-sm">
-              <Heart className="w-8 h-8 text-white fill-white" />
-            </div>
-            <div>
-              <h1 className="text-2xl text-[#2A1B14] font-semibold">Shemabuds</h1>
-              <p className="text-sm text-[#6B5D52]">Admin Dashboard</p>
-            </div>
+          <div className="flex flex-col items-center justify-center mb-8">
+            <img 
+              src="/Brand/logo.png" 
+              alt="Shemabuds" 
+              className="h-20 mb-2"
+            />
+            <p className="text-sm text-[#6B5D52]">Admin Dashboard</p>
           </div>
 
           {/* Form */}
@@ -92,7 +91,7 @@ export function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@shemabuds.com"
-                className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                className="mt-2 bg-[#FEFDFB] border-[#94b38a]/30 focus:border-[#94b38a]"
                 required
               />
             </div>
@@ -107,7 +106,7 @@ export function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="mt-2 bg-[#FEFDFB] border-[#A67C52]/20 focus:border-[#A67C52]"
+                className="mt-2 bg-[#FEFDFB] border-[#94b38a]/30 focus:border-[#94b38a]"
                 required
               />
             </div>
@@ -121,7 +120,7 @@ export function Login() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#A67C52] hover:bg-[#8B6B3E] text-white py-6 shadow-[0_4px_14px_rgba(166,124,82,0.25)] transition-all duration-300 font-medium"
+              className="w-full bg-[#d47448] hover:bg-[#b85f3a] text-white py-6 shadow-[0_4px_14px_rgba(212,116,72,0.25)] transition-all duration-300 font-medium"
             >
               {loading ? "Signing in..." : "Sign In"}
             </Button>

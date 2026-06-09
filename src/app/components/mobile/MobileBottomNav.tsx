@@ -1,4 +1,4 @@
-import { Home, Grid3x3, ShoppingBag, Package, Settings } from "lucide-react";
+import { Home, Grid3x3, ShoppingBag, Package, User } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 import { useOrdering } from "../OrderingSystem";
@@ -18,7 +18,7 @@ export function MobileBottomNav({ activeTab, onTabChange }: MobileBottomNavProps
     { id: "collections", label: "Collections", icon: Grid3x3 },
     { id: "cart", label: "Cart", icon: ShoppingBag, badge: totalItems > 0 ? totalItems : null },
     { id: "orders", label: "Orders", icon: Package },
-    { id: "settings", label: "Settings", icon: Settings },
+    { id: "settings", label: "You", icon: User },
   ];
 
   return (

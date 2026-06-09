@@ -9,15 +9,8 @@ export function MobileSettingsPage() {
   const { theme, toggleTheme } = useTheme();
   const { user, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  
   const settingsSections = [
-    {
-      title: "Business Information",
-      icon: Heart,
-      items: [
-        { label: "About Shemabuds", value: "Handmade bouquets & gifts with love" },
-        { label: "Specialization", value: "Custom orders, Events, Weddings" },
-      ]
-    },
     {
       title: "Delivery Information",
       icon: Truck,
@@ -34,11 +27,6 @@ export function MobileSettingsPage() {
         { label: "Business Hours", value: "Contact us for details" },
       ]
     },
-  ];
-
-  const legalLinks = [
-    { label: "Privacy Policy", icon: Shield },
-    { label: "Terms & Conditions", icon: FileText },
   ];
 
   return (
@@ -58,7 +46,7 @@ export function MobileSettingsPage() {
         {user ? (
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="bg-primary/20 p-2.5 rounded-lg relative">
+              <div className="bg-muted p-2.5 rounded-lg relative">
                 <User className="w-5 h-5 text-primary" />
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></span>
               </div>
@@ -96,7 +84,7 @@ export function MobileSettingsPage() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="bg-primary/20 p-2.5 rounded-lg">
+            <div className="bg-muted p-2.5 rounded-lg">
               <Palette className="w-5 h-5 text-primary" />
             </div>
             <div>
@@ -177,7 +165,7 @@ export function MobileSettingsPage() {
               className="glass-strong rounded-2xl p-4 shadow-luxury"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="bg-secondary p-2 rounded-lg">
+                <div className="bg-muted p-2 rounded-lg">
                   <Icon className="w-5 h-5 text-primary" />
                 </div>
                 <h2 className="font-semibold text-foreground">{section.title}</h2>
@@ -195,34 +183,6 @@ export function MobileSettingsPage() {
           );
         })}
       </div>
-
-      {/* Legal Links */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="glass-strong rounded-2xl p-4 shadow-luxury mb-6"
-      >
-        <h2 className="font-semibold text-foreground mb-3">Legal</h2>
-        <div className="space-y-2">
-          {legalLinks.map((link, index) => {
-            const Icon = link.icon;
-            return (
-              <motion.button
-                key={index}
-                whileTap={{ scale: 0.98 }}
-                className="w-full flex items-center justify-between p-3 rounded-lg hover:bg-muted transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <Icon className="w-4 h-4 text-primary" />
-                  <span className="text-sm text-foreground">{link.label}</span>
-                </div>
-                <span className="text-muted-foreground">→</span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </motion.div>
 
       {/* App Version */}
       <motion.div
