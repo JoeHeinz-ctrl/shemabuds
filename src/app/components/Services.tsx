@@ -203,23 +203,21 @@ export function Services() {
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-3 right-3 flex gap-2">
-                    <span className="bg-sage text-[#2A1B14] text-xs font-bold px-3 py-1 rounded-full shadow-sm z-10">
-                      {item.badge}
-                    </span>
-                    </div>
                   </div>
                   <div className="p-4 sm:p-5">
-                    <div className="flex items-start justify-between gap-2 mb-1.5 sm:mb-2">
-                      <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 flex-1 line-clamp-1">
-                        {item.title}
-                      </h3>
+                    <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                      <span className="inline-block px-2.5 py-1 md:px-3.5 md:py-1.5 bg-[#2d5f3f] text-white rounded-full text-[10px] md:text-xs font-bold tracking-wide">
+                        {item.badge}
+                      </span>
                       {item.price && (
-                        <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">
+                        <span className="text-base sm:text-xl font-bold text-primary whitespace-nowrap">
                           {item.price}
                         </span>
                       )}
                     </div>
+                    <h3 className="text-sm sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1 sm:mb-2 line-clamp-2">
+                      {item.title}
+                    </h3>
                     <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
                       {item.description}
                     </p>
@@ -272,23 +270,21 @@ export function Services() {
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                          <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
-                            <span className="inline-block px-2.5 py-1 bg-white/80 backdrop-blur-md text-primary rounded-full text-[10px] sm:text-xs font-semibold shadow-sm">
-                              {item.badge}
-                            </span>
-                          </div>
                         </div>
                         <div className="p-4 sm:p-5">
-                          <div className="flex items-start justify-between gap-2 mb-1.5 sm:mb-2">
-                            <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 flex-1 line-clamp-1">
-                              {item.title}
-                            </h3>
+                          <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
+                            <span className="inline-block px-2.5 py-1 md:px-3.5 md:py-1.5 bg-[#2d5f3f] text-white rounded-full text-[10px] md:text-xs font-bold tracking-wide">
+                              {item.badge}
+                            </span>
                             {item.price && (
-                              <span className="text-base sm:text-lg font-bold text-primary whitespace-nowrap">
+                              <span className="text-base sm:text-xl font-bold text-primary whitespace-nowrap">
                                 {item.price}
                               </span>
                             )}
                           </div>
+                          <h3 className="text-sm sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1 sm:mb-2 line-clamp-2">
+                            {item.title}
+                          </h3>
                           <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
                             {item.description}
                           </p>

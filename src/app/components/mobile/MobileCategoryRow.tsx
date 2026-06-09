@@ -82,30 +82,31 @@ export function MobileCategoryRow({
                     alt={product.title}
                     className="w-full h-full object-cover object-center"
                   />
-                  {product.badge && (
-                    <div className="absolute top-2 left-2">
-                      <span className="px-2 py-1 bg-[#2D5F3F] text-white text-[10px] rounded-full font-semibold shadow-md">
-                        {product.badge}
-                      </span>
-                    </div>
-                  )}
                 </div>
 
                 {/* Product Info */}
                 <div className="p-3 flex flex-col flex-1 justify-between">
                   <div>
+                    {/* Badge and Price Row */}
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      {product.badge && (
+                        <span className="inline-block px-2 py-0.5 bg-[#2d5f3f] text-white rounded-full text-[9px] font-bold tracking-wide">
+                          {product.badge}
+                        </span>
+                      )}
+                      {product.price && (
+                        <span className="text-sm font-bold text-primary whitespace-nowrap">
+                          {product.price}
+                        </span>
+                      )}
+                    </div>
+                    
                     <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1.5 min-h-[2.5rem]">
                       {product.title}
                     </h3>
                   </div>
                   
                   <div className="mt-2">
-                    {product.price && (
-                      <p className="text-sm font-bold text-primary mb-2">
-                        ₹{product.price}
-                      </p>
-                    )}
-
                     {/* Add to Cart Button */}
                     <Button
                       onClick={(e) => handleQuickAddToCart(product, e)}

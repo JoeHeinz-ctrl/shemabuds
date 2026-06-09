@@ -101,15 +101,15 @@ export function Hero() {
         <FloatingLeaf size={45} opacity={0.08} className="absolute left-[15%] bottom-[15%] pointer-events-none hidden lg:block text-accent" delay={1.5} duration={8} />
         <FloatingLeaf size={50} opacity={0.10} className="absolute right-[12%] top-[18%] pointer-events-none hidden lg:block text-primary" delay={3} duration={6} />
         
-        <div className="w-full max-w-3xl lg:max-w-4xl self-center -translate-y-6">
+        <div className="w-full max-w-lg lg:max-w-xl self-center -translate-y-6">
           <div
-            className="rounded-2xl px-7 py-8 sm:px-9 sm:py-10 md:px-12 md:py-11 relative overflow-hidden"
+            className="rounded-2xl px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9 relative overflow-hidden"
             style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,245,235,0.35) 50%, rgba(255,255,255,0.40) 100%)",
-              backdropFilter: "blur(28px) saturate(180%)",
-              WebkitBackdropFilter: "blur(28px) saturate(180%)",
-              border: "1.5px solid rgba(255,255,255,0.65)",
-              boxShadow: "0 8px 32px rgba(212,116,74,0.18), 0 2px 8px rgba(255,255,255,0.5) inset, 0 -1px 0 rgba(212,116,74,0.12) inset",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,245,235,0.20) 50%, rgba(255,255,255,0.22) 100%)",
+              backdropFilter: "blur(40px) saturate(200%)",
+              WebkitBackdropFilter: "blur(40px) saturate(200%)",
+              border: "1.5px solid rgba(255,255,255,0.40)",
+              boxShadow: "0 12px 48px rgba(212,116,74,0.15), 0 4px 12px rgba(255,255,255,0.35) inset, 0 -2px 0 rgba(212,116,74,0.08) inset",
             }}
           >
             {/* Subtle Brand Logomark Corner Accents */}
@@ -121,56 +121,114 @@ export function Hero() {
               aria-hidden
               style={{
                 position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
-                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.55) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(212,116,74,0.10) 0%, transparent 60%)",
+                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.45) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(212,116,74,0.12) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 70%)",
               }}
             />
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="glass inline-flex items-center gap-2 px-3 py-1.5 md:px-5 md:py-2.5 rounded-full mb-4 md:mb-6 shadow-luxury"
-            >
-              <motion.div
-                animate={{ rotate: [0, 15, -15, 15, 0] }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-              >
-                <Sparkles className="w-3 h-3 md:w-4 md:h-4 text-primary" />
-              </motion.div>
-              <span className="text-xs md:text-sm text-secondary-foreground font-medium tracking-wide">Crafted with Love & Care</span>
-            </motion.div>
+
+            {/* Text contrast backdrop */}
+            <div
+              aria-hidden
+              style={{
+                position: "absolute",
+                inset: "10%",
+                borderRadius: "inherit",
+                pointerEvents: "none",
+                background: "radial-gradient(ellipse at center, rgba(255,255,255,0.35) 0%, transparent 70%)",
+                filter: "blur(30px)",
+              }}
+            />
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6 text-[#1a0f0a] leading-[1.1] font-bold tracking-tight relative"
-              style={{ textShadow: "0 1px 3px rgba(255,255,255,0.4)" }}
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3 md:mb-4 leading-[1.1] font-bold tracking-tight relative text-center z-10"
             >
-              <span className="relative inline-block">
-                Handmade Meets{" "}
-                <motion.span
-                  className="italic font-serif relative inline-block shimmer"
-                >
-                  Heartmade
-                </motion.span>
+              <span 
+                className="relative block"
+                style={{
+                  color: "#2d5f3f",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.15), 1px 1px 1px rgba(0,0,0,0.2)",
+                }}
+              >
+                Handmade Meets
               </span>
+              <motion.span
+                className="italic font-serif relative block"
+                style={{
+                  background: "linear-gradient(135deg, #d47448 0%, #efbf43 50%, #94b38a 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                  filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4)) drop-shadow(0 4px 16px rgba(0,0,0,0.3)) drop-shadow(0 0 20px rgba(0,0,0,0.2))",
+                }}
+              >
+                Heartmade
+              </motion.span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium"
+              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium text-center relative z-10 mb-4 md:mb-5"
+              style={{ textShadow: "0 1px 4px rgba(255,255,255,0.6)" }}
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
             </motion.p>
 
+            {/* Explore Collection Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-7 md:mt-9 pt-7 md:pt-9 pb-1 border-t border-white/50"
+              className="mt-4 md:mt-5 flex justify-center relative z-10"
+            >
+              <button
+                onClick={() => {
+                  // Check if mobile view
+                  const isMobile = window.innerWidth < 768;
+                  
+                  if (isMobile) {
+                    // Mobile: Navigate to collections tab
+                    window.dispatchEvent(new Event('navigateToCollections'));
+                  } else {
+                    // Desktop: Scroll to gallery section
+                    const gallerySection = document.getElementById("gallery");
+                    if (gallerySection) {
+                      gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }
+                }}
+                className="group px-6 py-3 md:px-8 md:py-4 rounded-full text-sm md:text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95"
+                style={{
+                  background: "linear-gradient(135deg, rgba(212,116,74,0.85) 0%, rgba(239,191,67,0.75) 100%)",
+                  backdropFilter: "blur(12px)",
+                  WebkitBackdropFilter: "blur(12px)",
+                  border: "2px solid rgba(212,116,74,0.90)",
+                  boxShadow: "0 6px 24px rgba(212,116,74,0.35), 0 2px 8px rgba(255,255,255,0.3) inset",
+                  color: "#ffffff",
+                  textShadow: "0 1px 2px rgba(0,0,0,0.2)",
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  Explore Collection
+                  <motion.span
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    →
+                  </motion.span>
+                </span>
+              </button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-5 md:mt-6 pt-5 md:pt-6 pb-1 border-t border-white/50"
             >
               <div className="grid grid-cols-3 divide-x divide-white/40">
                 {stats.map((stat, index) => {
@@ -180,16 +238,16 @@ export function Hero() {
                       key={stat.label}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.4 + index * 0.1 }}
-                      className="flex flex-col items-center text-center px-3 sm:px-6 py-2"
+                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                      className="flex flex-col items-center text-center px-2 sm:px-4 py-1"
                     >
-                      <div className="bg-secondary/90 w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center mb-2 sm:mb-3">
-                        <Icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      <div className="bg-secondary/90 w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-1.5 sm:mb-2">
+                        <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-primary" />
                       </div>
-                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-none mb-1">
+                      <p className="text-base sm:text-lg md:text-xl font-bold text-foreground leading-none mb-0.5">
                         {stat.value}
                       </p>
-                      <p className="text-[11px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
+                      <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
                         {stat.label}
                       </p>
                     </motion.div>
