@@ -24,6 +24,9 @@ const categoryLabels: Record<string, string> = {
   wedding: "Wedding Accessories",
   custom: "Custom Orders",
   boutique: "Boutique Collection",
+  "ring-plater": "Ring Plater",
+  "gift-hampers": "Gift Hampers",
+  "bouquet": "Bouquets",
 };
 
 // Featured-style Product Card Component
@@ -138,6 +141,7 @@ export function MobileCollectionsPage() {
   const [categorizedProducts, setCategorizedProducts] = useState<Record<string, Product[]>>({});
   const [selectedCategory, setSelectedCategory] = useState<string | null>("all");
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(60);
 
   useEffect(() => {
     // Organize products by category
@@ -152,6 +156,34 @@ export function MobileCollectionsPage() {
     setCategorizedProducts(organized);
   }, [products]);
 
+  // Dynamically measure the header height to prevent any gaps
+  useEffect(() => {
+    const updateHeight = () => {
+      const header = document.getElementById("mobile-header");
+      if (header) {
+        setHeaderHeight(header.getBoundingClientRect().height || header.offsetHeight);
+      }
+    };
+
+    updateHeight();
+    window.addEventListener("resize", updateHeight);
+    window.addEventListener("load", updateHeight);
+
+    // Also observe size changes in case of dynamic resizing/render delays
+    const header = document.getElementById("mobile-header");
+    let observer: ResizeObserver | null = null;
+    if (header) {
+      observer = new ResizeObserver(() => updateHeight());
+      observer.observe(header);
+    }
+
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+      window.removeEventListener("load", updateHeight);
+      if (observer) observer.disconnect();
+    };
+  }, []);
+
   const handleCategoryClick = (categoryKey: string | null) => {
     setSelectedCategory(categoryKey);
   };
@@ -164,8 +196,7 @@ export function MobileCollectionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-background to-muted">
-        <div style={{ height: "140px" }} />
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted" style={{ paddingTop: `${headerHeight}px` }}>
         <div className="px-4 mb-4">
           <h1 className="text-2xl font-bold text-foreground">Collections</h1>
           <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
@@ -178,11 +209,30 @@ export function MobileCollectionsPage() {
   }
 
   return (
-    <div style={{ width: "100%", display: "flex", flexDirection: "column", margin: 0, padding: 0 }}>
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", margin: 0, paddingTop: `${headerHeight}px` }}>
       {/* COLLECTIONS HEADING - Normal flow, scrolls away naturally */}
-      <div style={{ padding: "16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", margin: 0 }}>
-        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "var(--foreground)", margin: "0 0 8px 0", padding: 0 }}>Collections</h1>
-        <p style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", margin: 0, padding: 0 }}>Browse our handcrafted products</p>
+      <div style={{ padding: "16px 16px 4px 16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", margin: 0, textAlign: "center" }}>
+        <h1 style={{ 
+          fontSize: "2.4rem", 
+          fontWeight: "bold", 
+          margin: "0 0 4px 0", 
+          padding: 0,
+          background: "linear-gradient(135deg, #d47448 0%, #efbf43 55%, #94b38a 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.1))",
+          fontFamily: "var(--font-serif, serif)",
+        }}>Collections</h1>
+        <p style={{ 
+          fontSize: "0.85rem", 
+          color: "#b8572d", // Premium terracotta dark
+          fontWeight: 600, 
+          margin: 0, 
+          padding: 0,
+          letterSpacing: "0.05em",
+          textTransform: "uppercase" as const,
+        }}>Browse our handcrafted products</p>
       </div>
 
       {/* CATEGORY FILTER BAR - Sticky, positioned below navbar */}
@@ -190,89 +240,98 @@ export function MobileCollectionsPage() {
         <div
           style={{
             position: "sticky",
-            top: "76px",
-            zIndex: 900,
-            background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,245,235,0.9) 50%, rgba(255,255,255,0.95) 100%)",
-            backdropFilter: "blur(24px) saturate(130%)",
-            WebkitBackdropFilter: "blur(24px) saturate(130%)",
-            borderBottom: "1px solid rgba(255,255,255,0.4)",
-            padding: "12px 16px",
-            margin: 0,
-            left: 0,
-            right: 0,
-            width: "100%",
+            top: `${headerHeight + 6}px`, // Float 6px below navbar
+            zIndex: 40,
+            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.15) 100%)",
+            backdropFilter: "blur(20px) saturate(140%)",
+            WebkitBackdropFilter: "blur(20px) saturate(140%)",
+            border: "1px solid rgba(255, 255, 255, 0.4)",
+            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.4)",
+            padding: "8px 12px",
+            margin: "6px auto 8px auto",
+            width: "92%",
+            maxWidth: "480px",
+            borderRadius: "9999px",
             boxSizing: "border-box" as const,
           }}
         >
           <div
-            className="flex overflow-x-auto overflow-y-hidden gap-2.5 w-full"
+            className="flex overflow-x-auto overflow-y-hidden gap-1.5 w-full scrollbar-hide"
             style={{
               WebkitOverflowScrolling: "touch",
               touchAction: "pan-x",
               scrollBehavior: "smooth",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
-              paddingBottom: "2px",
+              paddingBottom: 0,
               margin: 0,
             } as React.CSSProperties}
           >
             {/* ALL Products Chip */}
             <motion.button
               onClick={() => handleCategoryClick("all")}
-              whileHover={{ scale: 1.08 }}
-              whileTap={{ scale: 0.92 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.05 }}
-              className="group relative flex-shrink-0 px-6 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap"
+              className="group relative flex-shrink-0 px-4 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap"
               style={{
-                height: "40px",
+                height: "32px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 background: selectedCategory === "all" 
                   ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                  : "#F6EFE7",
+                  : "rgba(255, 255, 255, 0.45)",
                 border: selectedCategory === "all"
                   ? "none"
-                  : "1.5px solid #E7D8C8",
+                  : "1px solid rgba(212, 116, 74, 0.15)",
                 color: selectedCategory === "all" ? "#ffffff" : "#5A4638",
                 boxShadow: selectedCategory === "all"
-                  ? "0 6px 16px rgba(212, 116, 74, 0.3)"
+                  ? "0 4px 12px rgba(212, 116, 74, 0.25)"
                   : "none",
                 margin: 0,
+                backdropFilter: "blur(4px)",
               }}
             >
               All
             </motion.button>
 
             {/* Individual Category Chips */}
-            {Object.keys(categorizedProducts).map((categoryKey, index) => (
+            {Object.keys(categorizedProducts)
+              .sort((a, b) => {
+                if (a === "ring-plater") return -1;
+                if (b === "ring-plater") return 1;
+                return a.localeCompare(b);
+              })
+              .map((categoryKey, index) => (
               <motion.button
                 key={categoryKey}
                 onClick={() => handleCategoryClick(categoryKey)}
-                whileHover={{ scale: 1.08 }}
-                whileTap={{ scale: 0.92 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.05 + (index + 1) * 0.02 }}
-                className="group relative flex-shrink-0 px-6 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap"
+                className="group relative flex-shrink-0 px-4 rounded-full text-xs font-semibold transition-all duration-200 whitespace-nowrap"
                 style={{
-                  height: "40px",
+                  height: "32px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   background: selectedCategory === categoryKey 
                     ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                    : "#F6EFE7",
+                    : "rgba(255, 255, 255, 0.45)",
                   border: selectedCategory === categoryKey
                     ? "none"
-                    : "1.5px solid #E7D8C8",
+                    : "1px solid rgba(212, 116, 74, 0.15)",
                   color: selectedCategory === categoryKey ? "#ffffff" : "#5A4638",
                   boxShadow: selectedCategory === categoryKey
-                    ? "0 6px 16px rgba(212, 116, 74, 0.3)"
+                    ? "0 4px 12px rgba(212, 116, 74, 0.25)"
                     : "none",
                   margin: 0,
+                  backdropFilter: "blur(4px)",
                 }}
               >
                 {categoryLabels[categoryKey] || categoryKey}

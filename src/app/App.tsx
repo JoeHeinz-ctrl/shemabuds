@@ -212,8 +212,7 @@ function AppContent() {
             style={{ 
               width: "100%", 
               minHeight: "100vh",
-              overflowX: "hidden",
-              overflowY: "visible",
+              overflow: "visible",
             }}
           >
             {renderMobileContent()}

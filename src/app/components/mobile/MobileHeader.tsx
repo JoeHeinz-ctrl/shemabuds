@@ -29,6 +29,7 @@ export function MobileHeader() {
   return (
     <>
       <div 
+        id="mobile-header"
         className="md:hidden fixed top-0 left-0 right-0 z-50 shadow-luxury"
         style={{
           background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
