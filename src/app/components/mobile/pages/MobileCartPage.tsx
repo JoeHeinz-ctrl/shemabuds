@@ -103,7 +103,7 @@ export function MobileCartPage() {
             className="px-4"
           >
             {/* Header */}
-            <div className="mb-6">
+            <div className="mb-6 text-center">
               <h1 className="section-title text-2xl text-foreground">Shopping Cart</h1>
               <p className="text-sm text-muted-foreground mt-1">
                 {itemCount} {itemCount === 1 ? "item" : "items"} in your cart

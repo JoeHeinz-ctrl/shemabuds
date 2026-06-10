@@ -197,7 +197,7 @@ export function MobileCollectionsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-background to-muted" style={{ paddingTop: `${headerHeight}px` }}>
-        <div className="px-4 mb-4">
+        <div className="px-4 mb-4 text-center">
           <h1 className="text-2xl font-bold text-foreground">Collections</h1>
           <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
         </div>

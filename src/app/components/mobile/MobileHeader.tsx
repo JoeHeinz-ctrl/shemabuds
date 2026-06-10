@@ -60,7 +60,10 @@ export function MobileHeader() {
               <img
                 src="/Brand/logo.svg"
                 alt="Shema Buds"
-                className="h-9 w-auto object-contain select-none scale-[2.5] origin-center"
+                className="h-9 w-auto object-contain select-none scale-[3] origin-center"
+                style={{
+                  filter: "drop-shadow(0 0 8px rgba(34, 197, 94, 0.4)) drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3)) drop-shadow(0 0 0 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 0 4px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 0 6px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 0 8px rgba(0, 0, 0, 0.2))"
+                }}
               />
           </div>
 

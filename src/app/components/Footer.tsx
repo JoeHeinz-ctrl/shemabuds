@@ -9,7 +9,14 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <img src="/Brand/logo.svg" alt="Shema Buds" className="h-10 md:h-12 w-auto brightness-0 invert opacity-90" />
+              <img 
+                src="/Brand/logo.svg" 
+                alt="Shema Buds" 
+                className="h-10 md:h-12 w-auto brightness-0 invert opacity-90" 
+                style={{
+                  filter: "brightness(0) invert(1) drop-shadow(0 0 6px rgba(34, 197, 94, 0.3)) drop-shadow(0 0 0 2px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 0 4px rgba(0, 0, 0, 0.7)) drop-shadow(0 0 0 6px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 0 8px rgba(0, 0, 0, 0.25))"
+                }}
+              />
             </div>
             <p className="text-white/80 leading-relaxed mb-2 md:mb-4 font-light text-xs md:text-base">
               Creating beautiful, heartfelt gifts and decorations that make every moment special.
