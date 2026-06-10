@@ -5,21 +5,21 @@ import { LogomarkWatermark, FloatingLeaf } from "./BrandDecoration";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Wedding Client",
-    content: "Shema Buds transformed our wedding venue into a fairytale. The floral decorations were beyond our wildest dreams. Every detail was perfect!",
-    rating: 5,
-  },
-  {
-    name: "Michael Chen",
+    name: "Angel",
     role: "Gift Recipient",
-    content: "The personalized gift box I ordered for my mother's birthday was absolutely stunning. The craftsmanship and thoughtfulness were evident in every detail.",
+    content: "Apro gift super..rah semma happy🥳 especially Muthu ku romba pidichirunthuchu.. Thank You so much💗💫exam time kuda pakama pani kuduthathuku..",
     rating: 5,
   },
   {
-    name: "Emily Rodriguez",
-    role: "Corporate Client",
-    content: "We've used Shema Buds for multiple corporate events. Their custom bouquets and decorations always impress our guests. Highly professional and creative!",
+    name: "Swathi",
+    role: "Gift Recipient",
+    content: "Dei ellathayum attach paniyachu da super ah irunchu da ellame enaku rombapidichirunthuchu🥰🥰🥰 veetla elarukume romba pidichirunthuchu",
+    rating: 5,
+  },
+  {
+    name: "Chitra",
+    role: "Client",
+    content: "These plates made my day😍😍😍 I really appreciate to you sis👍🤝",
     rating: 5,
   }
 ];

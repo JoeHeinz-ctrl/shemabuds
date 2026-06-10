@@ -11,7 +11,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   if (!isOpen) return null;
 
   const handleWhatsApp = () => {
-    window.open("https://wa.me/919363962399?text=Hello%20Shema%20Buds!%20I'd%20like%20to%20know%20more%20about%20your%20services.", "_blank");
+    window.open("https://wa.me/919486896203?text=Hello%20Shema%20Buds!%20I'd%20like%20to%20know%20more%20about%20your%20services.", "_blank");
   };
 
   return (
@@ -73,7 +73,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       <p className="text-sm text-muted-foreground mb-2">
                         Chat with us instantly for quick responses
                       </p>
-                      <p className="text-[#25D366] font-semibold">+91 93639 62399</p>
+                      <p className="text-[#25D366] font-semibold">+91 94868 96203</p>
                     </div>
                   </div>
                 </motion.div>
@@ -90,7 +90,7 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         Call us during business hours
                       </p>
                       <a href="tel:+919363962399" className="text-primary font-semibold hover:underline">
-                        +91 93639 62399
+                        +91 94868 96203
                       </a>
                     </div>
                   </div>
@@ -107,8 +107,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       <p className="text-sm text-muted-foreground mb-2">
                         Send us a detailed inquiry
                       </p>
-                      <a href="mailto:hello@shemabuds.com" className="text-primary font-semibold hover:underline">
-                        hello@shemabuds.com
+                      <a href="mailto:shemabuds@gmail.com" className="text-primary font-semibold hover:underline">
+                        shemabuds@gmail.com
                       </a>
                     </div>
                   </div>

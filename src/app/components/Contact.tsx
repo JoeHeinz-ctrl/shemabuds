@@ -115,7 +115,7 @@ export function Contact() {
               <motion.a
                 whileHover={{ scale: 1.02, x: 4 }}
                 transition={{ duration: 0.2 }}
-                href="https://wa.me/919363962399"
+                href="https://wa.me/919486896203"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-[#25D366]/10 hover:bg-[#25D366]/20 rounded-xl transition-colors duration-200 group shadow-sm border border-[#25D366]/20"
@@ -152,7 +152,7 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-sm md:text-base text-foreground font-semibold">Email</p>
-                  <p className="text-[10px] md:text-sm text-muted-foreground font-light">hello@shemabuds.com</p>
+                  <p className="text-[10px] md:text-sm text-muted-foreground font-light">shemabuds@gmail.com</p>
                 </div>
               </div>
             </div>
