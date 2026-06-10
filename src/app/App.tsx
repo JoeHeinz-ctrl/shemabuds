@@ -183,35 +183,38 @@ function AppContent() {
 
       {/* Mobile View - Tab-based Navigation with Swipe Support */}
       <main 
-        className="md:hidden pb-[80px] relative overflow-hidden"
+        className="md:hidden pb-[80px] relative"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        style={{ overflow: "visible" }}
       >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={mobileActiveTab}
-            initial={{ 
-              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '100%' : '-100%',
-              opacity: 0.8
-            }}
-            animate={{ 
-              x: 0,
-              opacity: 1
-            }}
-            exit={{ 
-              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '-100%' : '100%',
-              opacity: 0.8
-            }}
-            transition={{ 
-              type: "tween",
-              ease: "easeInOut",
-              duration: 0.25
-            }}
-          >
-            {renderMobileContent()}
-          </motion.div>
-        </AnimatePresence>
+        <div style={{ overflow: "hidden", width: "100%", height: "100%" }}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={mobileActiveTab}
+              initial={{ 
+                x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '100%' : '-100%',
+                opacity: 0.8
+              }}
+              animate={{ 
+                x: 0,
+                opacity: 1
+              }}
+              exit={{ 
+                x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '-100%' : '100%',
+                opacity: 0.8
+              }}
+              transition={{ 
+                type: "tween",
+                ease: "easeInOut",
+                duration: 0.25
+              }}
+            >
+              {renderMobileContent()}
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Swipe Indicator Dots */}
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 flex gap-1.5 px-3 py-1.5 rounded-full glass-strong z-40">
