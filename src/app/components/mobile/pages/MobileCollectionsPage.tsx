@@ -5,6 +5,7 @@ import { Product, useOrdering } from "../../OrderingSystem";
 import { Eye, ShoppingCart, Heart } from "lucide-react";
 import { Button } from "../../ui/button";
 import { Card } from "../../ui/card";
+import { AuthModal } from "../../AuthModal";
 
 // Empty demo products - all products will come from Firebase
 const demoProducts: Record<string, Product[]> = {
@@ -136,6 +137,7 @@ export function MobileCollectionsPage() {
   const { products, loading } = useProducts(demoProducts);
   const [categorizedProducts, setCategorizedProducts] = useState<Record<string, Product[]>>({});
   const [selectedCategory, setSelectedCategory] = useState<string | null>("all");
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     // Organize products by category
@@ -162,7 +164,8 @@ export function MobileCollectionsPage() {
 
   if (loading) {
     return (
-      <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px]">
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted">
+        <div style={{ height: "140px" }} />
         <div className="px-4 mb-4">
           <h1 className="text-2xl font-bold text-foreground">Collections</h1>
           <p className="text-sm text-muted-foreground mt-1">Browse our handcrafted products</p>
@@ -175,194 +178,170 @@ export function MobileCollectionsPage() {
   }
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted">
-      {/* Navbar spacing - maintains layout consistency */}
-      <div style={{ height: "76px" }} />
-
-      {/* Ultra-Compact Hero Section - NOT a containing block */}
-      <div className="px-4 py-1 bg-gradient-to-b from-background to-muted relative">
-        {/* Page Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-0"
-        >
-          <h1 
-            className="text-center"
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "2.5rem",
-              fontWeight: 700,
-              color: "#2d2a26",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.05,
-              marginBottom: "2px",
-            }}
-          >
-            Collections
-          </h1>
-        </motion.div>
-
-        {/* Subtitle */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-2.5"
-        >
-          <p 
-            className="text-center"
-            style={{
-              fontSize: "0.9rem",
-              fontWeight: 400,
-              color: "#5a4638",
-              letterSpacing: "0.002em",
-              lineHeight: 1.3,
-              marginBottom: 0,
-            }}
-          >
-            Browse our handcrafted products
-          </p>
-        </motion.div>
+    <div style={{ width: "100%", display: "flex", flexDirection: "column", margin: 0, padding: 0 }}>
+      {/* COLLECTIONS HEADING - Normal flow, scrolls away naturally */}
+      <div style={{ padding: "16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", margin: 0 }}>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: "bold", color: "var(--foreground)", margin: "0 0 8px 0", padding: 0 }}>Collections</h1>
+        <p style={{ fontSize: "0.9rem", color: "var(--muted-foreground)", margin: 0, padding: 0 }}>Browse our handcrafted products</p>
       </div>
 
-      {/* Sticky Category Filter Bar - OUTSIDE hero, direct child of main container */}
+      {/* CATEGORY FILTER BAR - Sticky, positioned below navbar */}
       {Object.keys(categorizedProducts).length > 0 && (
         <div
           style={{
             position: "sticky",
             top: "76px",
-            background: "linear-gradient(180deg, rgba(242,231,203,0.98) 0%, rgba(242,231,203,0.96) 100%)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            borderBottom: "1px solid rgba(212,116,74,0.08)",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
-            zIndex: 40,
+            zIndex: 900,
+            background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,245,235,0.9) 50%, rgba(255,255,255,0.95) 100%)",
+            backdropFilter: "blur(24px) saturate(130%)",
+            WebkitBackdropFilter: "blur(24px) saturate(130%)",
+            borderBottom: "1px solid rgba(255,255,255,0.4)",
+            padding: "12px 16px",
+            margin: 0,
+            left: 0,
+            right: 0,
+            width: "100%",
+            boxSizing: "border-box" as const,
           }}
         >
-          <div className="px-4 py-2">
-            <div
-              className="flex overflow-x-auto overflow-y-hidden gap-2.5"
+          <div
+            className="flex overflow-x-auto overflow-y-hidden gap-2.5 w-full"
+            style={{
+              WebkitOverflowScrolling: "touch",
+              touchAction: "pan-x",
+              scrollBehavior: "smooth",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              paddingBottom: "2px",
+              margin: 0,
+            } as React.CSSProperties}
+          >
+            {/* ALL Products Chip */}
+            <motion.button
+              onClick={() => handleCategoryClick("all")}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.92 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="group relative flex-shrink-0 px-6 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap"
               style={{
-                WebkitOverflowScrolling: "touch",
-                touchAction: "pan-x",
-                scrollBehavior: "smooth",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              } as React.CSSProperties}
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: selectedCategory === "all" 
+                  ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
+                  : "#F6EFE7",
+                border: selectedCategory === "all"
+                  ? "none"
+                  : "1.5px solid #E7D8C8",
+                color: selectedCategory === "all" ? "#ffffff" : "#5A4638",
+                boxShadow: selectedCategory === "all"
+                  ? "0 6px 16px rgba(212, 116, 74, 0.3)"
+                  : "none",
+                margin: 0,
+              }}
             >
-              <style>{`
-                .chips-scroll::-webkit-scrollbar {
-                  display: none;
-                }
-              `}</style>
-              
-              {/* ALL Products Chip */}
+              All
+            </motion.button>
+
+            {/* Individual Category Chips */}
+            {Object.keys(categorizedProducts).map((categoryKey, index) => (
               <motion.button
-                onClick={() => handleCategoryClick("all")}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.1 }}
-                className="group relative flex-shrink-0 px-5 rounded-full text-sm font-medium transition-all duration-250 whitespace-nowrap"
+                key={categoryKey}
+                onClick={() => handleCategoryClick(categoryKey)}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.92 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.05 + (index + 1) * 0.02 }}
+                className="group relative flex-shrink-0 px-6 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap"
                 style={{
-                  height: "36px",
+                  height: "40px",
                   display: "flex",
                   alignItems: "center",
-                  background: selectedCategory === "all" 
+                  justifyContent: "center",
+                  background: selectedCategory === categoryKey 
                     ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                    : "#F2E7CB",
-                  border: selectedCategory === "all"
+                    : "#F6EFE7",
+                  border: selectedCategory === categoryKey
                     ? "none"
-                    : "1px solid rgba(212,116,74,0.15)",
-                  color: selectedCategory === "all" ? "#ffffff" : "#5A4638",
-                  boxShadow: selectedCategory === "all"
-                    ? "0 4px 12px rgba(212,116,74,0.25)"
+                    : "1.5px solid #E7D8C8",
+                  color: selectedCategory === categoryKey ? "#ffffff" : "#5A4638",
+                  boxShadow: selectedCategory === categoryKey
+                    ? "0 6px 16px rgba(212, 116, 74, 0.3)"
                     : "none",
+                  margin: 0,
                 }}
               >
-                All
+                {categoryLabels[categoryKey] || categoryKey}
               </motion.button>
-
-              {/* Individual Category Chips */}
-              {Object.keys(categorizedProducts).map((categoryKey, index) => (
-                <motion.button
-                  key={categoryKey}
-                  onClick={() => handleCategoryClick(categoryKey)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: 0.1 + (index + 1) * 0.03 }}
-                  className="group relative flex-shrink-0 px-5 rounded-full text-sm font-medium transition-all duration-250 whitespace-nowrap"
-                  style={{
-                    height: "36px",
-                    display: "flex",
-                    alignItems: "center",
-                    background: selectedCategory === categoryKey 
-                      ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                      : "#F2E7CB",
-                    border: selectedCategory === categoryKey
-                      ? "none"
-                      : "1px solid rgba(212,116,74,0.15)",
-                    color: selectedCategory === categoryKey ? "#ffffff" : "#5A4638",
-                    boxShadow: selectedCategory === categoryKey
-                      ? "0 4px 12px rgba(212,116,74,0.25)"
-                      : "none",
-                  }}
-                >
-                  {categoryLabels[categoryKey] || categoryKey}
-                </motion.button>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Product Grid Section */}
-      <div className="px-4 pt-2 pb-4">
-        {showUnifiedView ? (
-          // Unified All Products View
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 gap-3"
-          >
-            {allProducts.map((product, index) => (
-              <FeaturedStyleProductCard
-                key={`${product.id}-${index}`}
-                product={product}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        ) : selectedCategory && selectedCategoryProducts.length > 0 ? (
-          // Filtered Single Category View - Display ALL products for category
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-2 gap-3"
-          >
-            {selectedCategoryProducts.map((product, index) => (
-              <FeaturedStyleProductCard
-                key={`${product.id}-${index}`}
-                product={product}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        ) : null}
-      </div>
-
-      {Object.keys(categorizedProducts).length === 0 && (
-        <div className="text-center py-12 px-4">
-          <p className="text-muted-foreground">No products available at the moment.</p>
+      {/* PRODUCT GRID - Normal flow, scrolls underneath sticky bar */}
+      {showUnifiedView && allProducts.length > 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+          className="grid grid-cols-2 gap-4"
+          style={{ 
+            padding: "16px",
+            paddingBottom: "120px",
+            background: "linear-gradient(to bottom, var(--background), var(--muted))",
+            margin: 0,
+            width: "100%",
+          }}
+        >
+          {allProducts.map((product, index) => (
+            <FeaturedStyleProductCard
+              key={`${product.id}-${index}`}
+              product={product}
+              index={index}
+            />
+          ))}
+        </motion.div>
+      ) : selectedCategory && selectedCategoryProducts.length > 0 ? (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
+          className="grid grid-cols-2 gap-4"
+          style={{ 
+            padding: "16px",
+            paddingBottom: "120px",
+            background: "linear-gradient(to bottom, var(--background), var(--muted))",
+            margin: 0,
+            width: "100%",
+          }}
+        >
+          {selectedCategoryProducts.map((product, index) => (
+            <FeaturedStyleProductCard
+              key={`${product.id}-${index}`}
+              product={product}
+              index={index}
+            />
+          ))}
+        </motion.div>
+      ) : Object.keys(categorizedProducts).length > 0 ? (
+        <div style={{ textAlign: "center", paddingTop: "40px", padding: "16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", width: "100%", margin: 0 }}>
+          <p style={{ color: "var(--color-muted-foreground)" }}>No products in this category.</p>
+        </div>
+      ) : (
+        <div style={{ textAlign: "center", paddingTop: "40px", padding: "16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", width: "100%", margin: 0 }}>
+          <p style={{ color: "var(--color-muted-foreground)" }}>No products available at the moment.</p>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+      />
     </div>
   );
 }

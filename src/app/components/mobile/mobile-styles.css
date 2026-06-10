@@ -39,3 +39,15 @@
     overflow-scrolling: touch;
   }
 }
+
+
+/* Remove gap between header and category bar */
+[role="main"] {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}

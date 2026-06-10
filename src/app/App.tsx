@@ -189,32 +189,36 @@ function AppContent() {
         onTouchEnd={onTouchEnd}
         style={{ overflow: "visible" }}
       >
-        <div style={{ overflow: "hidden", width: "100%", height: "100%" }}>
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={mobileActiveTab}
-              initial={{ 
-                x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '100%' : '-100%',
-                opacity: 0.8
-              }}
-              animate={{ 
-                x: 0,
-                opacity: 1
-              }}
-              exit={{ 
-                x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '-100%' : '100%',
-                opacity: 0.8
-              }}
-              transition={{ 
-                type: "tween",
-                ease: "easeInOut",
-                duration: 0.25
-              }}
-            >
-              {renderMobileContent()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={mobileActiveTab}
+            initial={{ 
+              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '100%' : '-100%',
+              opacity: 0.8
+            }}
+            animate={{ 
+              x: 0,
+              opacity: 1
+            }}
+            exit={{ 
+              x: tabOrder.indexOf(mobileActiveTab) > prevTabIndex ? '-100%' : '100%',
+              opacity: 0.8
+            }}
+            transition={{ 
+              type: "tween",
+              ease: "easeInOut",
+              duration: 0.25
+            }}
+            style={{ 
+              width: "100%", 
+              minHeight: "100vh",
+              overflowX: "hidden",
+              overflowY: "visible",
+            }}
+          >
+            {renderMobileContent()}
+          </motion.div>
+        </AnimatePresence>
 
         {/* Swipe Indicator Dots */}
         <div className="fixed bottom-20 left-1/2 -translate-x-1/2 flex gap-1.5 px-3 py-1.5 rounded-full glass-strong z-40">
