@@ -39,18 +39,53 @@ const ORDERS_COLLECTION = "orders";
 // Get all orders
 export const getAllOrders = async (): Promise<Order[]> => {
   try {
+    console.log("🔍 Querying orders collection...");
+    
+    // First try without orderBy to see if we get any results
+    const simpleQuery = collection(db, ORDERS_COLLECTION);
+    const simpleSnapshot = await getDocs(simpleQuery);
+    console.log("📊 Simple query (no orderBy) size:", simpleSnapshot.size);
+    
+    // Now try with orderBy
     const q = query(
       collection(db, ORDERS_COLLECTION),
       orderBy("createdAt", "desc")
     );
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    } as Order));
-  } catch (error) {
-    console.error("Error fetching orders:", error);
-    return [];
+    console.log("📊 Ordered query snapshot size:", querySnapshot.size);
+    console.log("📊 Query snapshot empty:", querySnapshot.empty);
+    
+    const orders = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      console.log("📄 Order doc:", doc.id, data);
+      return {
+        id: doc.id,
+        ...data
+      } as Order;
+    });
+    
+    console.log("✅ Total orders parsed:", orders.length);
+    return orders;
+  } catch (error: any) {
+    console.error("❌ Error fetching orders:", error);
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    
+    // If orderBy fails, try to get all orders without ordering
+    try {
+      console.log("⚠️ Retrying without orderBy...");
+      const simpleQuery = collection(db, ORDERS_COLLECTION);
+      const simpleSnapshot = await getDocs(simpleQuery);
+      const orders = simpleSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      } as Order));
+      console.log("✅ Got orders without orderBy:", orders.length);
+      return orders;
+    } catch (retryError) {
+      console.error("❌ Retry also failed:", retryError);
+      return [];
+    }
   }
 };
 

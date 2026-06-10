@@ -33,6 +33,7 @@ const categoryLabels: Record<string, string> = {
 function FeaturedStyleProductCard({ product, index }: { product: Product; index: number }) {
   const { setSelectedProduct, addToCart } = useOrdering();
   const [liked, setLiked] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   const handleViewDetails = () => {
     setSelectedProduct(product);
@@ -46,6 +47,12 @@ function FeaturedStyleProductCard({ product, index }: { product: Product; index:
       customizations: {},
       notes: "",
     });
+    
+    // Show success feedback
+    setIsAdded(true);
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 2000);
   };
 
   const toggleLike = () => {
@@ -127,11 +134,24 @@ function FeaturedStyleProductCard({ product, index }: { product: Product; index:
             <Button
               onClick={handleQuickAddToCart}
               size="sm"
-              className="flex-1 min-w-0 bg-primary hover:bg-primary/95 text-primary-foreground px-2 py-1.5"
+              className={`flex-1 min-w-0 text-primary-foreground px-2 py-1.5 transition-all duration-300 ${
+                isAdded ? 'bg-green-600 hover:bg-green-600' : 'bg-primary hover:bg-primary/95'
+              }`}
             >
               <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
-                <ShoppingCart className="w-3 h-3 flex-shrink-0" />
-                <span className="truncate">Add</span>
+                {isAdded ? (
+                  <>
+                    <svg className="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="truncate">Added</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-3 h-3 flex-shrink-0" />
+                    <span className="truncate">Add</span>
+                  </>
+                )}
               </div>
             </Button>
           </div>

@@ -18,10 +18,13 @@ export function Orders() {
   const loadOrders = async () => {
     setLoading(true);
     try {
+      console.log("🔍 Fetching orders from Firestore...");
       const data = await getAllOrders();
+      console.log("📦 Orders received:", data.length);
+      console.log("📋 Orders data:", data);
       setOrders(data);
     } catch (error) {
-      console.error("Error loading orders:", error);
+      console.error("❌ Error loading orders:", error);
     } finally {
       setLoading(false);
     }

@@ -15,7 +15,6 @@ const stats = [
 // Slideshow images - Your actual product photos
 const heroImages = [
   "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780749291/header_image2_btfrmh.jpg",
-  "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780749291/header_image1_u1vs4k.jpg",
   "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780749291/header_image3_fwkwqv.jpg",
   "https://res.cloudinary.com/diy2kkxyu/image/upload/v1780749601/header_image4_wnkkeb.jpg",
 ];
@@ -40,7 +39,7 @@ export function Hero() {
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 10000); // Change image every 10 seconds
+    }, 15000); // Change image every 10 seconds
 
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -113,15 +112,15 @@ export function Hero() {
             }}
           >
             {/* Subtle Brand Logomark Corner Accents */}
-            <LogomarkCorner size={90} position="top-right" opacity={0.10} colorClass="text-primary" />
-            <LogomarkCorner size={90} position="bottom-left" opacity={0.10} colorClass="text-primary" />
+            <LogomarkCorner size={90} position="top-right" opacity={0.50} colorClass="text-primary" />
+            <LogomarkCorner size={90} position="bottom-left" opacity={0.50} colorClass="text-primary" />
 
             {/* Liquid shimmer overlay */}
             <div
               aria-hidden
               style={{
                 position: "absolute", inset: 0, borderRadius: "inherit", pointerEvents: "none",
-                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.45) 0%, transparent 50%), radial-gradient(ellipse at 80% 100%, rgba(212,116,74,0.12) 0%, transparent 50%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 70%)",
+                background: "radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.45) 0%, transparent 40%), radial-gradient(ellipse at 80% 100%, rgba(212,116,74,0.12) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08) 0%, transparent 40%)",
               }}
             />
 
@@ -133,22 +132,22 @@ export function Hero() {
                 inset: "10%",
                 borderRadius: "inherit",
                 pointerEvents: "none",
-                background: "radial-gradient(ellipse at center, rgba(255,255,255,0.35) 0%, transparent 70%)",
-                filter: "blur(30px)",
+                background: "radial-gradient(ellipse at center, rgba(255,255,255,0.35) 40%, transparent 40%)",
+                filter: "blur(180px)",
               }}
             />
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{ opacity: 1, y: 3 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-3 md:mb-4 leading-[1.1] font-bold tracking-tight relative text-center z-10"
             >
               <span 
                 className="relative block"
                 style={{
-                  color: "#2d5f3f",
-                  textShadow: "0 2px 4px rgba(0,0,0,0.25), 0 4px 8px rgba(0,0,0,0.15), 1px 1px 1px rgba(0,0,0,0.2)",
+                  color: "#1c5d34ff",
+                  textShadow: "0 2px 4px rgba(200, 158, 158, 0.25), 0 4px 8px rgba(225, 215, 215, 0.15), 1px 1px 1px rgba(0,0,0,0.2)",
                 }}
               >
                 Handmade Meets
@@ -172,7 +171,7 @@ export function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-xs sm:text-sm md:text-base text-[#3b2a1e] leading-relaxed font-medium text-center relative z-10 mb-3 md:mb-4"
-              style={{ textShadow: "0 1px 4px rgba(255,255,255,0.6)" }}
+              style={{ textShadow: "0 1px 4px rgba(92, 90, 90, 0.6)" }}
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
               custom gifts, and elegant event decorations.
@@ -203,11 +202,11 @@ export function Hero() {
                 }}
                 className="group px-5 py-2.5 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
-                  background: "linear-gradient(135deg, rgba(212,116,74,0.85) 0%, rgba(239,191,67,0.75) 100%)",
+                  background: "linear-gradient(135deg, rgba(198, 89, 42, 0.85) 0%, rgba(213, 130, 52, 0.75) 100%)",
                   backdropFilter: "blur(12px)",
                   WebkitBackdropFilter: "blur(12px)",
-                  border: "2px solid rgba(212,116,74,0.90)",
-                  boxShadow: "0 6px 24px rgba(212,116,74,0.35), 0 2px 8px rgba(255,255,255,0.3) inset",
+                  border: "2px solid rgba(182, 79, 35, 0.9)",
+                  boxShadow: "0 6px 24px rgba(8, 106, 20, 0.35), 0 2px 8px rgba(255,255,255,0.3) inset",
                   color: "#ffffff",
                   textShadow: "0 1px 2px rgba(0,0,0,0.2)",
                 }}
@@ -216,7 +215,7 @@ export function Hero() {
                   Explore Collection
                   <motion.span
                     animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
                   >
                     →
                   </motion.span>
