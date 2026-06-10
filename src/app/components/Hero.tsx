@@ -101,9 +101,9 @@ export function Hero() {
         <FloatingLeaf size={45} opacity={0.08} className="absolute left-[15%] bottom-[15%] pointer-events-none hidden lg:block text-accent" delay={1.5} duration={8} />
         <FloatingLeaf size={50} opacity={0.10} className="absolute right-[12%] top-[18%] pointer-events-none hidden lg:block text-primary" delay={3} duration={6} />
         
-        <div className="w-full max-w-lg lg:max-w-xl self-center -translate-y-6">
+        <div className="w-full max-w-sm md:max-w-md lg:max-w-lg self-center -translate-y-6">
           <div
-            className="rounded-2xl px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9 relative overflow-hidden"
+            className="rounded-2xl px-6 py-6 sm:px-8 sm:py-8 md:px-9 md:py-7 relative overflow-hidden"
             style={{
               background: "linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,245,235,0.20) 50%, rgba(255,255,255,0.22) 100%)",
               backdropFilter: "blur(40px) saturate(200%)",
@@ -171,7 +171,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-[#3b2a1e] leading-relaxed font-medium text-center relative z-10 mb-4 md:mb-5"
+              className="text-xs sm:text-sm md:text-base text-[#3b2a1e] leading-relaxed font-medium text-center relative z-10 mb-3 md:mb-4"
               style={{ textShadow: "0 1px 4px rgba(255,255,255,0.6)" }}
             >
               Discover the art of personalized gifting with our exquisite handmade bouquets,
@@ -183,7 +183,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-4 md:mt-5 flex justify-center relative z-10"
+              className="mt-3 md:mt-4 flex justify-center relative z-10"
             >
               <button
                 onClick={() => {
@@ -201,7 +201,7 @@ export function Hero() {
                     }
                   }
                 }}
-                className="group px-6 py-3 md:px-8 md:py-4 rounded-full text-sm md:text-base font-bold transition-all duration-300 hover:scale-105 active:scale-95"
+                className="group px-5 py-2.5 md:px-6 md:py-3 rounded-full text-xs md:text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
                   background: "linear-gradient(135deg, rgba(212,116,74,0.85) 0%, rgba(239,191,67,0.75) 100%)",
                   backdropFilter: "blur(12px)",
@@ -228,7 +228,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-5 md:mt-6 pt-5 md:pt-6 pb-1 border-t border-white/50"
+              className="mt-4 md:mt-5 pt-4 md:pt-5 pb-1 border-t border-white/50"
             >
               <div className="grid grid-cols-3 divide-x divide-white/40">
                 {stats.map((stat, index) => {
@@ -241,13 +241,13 @@ export function Hero() {
                       transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
                       className="flex flex-col items-center text-center px-2 sm:px-4 py-1"
                     >
-                      <div className="bg-secondary/90 w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center mb-1.5 sm:mb-2">
-                        <Icon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-primary" />
+                      <div className="bg-secondary/90 w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center mb-1 sm:mb-1.5">
+                        <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
                       </div>
-                      <p className="text-base sm:text-lg md:text-xl font-bold text-foreground leading-none mb-0.5">
+                      <p className="text-sm sm:text-base md:text-lg font-bold text-foreground leading-none mb-0.5">
                         {stat.value}
                       </p>
-                      <p className="text-[10px] sm:text-xs md:text-sm text-[#4e3c32] font-semibold leading-snug">
+                      <p className="text-[9px] sm:text-[10px] md:text-xs text-[#4e3c32] font-semibold leading-snug">
                         {stat.label}
                       </p>
                     </motion.div>

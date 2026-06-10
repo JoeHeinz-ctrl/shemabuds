@@ -90,7 +90,7 @@ export function MobileCategoryRow({
                     {/* Badge and Price Row */}
                     <div className="flex items-center justify-between gap-2 mb-2">
                       {product.badge && (
-                        <span className="inline-block px-2 py-0.5 bg-[#2d5f3f] text-white rounded-full text-[9px] font-bold tracking-wide">
+                        <span className="inline-block px-2 py-0.5 bg-[#C8D5A0] text-[#3b2a1e] rounded-full text-[9px] font-bold tracking-wide">
                           {product.badge}
                         </span>
                       )}

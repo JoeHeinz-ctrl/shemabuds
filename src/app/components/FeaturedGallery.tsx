@@ -135,9 +135,10 @@ export function FeaturedGallery() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -8 }}
+              className="h-full"
             >
-              <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card">
-                <div className="relative overflow-hidden aspect-square md:aspect-[4/3]">
+              <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card h-full flex flex-col">
+                <div className="relative overflow-hidden aspect-square md:aspect-[4/3] flex-shrink-0">
                   <motion.div
                     whileHover={{ scale: 1.08 }}
                     transition={{ duration: 0.4, ease: "easeOut" }}
@@ -170,26 +171,32 @@ export function FeaturedGallery() {
                     <div className="flex gap-2">
                       <Button
                         onClick={() => handleViewDetails(product)}
-                        className="flex-1 bg-white/95 backdrop-blur-sm text-[#2A1B14] hover:bg-white shadow-lg"
+                        className="flex-1 min-w-0 bg-white/95 backdrop-blur-sm text-[#2A1B14] hover:bg-white shadow-lg px-2 py-1.5 sm:py-2"
                       >
-                        <Eye className="w-4 h-4 mr-2" />
-                        View Details
+                        <div className="flex items-center justify-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] md:text-xs">
+                          <Eye className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                          <span className="hidden lg:inline">View Details</span>
+                          <span className="lg:hidden truncate">View</span>
+                        </div>
                       </Button>
                       <Button
                         onClick={() => handleQuickAddToCart(product)}
-                        className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground shadow-lg"
+                        className="flex-1 min-w-0 bg-primary hover:bg-primary/95 text-primary-foreground shadow-lg px-2 py-1.5 sm:py-2"
                       >
-                        <ShoppingCart className="w-4 h-4 mr-2" />
-                        Add to Cart
+                        <div className="flex items-center justify-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] md:text-xs">
+                          <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                          <span className="hidden lg:inline">Add to Cart</span>
+                          <span className="lg:hidden truncate">Add</span>
+                        </div>
                       </Button>
                     </div>
                   </div>
                 </div>
                 
-                <div className="p-3 md:p-6">
+                <div className="p-3 md:p-6 flex flex-col flex-grow">
 
-                  <div className="flex items-start justify-between gap-1 md:gap-2 mb-2 md:mb-3">
-                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-olive text-[#2A1B14] rounded-full text-[10px] md:text-sm font-semibold">
+                  <div className="flex items-start justify-between gap-1 md:gap-2 mb-2 md:mb-3 flex-shrink-0">
+                    <span className="inline-block px-2 py-1 md:px-3 md:py-1.5 bg-[#C8D5A0] text-[#3b2a1e] rounded-full text-[10px] md:text-sm font-semibold">
                       {product.badge}
                     </span>
                     {product.price && (
@@ -198,8 +205,8 @@ export function FeaturedGallery() {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm md:text-xl text-foreground font-semibold mb-1 md:mb-2 line-clamp-2">{product.title}</h3>
-                  <p className="hidden md:block text-sm text-muted-foreground line-clamp-2">{product.description}</p>
+                  <h3 className="text-sm md:text-xl text-foreground font-semibold mb-1 md:mb-2 line-clamp-2 min-h-[2.5rem] md:min-h-[3.5rem]">{product.title}</h3>
+                  <p className="hidden md:block text-sm text-muted-foreground line-clamp-2 mb-2 flex-grow">{product.description}</p>
                   
                   {/* Mobile Action Buttons */}
                   <div className="md:hidden flex gap-1.5 mt-2">
@@ -210,10 +217,12 @@ export function FeaturedGallery() {
                       }}
                       size="sm"
                       variant="outline"
-                      className="flex-1 border-primary text-primary hover:bg-primary/10 text-[10px] h-7"
+                      className="flex-1 min-w-0 border-primary text-primary hover:bg-primary/10 px-2 py-1.5"
                     >
-                      <Eye className="w-3 h-3 mr-1" />
-                      View
+                      <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                        <Eye className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">View</span>
+                      </div>
                     </Button>
                     <Button
                       onClick={(e) => {
@@ -221,10 +230,12 @@ export function FeaturedGallery() {
                         handleQuickAddToCart(product);
                       }}
                       size="sm"
-                      className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground text-[10px] h-7"
+                      className="flex-1 min-w-0 bg-primary hover:bg-primary/95 text-primary-foreground px-2 py-1.5"
                     >
-                      <ShoppingCart className="w-3 h-3 mr-1" />
-                      Add
+                      <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                        <ShoppingCart className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">Add</span>
+                      </div>
                     </Button>
                   </div>
                 </div>

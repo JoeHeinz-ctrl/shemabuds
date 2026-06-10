@@ -92,10 +92,10 @@ export function DesktopCategoryModal({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="group relative rounded-2xl overflow-hidden glass-strong shadow-[0_4px_16px_rgba(166,124,82,0.12)] hover:shadow-[0_8px_24px_rgba(166,124,82,0.2)] transition-all duration-300"
+                    className="group relative rounded-2xl overflow-hidden glass-strong shadow-[0_4px_16px_rgba(166,124,82,0.12)] hover:shadow-[0_8px_24px_rgba(166,124,82,0.2)] transition-all duration-300 flex flex-col"
                   >
                     {/* Product Image */}
-                    <div className="relative aspect-square bg-muted overflow-hidden">
+                    <div className="relative aspect-square bg-muted overflow-hidden flex-shrink-0">
                       <motion.img
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.4 }}
@@ -107,7 +107,7 @@ export function DesktopCategoryModal({
                       
                       {product.badge && (
                         <div className="absolute top-3 left-3">
-                          <span className="px-2.5 py-1 bg-white/95 backdrop-blur-sm text-primary text-xs rounded-full font-semibold shadow-lg">
+                          <span className="px-2.5 py-1 bg-[#C8D5A0] text-[#3b2a1e] text-xs rounded-full font-semibold shadow-lg">
                             {product.badge}
                           </span>
                         </div>
@@ -115,7 +115,7 @@ export function DesktopCategoryModal({
                     </div>
 
                     {/* Product Info */}
-                    <div className="p-4">
+                    <div className="p-4 flex flex-col flex-grow">
                       <h3 className="text-base font-semibold text-foreground line-clamp-2 mb-2 min-h-[3rem] group-hover:text-primary transition-colors">
                         {product.title}
                       </h3>
@@ -127,23 +127,27 @@ export function DesktopCategoryModal({
                       )}
 
                       {/* Action Buttons */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 mt-auto">
                         <Button
                           onClick={() => handleViewDetails(product)}
                           variant="outline"
                           size="sm"
-                          className="flex-1 border-primary text-primary hover:bg-primary/10 text-xs"
+                          className="flex-1 min-w-0 border-primary text-primary hover:bg-primary/10 px-2 py-1.5"
                         >
-                          <Eye className="w-3.5 h-3.5 mr-1" />
-                          View
+                          <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                            <Eye className="w-3.5 h-3.5 flex-shrink-0" />
+                            <span className="truncate">View</span>
+                          </div>
                         </Button>
                         <Button
                           onClick={(e) => handleQuickAddToCart(product, e)}
                           size="sm"
-                          className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground text-xs"
+                          className="flex-1 min-w-0 bg-primary hover:bg-primary/95 text-primary-foreground px-2 py-1.5"
                         >
-                          <ShoppingCart className="w-3.5 h-3.5 mr-1" />
-                          Add
+                          <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                            <ShoppingCart className="w-3.5 h-3.5 flex-shrink-0" />
+                            <span className="truncate">Add</span>
+                          </div>
                         </Button>
                       </div>
                     </div>

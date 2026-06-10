@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Flower2, Gift, Sparkles, Heart, PenTool, ShoppingBag, ArrowRight, ArrowUp, Eye } from "lucide-react";
+import { motion } from "motion/react";
+import { Flower2, Gift, Sparkles, Heart, PenTool, ShoppingBag, Eye } from "lucide-react";
 import { Button } from "./ui/button";
 import { useOrdering, Product } from "./OrderingSystem";
 import { useProducts } from "../../hooks/useProducts";
@@ -8,6 +8,7 @@ import { LogomarkSpinner, LogomarkWatermark, FloatingLeaf } from "./BrandDecorat
 
 const categoryMeta: Record<string, { label: string; icon: typeof Flower2 }> = {
   bouquets: { label: "Bouquets", icon: Flower2 },
+  "ring-plater": { label: "Ring Plater", icon: Heart },
   gifts: { label: "Handmade Gifts", icon: Gift },
   events: { label: "Event Decorations", icon: Sparkles },
   wedding: { label: "Wedding Accessories", icon: Heart },
@@ -20,11 +21,13 @@ const categoryLabels: Record<string, string> = Object.fromEntries(
 );
 
 export function Services() {
-  const [activeCategory, setActiveCategory] = useState("");
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("all");
   const { setSelectedProduct, addToCart } = useOrdering();
   
   const { products: allProducts, loading } = useProducts({});
+
+  // Define category order with "ring-plater" as second
+  const categoryOrder = ["bouquets", "ring-plater", "gifts", "events", "wedding", "custom", "boutique"];
 
   const availableCategories = Object.entries(allProducts)
     .filter(([, products]) => products.length > 0)
@@ -32,23 +35,34 @@ export function Services() {
       id,
       label: categoryLabels[id] || id,
       icon: categoryMeta[id]?.icon ?? ShoppingBag,
-    }));
+    }))
+    .sort((a, b) => {
+      // Sort by the defined order, putting ring-plater second if it exists
+      const orderA = categoryOrder.indexOf(a.id);
+      const orderB = categoryOrder.indexOf(b.id);
+      return (orderA === -1 ? 999 : orderA) - (orderB === -1 ? 999 : orderB);
+    });
+
+  // Add "All" category at the beginning
+  const categoriesWithAll = [
+    { id: "all", label: "All", icon: ShoppingBag },
+    ...availableCategories
+  ];
 
   useEffect(() => {
     if (availableCategories.length === 0) return;
-    if (!availableCategories.some((c) => c.id === activeCategory)) {
-      setActiveCategory(availableCategories[0].id);
-      setIsExpanded(false);
+    if (!categoriesWithAll.some((c) => c.id === activeCategory)) {
+      setActiveCategory("all");
     }
   }, [allProducts, loading, availableCategories, activeCategory]);
 
-  const currentShowcase = allProducts[activeCategory] || [];
-  const itemsPerPage = 4;
-  const visibleItems = isExpanded ? currentShowcase : currentShowcase.slice(0, itemsPerPage);
+  // Show all products when "all" is selected, or products from the specific category
+  const currentShowcase = activeCategory === "all" 
+    ? Object.values(allProducts).flat() 
+    : (allProducts[activeCategory] || []);
 
   const handleCategoryChange = (categoryId: string) => {
     setActiveCategory(categoryId);
-    setIsExpanded(false);
   };
 
   const handleViewDetails = (product: Product) => {
@@ -146,7 +160,7 @@ export function Services() {
 
           {/* Controls Row: Category Navigation */}
           <motion.div layout className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6">
-            {availableCategories.length > 0 && (
+            {categoriesWithAll.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -154,7 +168,7 @@ export function Services() {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="flex flex-wrap justify-center gap-2 sm:gap-3"
               >
-                {availableCategories.map((category) => {
+                {categoriesWithAll.map((category) => {
                   const Icon = category.icon;
                   return (
                     <motion.button
@@ -179,23 +193,22 @@ export function Services() {
             )}
           </motion.div>
 
-          {availableCategories.length === 0 && (
+          {categoriesWithAll.length === 0 && (
             <div className="text-center py-8">
               <p className="text-muted-foreground">No products available at the moment.</p>
             </div>
           )}
 
-          {/* Grid Showcase */}
-          {availableCategories.length > 0 && <div className="relative">
-            {/* First row — always visible, no animation */}
+          {/* Grid Showcase - Show all products */}
+          {categoriesWithAll.length > 0 && <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-              {currentShowcase.slice(0, itemsPerPage).map((item, index) => (
+              {currentShowcase.map((item, index) => (
                 <div
                   key={item.id || index}
-                  className="group relative rounded-2xl sm:rounded-3xl overflow-hidden glass-strong bg-white/40 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-white/40"
+                  className="group relative rounded-2xl sm:rounded-3xl overflow-hidden glass-strong bg-white/40 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-white/40 flex flex-col"
                 >
                   {/* Image */}
-                  <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
+                  <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl flex-shrink-0">
                     <img
                       loading="lazy"
                       src={item.image}
@@ -204,9 +217,9 @@ export function Services() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <div className="p-4 sm:p-5">
-                    <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
-                      <span className="inline-block px-2.5 py-1 md:px-3.5 md:py-1.5 bg-[#2d5f3f] text-white rounded-full text-[10px] md:text-xs font-bold tracking-wide">
+                  <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                    <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3 flex-shrink-0">
+                      <span className="inline-block px-2.5 py-1 md:px-3.5 md:py-1.5 bg-[#C8D5A0] text-[#3b2a1e] rounded-full text-[10px] md:text-xs font-bold tracking-wide">
                         {item.badge}
                       </span>
                       {item.price && (
@@ -215,122 +228,41 @@ export function Services() {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-sm sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1 sm:mb-2 line-clamp-2">
+                    <h3 className="text-sm sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1 sm:mb-2 line-clamp-2 min-h-[2.5rem] sm:min-h-[3.5rem]">
                       {item.title}
                     </h3>
-                    <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
+                    <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2 flex-grow">
                       {item.description}
                     </p>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1.5 sm:gap-2">
                       <Button
                         size="sm"
                         onClick={() => handleViewDetails(item)}
                         variant="outline"
-                        className="flex-1 bg-white/50 border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
+                        className="flex-1 min-w-0 bg-white/50 border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 font-medium rounded-lg px-2 py-1.5 sm:py-2"
                       >
-                        <Eye className="w-3 h-3 mr-1" />
-                        <span>View Details</span>
+                        <div className="flex items-center justify-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] md:text-xs">
+                          <Eye className="w-3 h-3 flex-shrink-0" />
+                          <span className="hidden lg:inline">View Details</span>
+                          <span className="lg:hidden truncate">View</span>
+                        </div>
                       </Button>
                       <Button
                         size="sm"
                         onClick={(e) => handleQuickAddToCart(item, e)}
-                        className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
+                        className="flex-1 min-w-0 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 font-medium rounded-lg px-2 py-1.5 sm:py-2"
                       >
-                        <span className="text-sm mr-1">+</span>
-                        <span>Add to Cart</span>
+                        <div className="flex items-center justify-center gap-0.5 sm:gap-1 text-[9px] sm:text-[10px] md:text-xs">
+                          <span className="text-xs sm:text-sm flex-shrink-0">+</span>
+                          <span className="hidden lg:inline">Add to Cart</span>
+                          <span className="lg:hidden truncate">Add</span>
+                        </div>
                       </Button>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-
-            {/* Extra rows — fade in gently, no per-card bounce */}
-            {currentShowcase.length > itemsPerPage && (
-              <AnimatePresence>
-                {isExpanded && (
-                  <motion.div
-                    key="expanded-rows"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35, ease: "easeInOut" }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-4 sm:mt-5"
-                  >
-                    {currentShowcase.slice(itemsPerPage).map((item, index) => (
-                      <div
-                        key={item.id || index}
-                        className="group relative rounded-2xl sm:rounded-3xl overflow-hidden glass-strong bg-white/40 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-white/40"
-                      >
-                        <div className="relative h-48 sm:h-56 overflow-hidden rounded-t-2xl sm:rounded-t-3xl">
-                          <img
-                            loading="lazy"
-                            src={item.image}
-                            alt={item.title}
-                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
-                        <div className="p-4 sm:p-5">
-                          <div className="flex items-center justify-between gap-2 mb-2 sm:mb-3">
-                            <span className="inline-block px-2.5 py-1 md:px-3.5 md:py-1.5 bg-[#2d5f3f] text-white rounded-full text-[10px] md:text-xs font-bold tracking-wide">
-                              {item.badge}
-                            </span>
-                            {item.price && (
-                              <span className="text-base sm:text-xl font-bold text-primary whitespace-nowrap">
-                                {item.price}
-                              </span>
-                            )}
-                          </div>
-                          <h3 className="text-sm sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300 mb-1 sm:mb-2 line-clamp-2">
-                            {item.title}
-                          </h3>
-                          <p className="text-muted-foreground font-light leading-relaxed text-xs sm:text-sm mb-4 line-clamp-2">
-                            {item.description}
-                          </p>
-                          <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              onClick={() => handleViewDetails(item)}
-                              variant="outline"
-                              className="flex-1 bg-white/50 border border-primary/20 text-primary hover:bg-primary/10 transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
-                            >
-                              <Eye className="w-3 h-3 mr-1" />
-                              <span>View Details</span>
-                            </Button>
-                            <Button
-                              size="sm"
-                              onClick={(e) => handleQuickAddToCart(item, e)}
-                              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground shadow-md hover:shadow-lg transition-all duration-300 text-[10px] sm:text-xs font-medium rounded-lg"
-                            >
-                              <span className="text-sm mr-1">+</span>
-                              <span>Add to Cart</span>
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            )}
-
-            {/* Expand CTA */}
-            {currentShowcase.length > itemsPerPage && (
-              <motion.div layout className="flex justify-center mt-8">
-                <Button
-                  variant="outline"
-                  onClick={() => setIsExpanded(!isExpanded)}
-                  className="bg-white/80 border border-primary/20 text-primary hover:bg-primary hover:text-primary-foreground px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-400 shadow-sm group"
-                >
-                  {isExpanded ? (
-                    <>Show Less <ArrowUp className="w-4 h-4 ml-1.5 group-hover:-translate-y-0.5 transition-transform" /></>
-                  ) : (
-                    <>View All Collection <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform" /></>
-                  )}
-                </Button>
-              </motion.div>
-            )}
           </div>}
         </motion.div>
       </div>

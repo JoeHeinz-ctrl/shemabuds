@@ -58,10 +58,11 @@ function FeaturedStyleProductCard({ product, index }: { product: Product; index:
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
+      className="h-full"
     >
-      <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card rounded-3xl">
+      <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card rounded-3xl h-full flex flex-col">
         {/* Image Section */}
-        <div className="relative overflow-hidden aspect-square">
+        <div className="relative overflow-hidden aspect-square flex-shrink-0">
           <motion.div
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -92,11 +93,11 @@ function FeaturedStyleProductCard({ product, index }: { product: Product; index:
         </div>
 
         {/* Content Section */}
-        <div className="p-3">
+        <div className="p-3 flex flex-col flex-grow">
           {/* Badge and Price Row */}
-          <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-center justify-between gap-2 mb-2 flex-shrink-0">
             {product.badge && (
-              <span className="inline-block px-2.5 py-1 bg-[#2d5f3f] text-white rounded-full text-[10px] font-bold tracking-wide">
+              <span className="inline-block px-2.5 py-1 bg-[#C8D5A0] text-[#3b2a1e] rounded-full text-[10px] font-bold tracking-wide">
                 {product.badge}
               </span>
             )}
@@ -108,26 +109,30 @@ function FeaturedStyleProductCard({ product, index }: { product: Product; index:
           </div>
 
           {/* Product Title */}
-          <h3 className="text-sm text-foreground font-semibold mb-2 line-clamp-2">{product.title}</h3>
+          <h3 className="text-sm text-foreground font-semibold mb-2 line-clamp-2 min-h-[2.5rem]">{product.title}</h3>
 
           {/* Action Buttons */}
-          <div className="flex gap-1.5">
+          <div className="flex gap-1.5 mt-auto">
             <Button
               onClick={handleViewDetails}
               size="sm"
               variant="outline"
-              className="flex-1 border-primary text-primary hover:bg-primary/10 text-[10px] h-7"
+              className="flex-1 min-w-0 border-primary text-primary hover:bg-primary/10 px-2 py-1.5"
             >
-              <Eye className="w-3 h-3 mr-1" />
-              View
+              <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                <Eye className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">View</span>
+              </div>
             </Button>
             <Button
               onClick={handleQuickAddToCart}
               size="sm"
-              className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground text-[10px] h-7"
+              className="flex-1 min-w-0 bg-primary hover:bg-primary/95 text-primary-foreground px-2 py-1.5"
             >
-              <ShoppingCart className="w-3 h-3 mr-1" />
-              Add
+              <div className="flex items-center justify-center gap-0.5 text-[9px] sm:text-[10px]">
+                <ShoppingCart className="w-3 h-3 flex-shrink-0" />
+                <span className="truncate">Add</span>
+              </div>
             </Button>
           </div>
         </div>
