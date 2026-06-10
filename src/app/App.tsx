@@ -102,12 +102,17 @@ function AppContent() {
       setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
       setMobileActiveTab("home");
     };
+    const handleNavigateToCart = () => {
+      setPrevTabIndex(tabOrder.indexOf(mobileActiveTab));
+      setMobileActiveTab("cart");
+    };
 
     window.addEventListener('openAboutModal', handleOpenAbout);
     window.addEventListener('openContactModal', handleOpenContact);
     window.addEventListener('navigateToCollections', handleNavigateToCollections);
     window.addEventListener('navigateToOrders', handleNavigateToOrders);
     window.addEventListener('navigateToHome', handleNavigateToHome);
+    window.addEventListener('navigateToCart', handleNavigateToCart);
 
     return () => {
       window.removeEventListener('openAboutModal', handleOpenAbout);
@@ -115,6 +120,7 @@ function AppContent() {
       window.removeEventListener('navigateToCollections', handleNavigateToCollections);
       window.removeEventListener('navigateToOrders', handleNavigateToOrders);
       window.removeEventListener('navigateToHome', handleNavigateToHome);
+      window.removeEventListener('navigateToCart', handleNavigateToCart);
     };
   }, [mobileActiveTab]);
 

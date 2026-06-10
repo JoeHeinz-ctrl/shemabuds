@@ -71,8 +71,14 @@ export function MobileHeader() {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => {
-              // Navigate to collections tab
-              window.dispatchEvent(new CustomEvent('navigateToCollections'));
+              // Navigate to home and scroll to featured section
+              window.dispatchEvent(new CustomEvent('navigateToHome'));
+              setTimeout(() => {
+                const featuredSection = document.getElementById('featured');
+                if (featuredSection) {
+                  featuredSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }, 100);
             }}
             className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors z-10"
           >

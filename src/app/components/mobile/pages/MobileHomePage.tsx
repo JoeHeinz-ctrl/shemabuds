@@ -13,8 +13,8 @@ export function MobileHomePage() {
         <Hero />
       </div>
       
-      {/* Featured Collection */}
-      <div id="gallery">
+      {/* Featured Collection - Featured Section */}
+      <div id="featured">
         <FeaturedGallery />
       </div>
       

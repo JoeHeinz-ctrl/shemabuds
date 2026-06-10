@@ -1,49 +1,49 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Textarea } from "./ui/textarea";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { X, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { useOrdering, Product } from "./OrderingSystem";
 
 export function ProductDetailsModal() {
-  const { selectedProduct, setSelectedProduct, addToCart, setIsCartOpen } = useOrdering();
+  const { selectedProduct, setSelectedProduct, addToCart } = useOrdering();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [customizations, setCustomizations] = useState<Record<string, string>>({});
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [showImageViewer, setShowImageViewer] = useState(false);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   if (!selectedProduct) return null;
 
-  const images = selectedProduct.images && selectedProduct.images.length > 0 
+  // Handle missing images gracefully
+  const images = (selectedProduct.images && selectedProduct.images.length > 0) 
     ? selectedProduct.images 
-    : [selectedProduct.image];
+    : selectedProduct.image 
+      ? [selectedProduct.image]
+      : ['data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="200" height="200"%3E%3Crect fill="%23f0f0f0" width="200" height="200"/%3E%3Ctext x="50%25" y="50%25" font-family="Arial" font-size="16" fill="%23999" text-anchor="middle" dominant-baseline="middle"%3ENo Image%3C/text%3E%3C/svg%3E'];
 
   const handleClose = () => {
     setSelectedProduct(null);
-    setCustomizations({});
     setNotes("");
     setQuantity(1);
     setCurrentImageIndex(0);
     setShowImageViewer(false);
+    setIsAddedToCart(false);
   };
 
   const handleAddToCart = () => {
     addToCart({
       product: selectedProduct,
       quantity,
-      customizations,
+      customizations: {},
       notes: notes || undefined,
     });
 
-    handleClose();
+    // Show "Added to Cart" feedback
+    setIsAddedToCart(true);
     
-    // Show cart after a brief delay
+    // Reset button after 2 seconds and close modal
     setTimeout(() => {
-      setIsCartOpen(true);
-    }, 500);
+      handleClose();
+    }, 2000);
   };
 
   const nextImage = () => {
@@ -73,11 +73,13 @@ export function ProductDetailsModal() {
           </button>
 
           <div className="relative w-full h-full flex items-center justify-center p-4">
-            <ImageWithFallback
-              src={images[currentImageIndex]}
-              alt={selectedProduct.title}
-              className="w-full h-full object-contain"
-            />
+            {images[currentImageIndex] && (
+              <img
+                src={images[currentImageIndex]}
+                alt={selectedProduct?.title || "Product"}
+                className="w-full h-full object-contain"
+              />
+            )}
 
             {images.length > 1 && (
               <>
@@ -106,343 +108,240 @@ export function ProductDetailsModal() {
       )}
 
       {/* Main Modal */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-[#2A1B14]/60 backdrop-blur-md"
-        onClick={handleClose}
-      >
+      {selectedProduct && (
         <motion.div
-          initial={{ scale: 0.9, opacity: 0, y: 20 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.9, opacity: 0, y: 20 }}
-          transition={{ type: "spring", duration: 0.5 }}
-          onClick={(e) => e.stopPropagation()}
-          className="bg-card text-card-foreground rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40"
+          onClick={handleClose}
         >
-          {/* Header */}
-          <div className="flex items-center justify-between p-3 md:p-6 border-b border-border flex-shrink-0">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-primary" />
-              <h2 className="text-lg md:text-2xl font-semibold text-foreground font-serif">Product Details</h2>
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.95, opacity: 0 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-sm md:max-w-2xl max-h-[90vh] overflow-hidden flex flex-col"
+          >
+            {/* Header - Mobile only */}
+            <div className="md:hidden flex justify-between items-center p-3 border-b bg-white">
+              <h2 className="text-lg font-bold">{selectedProduct.title}</h2>
+              <button onClick={handleClose} className="p-1 hover:bg-gray-100 rounded">
+                <X className="w-5 h-5" />
+              </button>
             </div>
-            <button
-              onClick={handleClose}
-              className="p-2 hover:bg-muted rounded-full transition-colors"
-            >
-              <X className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground" />
-            </button>
-          </div>
 
-          {/* Content */}
-          <div className="overflow-y-auto flex-1">
-            {/* Mobile Layout: Image left, content right */}
-            <div className="md:hidden p-3">
-              <div className="flex gap-3 h-full">
-                {/* Left: Compact Image */}
-                <div className="flex-shrink-0 w-32">
-                  <div 
-                    className="relative w-32 h-32 rounded-lg overflow-hidden bg-muted cursor-pointer hover:opacity-90 transition-opacity"
-                    onClick={() => setShowImageViewer(true)}
-                  >
-                    <ImageWithFallback
-                      src={images[currentImageIndex]}
-                      alt={selectedProduct.title}
-                      className="w-full h-full object-cover"
-                    />
-                    
-                    {images.length > 1 && (
-                      <>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            prevImage();
-                          }}
-                          className="absolute left-1 top-1/2 -translate-y-1/2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors"
-                        >
-                          <ChevronLeft className="w-3 h-3 text-black" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            nextImage();
-                          }}
-                          className="absolute right-1 top-1/2 -translate-y-1/2 w-6 h-6 bg-white/90 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors"
-                        >
-                          <ChevronRight className="w-3 h-3 text-black" />
-                        </button>
-                      </>
-                    )}
-
-                    <div className="absolute top-1 left-1">
-                      <span className="inline-block px-2 py-0.5 bg-white/90 text-primary rounded-full text-xs font-semibold shadow-md">
-                        {selectedProduct.badge}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right: Product Info - Scrollable */}
-                <div className="flex-1 space-y-2 overflow-y-auto max-h-96">
-                  <div>
-                    <h3 className="text-lg font-semibold text-foreground mb-1">
-                      {selectedProduct.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground font-light leading-tight">
-                      {selectedProduct.description}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <span className="text-xs text-muted-foreground">Category:</span>
-                    <span className="px-2 py-0.5 bg-muted text-primary rounded-full text-xs font-medium">
-                      {selectedProduct.category}
-                    </span>
-                  </div>
-
-                  {/* Customization Options - Compact */}
-                  {selectedProduct.customizationOptions && selectedProduct.customizationOptions.length > 0 && (
-                    <div className="space-y-2 pt-2 border-t border-border">
-                      <h4 className="text-sm font-semibold text-foreground">Customize</h4>
+            {/* Content - Mobile Optimized */}
+            <div className="overflow-y-auto flex-1">
+              {/* Mobile Layout */}
+              <div className="md:hidden">
+                <div className="flex gap-3 p-3">
+                  {/* Left: Image */}
+                  <div className="flex-shrink-0 w-32">
+                    <div 
+                      className="w-32 h-32 bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity relative"
+                      onClick={() => setShowImageViewer(true)}
+                    >
+                      <img
+                        src={images[currentImageIndex]}
+                        alt={selectedProduct.title}
+                        className="w-full h-full object-cover"
+                      />
                       
-                      {selectedProduct.customizationOptions.map((option) => (
-                        <div key={option.label} className="space-y-1">
-                          <Label className="text-foreground font-medium text-xs">{option.label}</Label>
-                          <div className="flex flex-wrap gap-1">
-                            {option.options.map((opt) => (
-                              <button
-                                key={opt}
-                                onClick={() =>
-                                  setCustomizations((prev) => ({
-                                    ...prev,
-                                    [option.label]: opt,
-                                  }))
-                                }
-                                className={`px-2 py-1 rounded-full text-xs font-medium transition-all ${
-                                  customizations[option.label] === opt
-                                    ? 'bg-primary text-primary-foreground shadow-md'
-                                    : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                                }`}
-                              >
-                                {opt}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
+                      {images.length > 1 && (
+                        <>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              prevImage();
+                            }}
+                            className="absolute left-0.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-white/80 rounded-full flex items-center justify-center hover:bg-white"
+                          >
+                            <ChevronLeft className="w-3 h-3" />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              nextImage();
+                            }}
+                            className="absolute right-0.5 top-1/2 -translate-y-1/2 w-5 h-5 bg-white/80 rounded-full flex items-center justify-center hover:bg-white"
+                          >
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
+                        </>
+                      )}
                     </div>
-                  )}
+                  </div>
 
-                  {/* Quantity - Compact */}
-                  <div className="space-y-1 pt-2">
-                    <Label className="text-xs text-foreground font-medium">Qty</Label>
+                  {/* Right: Content - Scrollable */}
+                  <div className="flex-1 overflow-y-auto pr-2 space-y-2">
+                    <div>
+                      <p className="text-xs text-gray-500">{selectedProduct.description}</p>
+                    </div>
+
+                    {/* Price */}
+                    <div className="text-lg font-bold text-orange-600">
+                      ₹{selectedProduct.price}
+                    </div>
+
+                    {/* Category */}
+                    <div className="text-xs">
+                      <span className="text-gray-500">Category:</span>
+                      <span className="ml-1 font-medium">{selectedProduct.category}</span>
+                    </div>
+
+                    {/* Quantity */}
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-8 h-8 rounded-full bg-muted hover:bg-accent flex items-center justify-center font-semibold text-foreground transition-colors text-sm"
-                      >
-                        -
-                      </button>
-                      <span className="text-lg font-semibold text-foreground w-8 text-center">
-                        {quantity}
-                      </span>
-                      <button
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="w-8 h-8 rounded-full bg-muted hover:bg-accent flex items-center justify-center font-semibold text-foreground transition-colors text-sm"
-                      >
-                        +
-                      </button>
+                      <span className="text-xs font-medium">Qty:</span>
+                      <div className="flex items-center gap-1 border rounded-lg p-0.5">
+                        <button
+                          onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                          className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 text-sm"
+                        >
+                          −
+                        </button>
+                        <span className="w-5 text-center text-sm">{quantity}</span>
+                        <button
+                          onClick={() => setQuantity(quantity + 1)}
+                          className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 text-sm"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Notes */}
+                    <div className="space-y-1">
+                      <label className="block text-xs font-medium">Special Requests</label>
+                      <textarea
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        placeholder="Any special requests..."
+                        className="w-full p-2 border rounded-lg text-xs"
+                        rows={2}
+                      />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Optional Notes - Below both */}
-              <div className="space-y-2 mt-4">
-                <Label className="text-xs text-foreground font-medium">Special Requests (Optional)</Label>
-                <Textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Any special requests..."
-                  className="bg-input-background border-border focus:border-primary text-foreground min-h-[60px] text-sm"
-                />
-              </div>
-
-              {/* Add to Cart Button */}
-              <Button
-                onClick={handleAddToCart}
-                className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-3 text-sm shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300 font-medium mt-4"
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Add to Cart
-              </Button>
-            </div>
-
-            {/* Desktop Layout: Original */}
-            <div className="hidden md:block">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8 p-3 md:p-6">
-                {/* Left: Image Gallery */}
-                <div className="space-y-2 md:space-y-4 flex flex-col">
-                  {/* Main Image - Clickable */}
-                  <div 
-                    className="relative aspect-square rounded-xl md:rounded-2xl overflow-hidden bg-muted cursor-pointer hover:opacity-90 transition-opacity"
-                    onClick={() => setShowImageViewer(true)}
-                  >
-                    <ImageWithFallback
-                      src={images[currentImageIndex]}
-                      alt={selectedProduct.title}
-                      className="w-full h-full object-cover"
-                    />
-                    
-                    {images.length > 1 && (
-                      <>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            prevImage();
-                          }}
-                          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
-                        >
-                          <ChevronLeft className="w-5 h-5 text-black" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            nextImage();
-                          }}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-colors"
-                        >
-                          <ChevronRight className="w-5 h-5 text-black" />
-                        </button>
-                      </>
-                    )}
-
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-block px-3 py-1.5 bg-white/95 backdrop-blur-sm text-primary rounded-full text-sm font-semibold shadow-lg">
-                        {selectedProduct.badge}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Thumbnail Gallery - Desktop only */}
+              {/* Desktop Layout */}
+              <div className="hidden md:block p-6 space-y-4">
+                {/* Image */}
+                <div 
+                  className="w-full bg-gray-100 rounded-lg overflow-hidden cursor-pointer h-80 relative group"
+                  onClick={() => setShowImageViewer(true)}
+                >
+                  <img
+                    src={images[currentImageIndex]}
+                    alt={selectedProduct.title}
+                    className="w-full h-full object-cover hover:opacity-90 transition-opacity"
+                  />
+                  
                   {images.length > 1 && (
-                    <div className="flex gap-2 overflow-x-auto">
-                      {images.map((img, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentImageIndex(idx)}
-                          className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                            currentImageIndex === idx
-                              ? 'border-primary'
-                              : 'border-transparent opacity-60 hover:opacity-100'
-                          }`}
-                        >
-                          <ImageWithFallback src={img} alt="" className="w-full h-full object-cover" />
-                        </button>
-                      ))}
-                    </div>
+                    <>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          prevImage();
+                        }}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          nextImage();
+                        }}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/80 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <ChevronRight className="w-5 h-5" />
+                      </button>
+                    </>
                   )}
                 </div>
 
-                {/* Right: Product Info & Customization */}
-                <div className="space-y-4 md:space-y-6">
-                  <div>
-                    <h3 className="text-xl md:text-3xl font-semibold text-foreground mb-2">
-                      {selectedProduct.title}
-                    </h3>
-                    <p className="text-sm md:text-base text-muted-foreground font-light leading-relaxed">
-                      {selectedProduct.description}
-                    </p>
+                {/* Title */}
+                <div className="flex justify-between items-start">
+                  <h2 className="text-2xl font-bold">{selectedProduct.title}</h2>
+                  <button onClick={handleClose} className="p-1 hover:bg-gray-100 rounded">
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                {/* Description */}
+                <p className="text-gray-600">{selectedProduct.description}</p>
+
+                {/* Price */}
+                <div className="text-3xl font-bold text-orange-600">
+                  ₹{selectedProduct.price}
+                </div>
+
+                {/* Category */}
+                <div className="flex gap-2">
+                  <span className="text-sm text-gray-500">Category:</span>
+                  <span className="text-sm font-medium">{selectedProduct.category}</span>
+                </div>
+
+                {/* Quantity */}
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium">Quantity:</span>
+                  <div className="flex items-center gap-2 border rounded-lg p-1">
+                    <button
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-8 h-8 flex items-center justify-center hover:bg-gray-100"
+                    >
+                      −
+                    </button>
+                    <span className="w-8 text-center">{quantity}</span>
+                    <button
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="w-8 h-8 flex items-center justify-center hover:bg-gray-100"
+                    >
+                      +
+                    </button>
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-muted-foreground">Category:</span>
-                    <span className="px-3 py-1 bg-muted text-primary rounded-full text-sm font-medium">
-                      {selectedProduct.category}
-                    </span>
-                  </div>
-
-                  {/* Customization Options */}
-                  {selectedProduct.customizationOptions && selectedProduct.customizationOptions.length > 0 && (
-                    <div className="space-y-3 md:space-y-4 pt-3 md:pt-4 border-t border-border">
-                      <h4 className="text-base md:text-lg font-semibold text-foreground">Customize Your Order</h4>
-                      
-                      {selectedProduct.customizationOptions.map((option) => (
-                        <div key={option.label} className="space-y-2">
-                          <Label className="text-foreground font-medium">{option.label}</Label>
-                          <div className="flex flex-wrap gap-2">
-                            {option.options.map((opt) => (
-                              <button
-                                key={opt}
-                                onClick={() =>
-                                  setCustomizations((prev) => ({
-                                    ...prev,
-                                    [option.label]: opt,
-                                  }))
-                                }
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                                  customizations[option.label] === opt
-                                    ? 'bg-primary text-primary-foreground shadow-md'
-                                    : 'bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-                                }`}
-                              >
-                                {opt}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Optional Notes */}
-                  <div className="space-y-2">
-                    <Label className="text-sm md:text-base text-foreground font-medium">Special Requests (Optional)</Label>
-                    <Textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Any special requests or customizations..."
-                      className="bg-input-background border-border focus:border-primary text-foreground min-h-[80px] md:min-h-[100px] text-sm"
-                    />
-                  </div>
-
-                  {/* Quantity */}
-                  <div className="space-y-2">
-                    <Label className="text-sm md:text-base text-foreground font-medium">Quantity</Label>
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-10 h-10 rounded-full bg-muted hover:bg-accent flex items-center justify-center font-semibold text-foreground transition-colors"
-                      >
-                        -
-                      </button>
-                      <span className="text-xl font-semibold text-foreground w-12 text-center">
-                        {quantity}
-                      </span>
-                      <button
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="w-10 h-10 rounded-full bg-muted hover:bg-accent flex items-center justify-center font-semibold text-foreground transition-colors"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Add to Cart Button */}
-                  <Button
-                    onClick={handleAddToCart}
-                    className="w-full bg-primary hover:bg-primary/95 text-primary-foreground py-4 md:py-6 text-sm md:text-lg shadow-[0_4px_16px_rgba(166,124,82,0.3)] transition-all duration-300 font-medium"
-                  >
-                    <Sparkles className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                    Customize & Add to Cart
-                  </Button>
+                {/* Notes */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Special Requests</label>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="Any special requests..."
+                    className="w-full p-2 border rounded-lg text-sm"
+                    rows={3}
+                  />
                 </div>
               </div>
             </div>
-          </div>
+
+            {/* Add to Cart Button */}
+            <div className="p-3 md:p-4 border-t bg-white sticky bottom-0">
+              <button
+                onClick={handleAddToCart}
+                disabled={isAddedToCart}
+                className={`w-full font-bold py-3 rounded-lg transition flex items-center justify-center gap-2 text-white ${
+                  isAddedToCart
+                    ? 'bg-green-500 hover:bg-green-500'
+                    : 'bg-orange-500 hover:bg-orange-600'
+                }`}
+              >
+                {isAddedToCart ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    Added to Cart
+                  </>
+                ) : (
+                  'Add to Cart'
+                )}
+              </button>
+            </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 }
