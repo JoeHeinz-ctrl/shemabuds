@@ -194,10 +194,10 @@ export function Hero() {
                     // Mobile: Navigate to collections tab
                     window.dispatchEvent(new Event('navigateToCollections'));
                   } else {
-                    // Desktop: Scroll to gallery section
-                    const gallerySection = document.getElementById("gallery");
-                    if (gallerySection) {
-                      gallerySection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    // Desktop: Scroll to Our Collection (services) section
+                    const servicesSection = document.getElementById("services");
+                    if (servicesSection) {
+                      servicesSection.scrollIntoView({ behavior: "smooth", block: "start" });
                     }
                   }
                 }}
@@ -247,7 +247,7 @@ export function Hero() {
                       <p className="text-base sm:text-lg md:text-xl font-bold text-foreground leading-none mb-0.5">
                         {stat.value}
                       </p>
-                      <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground font-medium leading-snug">
+                      <p className="text-[10px] sm:text-xs md:text-sm text-[#4e3c32] font-semibold leading-snug">
                         {stat.label}
                       </p>
                     </motion.div>

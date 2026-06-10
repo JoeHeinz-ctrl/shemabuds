@@ -211,11 +211,11 @@ export function MobileCollectionsPage() {
   return (
     <div style={{ width: "100%", display: "flex", flexDirection: "column", margin: 0, paddingTop: `${headerHeight}px` }}>
       {/* COLLECTIONS HEADING - Normal flow, scrolls away naturally */}
-      <div style={{ padding: "16px 16px 4px 16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", margin: 0, textAlign: "center" }}>
+      <div style={{ padding: "12px 16px 2px 16px", background: "linear-gradient(to bottom, var(--background), var(--muted))", margin: 0, textAlign: "center" }}>
         <h1 style={{ 
-          fontSize: "2.4rem", 
-          fontWeight: "bold", 
-          margin: "0 0 4px 0", 
+          fontSize: "2.4rem",
+          fontWeight: "bold",
+          margin: "0 0 2px 0",
           padding: 0,
           background: "linear-gradient(135deg, #d47448 0%, #efbf43 55%, #94b38a 100%)",
           WebkitBackgroundClip: "text",
@@ -238,18 +238,21 @@ export function MobileCollectionsPage() {
       {/* CATEGORY FILTER BAR - Sticky, positioned below navbar */}
       {Object.keys(categorizedProducts).length > 0 && (
         <div
+          onTouchStart={(e) => e.stopPropagation()}
+          onTouchMove={(e) => e.stopPropagation()}
+          onTouchEnd={(e) => e.stopPropagation()}
           style={{
             position: "sticky",
-            top: `${headerHeight + 6}px`, // Float 6px below navbar
+            top: `${headerHeight + 2}px`, // Slight gap below navbar
             zIndex: 40,
-            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.15) 100%)",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.15) 100%)",
             backdropFilter: "blur(20px) saturate(140%)",
             WebkitBackdropFilter: "blur(20px) saturate(140%)",
-            border: "1px solid rgba(255, 255, 255, 0.4)",
-            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.4)",
+            border: "1px solid rgba(255,255,255,0.4)",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
             padding: "8px 12px",
             margin: "6px auto 8px auto",
-            width: "92%",
+            width: "85%",
             maxWidth: "480px",
             borderRadius: "9999px",
             boxSizing: "border-box" as const,

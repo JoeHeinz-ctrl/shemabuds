@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Heart, ShoppingBag, Moon, Sun, User, LogOut, Package, Settings } from "lucide-react";
+import { Heart, ShoppingBag, Moon, Sun, User, LogOut, Package, Settings, Car } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import { useOrdering } from "./OrderingSystem";
@@ -77,20 +77,21 @@ export function Header() {
 
           {/* Right Side - Action Buttons */}
           <div className="flex items-center gap-2">
-            {/* Explore Collection Button */}
-            <button
-              onClick={() => {
-                const element = document.getElementById("services");
-                if (element) {
-                  element.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-foreground/80 bg-primary/10 hover:bg-primary/20 backdrop-blur-sm transition-all duration-200 hover:scale-105"
-            >
-              Explore Collection
-            </button>
+            {/* Explore Collection button removed */}
 
             {/* Settings Menu - Button only */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCartOpen(true)}
+              className="relative p-2.5 text-foreground/70 hover:text-primary transition-colors duration-200 rounded-full hover:bg-muted/40"
+              aria-label="Cart"
+            >
+              <ShoppingBag className="w-5 h-5" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] rounded-full flex items-center justify-center font-semibold">{totalItems}</span>
+              )}
+            </motion.button>
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.95 }}
@@ -103,7 +104,7 @@ export function Header() {
           </div>
         </nav>
       </header>
-      
+
       {/* Settings Modal - Renders at body level */}
       <AnimatePresence>
         {showSettingsMenu && (
@@ -242,7 +243,7 @@ export function Header() {
           </>
         )}
       </AnimatePresence>
-      
+
       {/* Auth Modal */}
       <AuthModal
         isOpen={showAuthModal}

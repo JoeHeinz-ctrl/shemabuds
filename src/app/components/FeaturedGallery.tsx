@@ -233,62 +233,7 @@ export function FeaturedGallery() {
           ))}
         </div>
 
-        {/* Explore More Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-10 md:mt-16 flex justify-center relative z-20"
-        >
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              
-              // Check if mobile view
-              const isMobile = window.innerWidth < 768;
-              
-              if (isMobile) {
-                // Mobile: Navigate to collections tab
-                window.dispatchEvent(new Event('navigateToCollections'));
-              } else {
-                // Desktop: scroll to services section
-                const servicesSection = document.getElementById("services");
-                
-                if (servicesSection) {
-                  const headerOffset = 80; // Account for fixed header
-                  const elementPosition = servicesSection.getBoundingClientRect().top;
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                  });
-                }
-              }
-            }}
-            className="group px-8 py-4 md:px-10 md:py-5 rounded-full text-base md:text-lg font-bold transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-            style={{
-              background: "linear-gradient(135deg, rgba(107,158,95,0.85) 0%, rgba(148,179,138,0.75) 100%)",
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              border: "2px solid rgba(107,158,95,0.90)",
-              boxShadow: "0 6px 24px rgba(107,158,95,0.35), 0 2px 8px rgba(255,255,255,0.3) inset",
-              color: "#ffffff",
-              textShadow: "0 1px 2px rgba(0,0,0,0.2)",
-            }}
-          >
-            <span className="flex items-center gap-2">
-              Explore More
-              <motion.span
-                animate={{ y: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                ↓
-              </motion.span>
-            </span>
-          </button>
-        </motion.div>
+        {/* Explore More button removed */}
       </div>
     </section>
   );
