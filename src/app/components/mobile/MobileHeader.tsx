@@ -55,14 +55,17 @@ export function MobileHeader() {
           {/* Centered Title - Elegant logo image */}
           <div 
             className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 cursor-pointer flex items-center"
-            onClick={scrollToTop}
+            onClick={() => {
+              const event = new CustomEvent('openAboutModal');
+              window.dispatchEvent(event);
+            }}
           >
               <img
                 src="/Brand/logo.svg"
                 alt="Shema Buds"
                 className="h-9 w-auto object-contain select-none scale-[3] origin-center"
                 style={{
-                  filter: "drop-shadow(0 0 8px rgba(34, 197, 94, 0.4)) drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3)) drop-shadow(0 0 0 2px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 0 4px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 0 6px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 0 8px rgba(0, 0, 0, 0.2))"
+                  filter: "drop-shadow(0 0 0 2px rgba(34, 197, 94, 1)) drop-shadow(0 0 0 3px rgba(34, 197, 94, 0.8)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5)) drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4)) drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3))"
                 }}
               />
           </div>

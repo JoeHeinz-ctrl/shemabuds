@@ -244,7 +244,35 @@ export function FeaturedGallery() {
           ))}
         </div>
 
-        {/* Explore More button removed */}
+        {/* Explore More Collection Button - Mobile Only */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="md:hidden flex justify-center mt-6 px-4"
+        >
+          <button
+            onClick={() => {
+              window.dispatchEvent(new Event('navigateToCollections'));
+            }}
+            className="px-5 py-2.5 rounded-full font-semibold text-sm text-white transition-all duration-300 hover:scale-105 active:scale-95"
+            style={{
+              background: "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)",
+              boxShadow: "0 4px 12px rgba(212, 116, 74, 0.3)"
+            }}
+          >
+            <span className="flex items-center justify-center gap-2">
+              Explore More Collection
+              <motion.span
+                animate={{ x: [0, 4, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                →
+              </motion.span>
+            </span>
+          </button>
+        </motion.div>
       </div>
     </section>
   );
