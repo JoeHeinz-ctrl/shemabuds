@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { MobileCategoryRow } from "../MobileCategoryRow";
 import { useProducts } from "../../../../hooks/useProducts";
 import { Product, useOrdering } from "../../OrderingSystem";
-import { ArrowRight, Eye, ShoppingCart } from "lucide-react";
+import { Eye, ShoppingCart, Heart } from "lucide-react";
 import { Button } from "../../ui/button";
+import { Card } from "../../ui/card";
 
 // Empty demo products - all products will come from Firebase
 const demoProducts: Record<string, Product[]> = {
@@ -25,11 +25,117 @@ const categoryLabels: Record<string, string> = {
   boutique: "Boutique Collection",
 };
 
+// Featured-style Product Card Component
+function FeaturedStyleProductCard({ product, index }: { product: Product; index: number }) {
+  const { setSelectedProduct, addToCart } = useOrdering();
+  const [liked, setLiked] = useState(false);
+
+  const handleViewDetails = () => {
+    setSelectedProduct(product);
+  };
+
+  const handleQuickAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    addToCart({
+      product,
+      quantity: 1,
+      customizations: {},
+      notes: "",
+    });
+  };
+
+  const toggleLike = () => {
+    setLiked(!liked);
+  };
+
+  return (
+    <motion.div
+      key={product.id}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
+    >
+      <Card className="group overflow-hidden border border-border hover:shadow-luxury-lg transition-all duration-300 bg-card rounded-3xl">
+        {/* Image Section */}
+        <div className="relative overflow-hidden aspect-square">
+          <motion.div
+            whileHover={{ scale: 1.08 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="w-full h-full"
+          >
+            <img
+              src={product.image}
+              alt={product.title}
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+          <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          {/* Wishlist Button */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleLike}
+            className="absolute top-2 right-2 glass p-2 rounded-full shadow-luxury"
+          >
+            <Heart 
+              className={`w-4 h-4 transition-colors duration-200 ${
+                liked ? 'fill-red-500 text-red-500' : 'text-muted-foreground'
+              }`} 
+            />
+          </motion.button>
+        </div>
+
+        {/* Content Section */}
+        <div className="p-3">
+          {/* Badge and Price Row */}
+          <div className="flex items-center justify-between gap-2 mb-2">
+            {product.badge && (
+              <span className="inline-block px-2.5 py-1 bg-[#2d5f3f] text-white rounded-full text-[10px] font-bold tracking-wide">
+                {product.badge}
+              </span>
+            )}
+            {product.price && (
+              <span className="text-sm font-bold text-primary whitespace-nowrap">
+                {product.price}
+              </span>
+            )}
+          </div>
+
+          {/* Product Title */}
+          <h3 className="text-sm text-foreground font-semibold mb-2 line-clamp-2">{product.title}</h3>
+
+          {/* Action Buttons */}
+          <div className="flex gap-1.5">
+            <Button
+              onClick={handleViewDetails}
+              size="sm"
+              variant="outline"
+              className="flex-1 border-primary text-primary hover:bg-primary/10 text-[10px] h-7"
+            >
+              <Eye className="w-3 h-3 mr-1" />
+              View
+            </Button>
+            <Button
+              onClick={handleQuickAddToCart}
+              size="sm"
+              className="flex-1 bg-primary hover:bg-primary/95 text-primary-foreground text-[10px] h-7"
+            >
+              <ShoppingCart className="w-3 h-3 mr-1" />
+              Add
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </motion.div>
+  );
+}
+
 export function MobileCollectionsPage() {
   const { products, loading } = useProducts(demoProducts);
   const [categorizedProducts, setCategorizedProducts] = useState<Record<string, Product[]>>({});
   const [selectedCategory, setSelectedCategory] = useState<string | null>("all");
-  const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
   useEffect(() => {
     // Organize products by category
@@ -46,20 +152,13 @@ export function MobileCollectionsPage() {
 
   const handleCategoryClick = (categoryKey: string | null) => {
     setSelectedCategory(categoryKey);
-    
-    if (categoryKey && categoryKey !== "all") {
-      // Scroll to the category section
-      setTimeout(() => {
-        const element = categoryRefs.current[categoryKey];
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    }
   };
 
   const allProducts = Object.values(categorizedProducts).flat();
   const showUnifiedView = selectedCategory === "all";
+  const selectedCategoryProducts = selectedCategory && selectedCategory !== "all" 
+    ? categorizedProducts[selectedCategory] 
+    : [];
 
   if (loading) {
     return (
@@ -76,323 +175,196 @@ export function MobileCollectionsPage() {
   }
 
   return (
-    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted pt-[76px] pb-4">
-      {/* Premium Compact Header Section */}
-      <div className="px-4 py-3">
-        {/* Main Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-0.5"
-        >
-          <h1 
-            className="text-center"
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "2.5rem",
-              fontWeight: 700,
-              color: "#2d2a26",
-              letterSpacing: "-0.01em",
-              lineHeight: 1.1,
-            }}
-          >
-            Collections
-          </h1>
-        </motion.div>
+    <div className="md:hidden min-h-screen bg-gradient-to-b from-background to-muted">
+      {/* Fixed Top - Navbar Container */}
+      <div className="fixed top-0 left-0 right-0 z-40 pt-[76px]" />
 
-        {/* Subtitle - Reduced spacing */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="mb-2"
-        >
-          <p 
-            className="text-center"
-            style={{
-              fontSize: "0.9rem",
-              fontWeight: 400,
-              color: "#5a4638",
-              letterSpacing: "0.005em",
-              lineHeight: 1.4,
-            }}
-          >
-            Browse our handcrafted products
-          </p>
-        </motion.div>
-
-        {/* Enhanced Decorative Floral Divider - Reduced spacing */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="flex items-center justify-center gap-2 mb-2.5"
-          style={{ originX: 0.5 }}
-        >
-          <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,116,74,0.4), transparent)" }} />
-          {/* Enhanced Botanical SVG */}
-          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0">
-            <path d="M14 3C14 3 13 7 13 10C13 12 13.5 13 14 13C14.5 13 15 12 15 10C15 7 14 3 14 3" stroke="#D4744A" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="14" cy="14" r="2" fill="#D4744A"/>
-            <path d="M11 13C9.5 14 8 16 8 18.5C8 20 9 21 10 22" stroke="#94B38A" strokeWidth="1" strokeLinecap="round" opacity="0.9"/>
-            <path d="M17 13C18.5 14 20 16 20 18.5C20 20 19 21 18 22" stroke="#94B38A" strokeWidth="1" strokeLinecap="round" opacity="0.9"/>
-            <circle cx="10" cy="11" r="0.8" fill="#EFBF43" opacity="0.8"/>
-            <circle cx="9" cy="13" r="0.7" fill="#D0D488" opacity="0.7"/>
-            <circle cx="18" cy="11" r="0.8" fill="#EFBF43" opacity="0.8"/>
-            <circle cx="19" cy="13" r="0.7" fill="#D0D488" opacity="0.7"/>
-            <path d="M13 16C12.5 17 12 18.5 12 20" stroke="#D0D488" strokeWidth="0.8" strokeLinecap="round" opacity="0.7"/>
-            <path d="M15 16C15.5 17 16 18.5 16 20" stroke="#D0D488" strokeWidth="0.8" strokeLinecap="round" opacity="0.7"/>
-          </svg>
-          <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(212,116,74,0.4), transparent)" }} />
-        </motion.div>
-
-        {/* Category Label - Reduced spacing */}
-        <motion.div
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mb-1.5 text-center"
-        >
-          <h3
-            style={{
-              fontFamily: "'Cormorant Garamond', serif",
-              fontSize: "0.85rem",
-              fontWeight: 600,
-              color: "#2d2a26",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
-            Category
-          </h3>
-        </motion.div>
-
-        {/* Filter Chips Container - Compact */}
-        {Object.keys(categorizedProducts).length > 0 && (
+      {/* Main Scrollable Container */}
+      <div className="pt-[76px]">
+        {/* Ultra-Compact Hero Section - Minimal Padding */}
+        <div className="px-4 py-1 bg-gradient-to-b from-background to-muted">
+          {/* Page Title */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex overflow-x-auto gap-2 pb-1 justify-center"
-            style={{
-              scrollBehavior: "smooth",
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-            }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-0"
           >
-            <style>{`
-              .chips-container::-webkit-scrollbar {
-                display: none;
-              }
-            `}</style>
-            
-            {/* ALL Products Chip */}
-            <motion.button
-              onClick={() => handleCategoryClick("all")}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-              className="group relative flex-shrink-0 h-9 px-5 rounded-full text-xs font-medium transition-all duration-250 whitespace-nowrap"
+            <h1 
+              className="text-center"
               style={{
-                background: selectedCategory === "all" 
-                  ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                  : "#F2E7CB",
-                border: selectedCategory === "all"
-                  ? "1.5px solid #D4744A"
-                  : "1.5px solid rgba(212,116,74,0.35)",
-                color: selectedCategory === "all" ? "#ffffff" : "#5A4638",
-                boxShadow: selectedCategory === "all"
-                  ? "0 4px 12px rgba(212,116,74,0.3)"
-                  : "0 2px 6px rgba(212,116,74,0.15), 0 1px 2px rgba(255,255,255,0.4) inset",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "2.5rem",
+                fontWeight: 700,
+                color: "#2d2a26",
+                letterSpacing: "-0.01em",
+                lineHeight: 1.05,
+                marginBottom: "2px",
               }}
             >
-              All
-            </motion.button>
-
-            {/* Individual Category Chips */}
-            {Object.keys(categorizedProducts).map((categoryKey, index) => (
-              <motion.button
-                key={categoryKey}
-                onClick={() => handleCategoryClick(categoryKey)}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.2 + (index + 1) * 0.04 }}
-                className="group relative flex-shrink-0 h-9 px-5 rounded-full text-xs font-medium transition-all duration-250 whitespace-nowrap"
-                style={{
-                  background: selectedCategory === categoryKey 
-                    ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
-                    : "#F2E7CB",
-                  border: selectedCategory === categoryKey
-                    ? "1.5px solid #D4744A"
-                    : "1.5px solid rgba(212,116,74,0.35)",
-                  color: selectedCategory === categoryKey ? "#ffffff" : "#5A4638",
-                  boxShadow: selectedCategory === categoryKey
-                    ? "0 4px 12px rgba(212,116,74,0.3)"
-                    : "0 2px 6px rgba(212,116,74,0.15), 0 1px 2px rgba(255,255,255,0.4) inset",
-                }}
-              >
-                {categoryLabels[categoryKey] || categoryKey}
-              </motion.button>
-            ))}
+              Collections
+            </h1>
           </motion.div>
-        )}
-      </div>
 
-      {/* Product Section - Tighter spacing */}
-      <div className="mt-4 space-y-6">
-        {showUnifiedView ? (
-          // Unified All Products View
-          <div className="px-4">
-            <div className="grid grid-cols-2 gap-3">
-              {allProducts.map((product, index) => (
-                <motion.div
-                  key={`${product.id}-${index}`}
+          {/* Subtitle */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.05 }}
+            className="mb-2.5"
+          >
+            <p 
+              className="text-center"
+              style={{
+                fontSize: "0.9rem",
+                fontWeight: 400,
+                color: "#5a4638",
+                letterSpacing: "0.002em",
+                lineHeight: 1.3,
+                marginBottom: 0,
+              }}
+            >
+              Browse our handcrafted products
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Sticky Category Filter Bar - Now in the scrolling container */}
+        {Object.keys(categorizedProducts).length > 0 && (
+          <div
+            className="sticky z-40"
+            style={{
+              top: "76px",
+              background: "linear-gradient(180deg, rgba(242,231,203,0.98) 0%, rgba(242,231,203,0.96) 100%)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              borderBottom: "1px solid rgba(212,116,74,0.08)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+            }}
+          >
+            <div className="px-4 py-2">
+              <div
+                className="flex overflow-x-auto overflow-y-hidden gap-2.5"
+                style={{
+                  WebkitOverflowScrolling: "touch",
+                  touchAction: "pan-x",
+                  scrollBehavior: "smooth",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                } as React.CSSProperties}
+              >
+                <style>{`
+                  .chips-scroll::-webkit-scrollbar {
+                    display: none;
+                  }
+                `}</style>
+                
+                {/* ALL Products Chip */}
+                <motion.button
+                  onClick={() => handleCategoryClick("all")}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: index * 0.02 }}
-                  className="glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow flex flex-col"
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="group relative flex-shrink-0 px-5 rounded-full text-sm font-medium transition-all duration-250 whitespace-nowrap"
+                  style={{
+                    height: "36px",
+                    display: "flex",
+                    alignItems: "center",
+                    background: selectedCategory === "all" 
+                      ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
+                      : "#F2E7CB",
+                    border: selectedCategory === "all"
+                      ? "none"
+                      : "1px solid rgba(212,116,74,0.15)",
+                    color: selectedCategory === "all" ? "#ffffff" : "#5A4638",
+                    boxShadow: selectedCategory === "all"
+                      ? "0 4px 12px rgba(212,116,74,0.25)"
+                      : "none",
+                  }}
                 >
-                  <div className="relative aspect-square bg-muted overflow-hidden">
-                    <img
-                      src={product.image}
-                      alt={product.title}
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
+                  All
+                </motion.button>
 
-                  <div className="p-3 flex flex-col flex-1 justify-between">
-                    <div>
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        {product.badge && (
-                          <span className="inline-block px-2 py-0.5 bg-[#2d5f3f] text-white rounded-full text-[9px] font-bold tracking-wide">
-                            {product.badge}
-                          </span>
-                        )}
-                        {product.price && (
-                          <span className="text-sm font-bold text-primary whitespace-nowrap">
-                            {product.price}
-                          </span>
-                        )}
-                      </div>
-                      
-                      <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1.5 min-h-[2.5rem]">
-                        {product.title}
-                      </h3>
-                    </div>
-                    
-                    <div className="mt-2">
-                      <Button
-                        onClick={() => useOrdering().setSelectedProduct(product)}
-                        size="sm"
-                        className="w-full py-2 text-[11px] h-auto"
-                      >
-                        <Eye className="w-3.5 h-3.5 mr-1" />
-                        View
-                      </Button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          // Category-based View
-          Object.keys(categorizedProducts).map((categoryKey) => (
-            <div 
-              key={categoryKey}
-              ref={(el) => {
-                if (el) categoryRefs.current[categoryKey] = el;
-              }}
-              className="px-4"
-            >
-              {/* Category Title */}
-              <h2 className="text-lg font-semibold text-foreground mb-3">
-                {categoryLabels[categoryKey] || categoryKey}
-              </h2>
-
-              {/* Product Grid */}
-              <div className="grid grid-cols-2 gap-3 mb-3">
-                {categorizedProducts[categoryKey].map((product, index) => (
-                  <motion.div
-                    key={`${product.id}-${index}`}
+                {/* Individual Category Chips */}
+                {Object.keys(categorizedProducts).map((categoryKey, index) => (
+                  <motion.button
+                    key={categoryKey}
+                    onClick={() => handleCategoryClick(categoryKey)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.02 }}
-                    className="glass-strong rounded-xl overflow-hidden shadow-luxury active:shadow-luxury-lg transition-shadow flex flex-col"
+                    transition={{ duration: 0.3, delay: 0.1 + (index + 1) * 0.03 }}
+                    className="group relative flex-shrink-0 px-5 rounded-full text-sm font-medium transition-all duration-250 whitespace-nowrap"
+                    style={{
+                      height: "36px",
+                      display: "flex",
+                      alignItems: "center",
+                      background: selectedCategory === categoryKey 
+                        ? "linear-gradient(135deg, #D4744A 0%, #EFBF43 100%)"
+                        : "#F2E7CB",
+                      border: selectedCategory === categoryKey
+                        ? "none"
+                        : "1px solid rgba(212,116,74,0.15)",
+                      color: selectedCategory === categoryKey ? "#ffffff" : "#5A4638",
+                      boxShadow: selectedCategory === categoryKey
+                        ? "0 4px 12px rgba(212,116,74,0.25)"
+                        : "none",
+                    }}
                   >
-                    <div className="relative aspect-square bg-muted overflow-hidden">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-
-                    <div className="p-3 flex flex-col flex-1 justify-between">
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
-                          {product.badge && (
-                            <span className="inline-block px-2 py-0.5 bg-[#2d5f3f] text-white rounded-full text-[9px] font-bold tracking-wide">
-                              {product.badge}
-                            </span>
-                          )}
-                          {product.price && (
-                            <span className="text-sm font-bold text-primary whitespace-nowrap">
-                              {product.price}
-                            </span>
-                          )}
-                        </div>
-                        
-                        <h3 className="text-xs font-semibold text-foreground line-clamp-2 mb-1.5 min-h-[2.5rem]">
-                          {product.title}
-                        </h3>
-                      </div>
-                      
-                      <div className="mt-2">
-                        <Button
-                          onClick={() => useOrdering().setSelectedProduct(product)}
-                          size="sm"
-                          className="w-full py-2 text-[11px] h-auto"
-                        >
-                          <Eye className="w-3.5 h-3.5 mr-1" />
-                          View
-                        </Button>
-                      </div>
-                    </div>
-                  </motion.div>
+                    {categoryLabels[categoryKey] || categoryKey}
+                  </motion.button>
                 ))}
               </div>
-
-              {/* Show All Products Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3 }}
-                className="text-center mb-4"
-              >
-                <Button
-                  className="bg-white/70 hover:bg-white border border-[#D4744A] text-[#D4744A] hover:text-white hover:bg-[#D4744A] transition-all duration-300 px-6 py-2 rounded-full text-sm font-medium"
-                >
-                  Show All Products
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
             </div>
-          ))
+          </div>
+        )}
+
+        {/* Product Grid Section */}
+        <div className="px-4 pt-2 pb-4">
+          {showUnifiedView ? (
+            // Unified All Products View
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {allProducts.map((product, index) => (
+                <FeaturedStyleProductCard
+                  key={`${product.id}-${index}`}
+                  product={product}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          ) : selectedCategory && selectedCategoryProducts.length > 0 ? (
+            // Filtered Single Category View - Display ALL products for category
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {selectedCategoryProducts.map((product, index) => (
+                <FeaturedStyleProductCard
+                  key={`${product.id}-${index}`}
+                  product={product}
+                  index={index}
+                />
+              ))}
+            </motion.div>
+          ) : null}
+        </div>
+
+        {Object.keys(categorizedProducts).length === 0 && (
+          <div className="text-center py-12 px-4">
+            <p className="text-muted-foreground">No products available at the moment.</p>
+          </div>
         )}
       </div>
-
-      {Object.keys(categorizedProducts).length === 0 && (
-        <div className="text-center py-12 px-4">
-          <p className="text-muted-foreground">No products available at the moment.</p>
-        </div>
-      )}
     </div>
   );
 }
