@@ -40,23 +40,38 @@ export function Header() {
       <header
         className="hidden md:block fixed top-0 left-0 right-0 z-50 overflow-visible shadow-luxury"
         style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
-          backdropFilter: "blur(20px) saturate(120%)",
-          WebkitBackdropFilter: "blur(20px) saturate(120%)",
-          borderBottom: "1px solid rgba(255,255,255,0.3)",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,250,245,0.92) 50%, rgba(255,255,255,0.95) 100%)",
+          backdropFilter: "blur(24px) saturate(140%)",
+          WebkitBackdropFilter: "blur(24px) saturate(140%)",
+          borderBottom: "1px solid rgba(255,255,255,0.4)",
         }}
       >
         <nav className="container mx-auto px-6 py-2 flex items-center justify-between relative">
-          {/* Contact Button - Left */}
-          <button
-            onClick={() => {
-              const event = new CustomEvent('openContactModal');
-              window.dispatchEvent(event);
-            }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-foreground/80 bg-muted/60 hover:bg-muted/80 backdrop-blur-sm transition-all duration-200 hover:scale-105"
-          >
-            Contact
-          </button>
+          {/* Left Side - Contact Button + Navigation Links */}
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => {
+                const event = new CustomEvent('openContactModal');
+                window.dispatchEvent(event);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-foreground/80 bg-muted/60 hover:bg-muted/80 backdrop-blur-sm transition-all duration-200 hover:scale-105"
+            >
+              Contact
+            </button>
+            
+            <button
+              onClick={() => scrollToSection('testimonials')}
+              className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-200 whitespace-nowrap"
+            >
+              Reviews
+            </button>
+            <button
+              onClick={() => scrollToSection('how-to-order')}
+              className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-200 whitespace-nowrap"
+            >
+              How It Works
+            </button>
+          </div>
 
           {/* Logo - Center (no background pill, bigger with scale) */}
           <motion.div
@@ -78,11 +93,16 @@ export function Header() {
             />
           </motion.div>
 
-          {/* Right Side - Action Buttons */}
-          <div className="flex items-center gap-2">
-            {/* Explore Collection button removed */}
-
-            {/* Settings Menu - Button only */}
+          {/* Right Side - My Orders + Action Buttons */}
+          <div className="flex items-center gap-6">
+            <button
+              onClick={() => scrollToSection('orders')}
+              className="text-sm font-medium text-foreground/70 hover:text-primary transition-colors duration-200 whitespace-nowrap"
+            >
+              My Orders
+            </button>
+            
+            {/* Cart Button */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -95,108 +115,29 @@ export function Header() {
                 <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] rounded-full flex items-center justify-center font-semibold">{totalItems}</span>
               )}
             </motion.button>
+
+            {/* User Button */}
             <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setShowSettingsMenu(true)}
+              onClick={() => {
+                if (user) {
+                  setShowUserMenu(true);
+                } else {
+                  setShowAuthModal(true);
+                }
+              }}
               className="relative p-2.5 text-foreground/70 hover:text-primary transition-colors duration-200 rounded-full hover:bg-muted/40"
-              aria-label="Settings"
+              aria-label="User Account"
             >
-              <Settings className="w-5 h-5" />
+              <User className="w-5 h-5" />
+              {user && (
+                <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white"></span>
+              )}
             </motion.button>
           </div>
         </nav>
       </header>
-
-      {/* Settings Modal - Renders at body level */}
-      <AnimatePresence>
-        {showSettingsMenu && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 bg-black/20"
-              onClick={() => setShowSettingsMenu(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              transition={{ duration: 0.2 }}
-              className="fixed top-20 right-8 w-64 glass-strong rounded-2xl shadow-luxury-lg border border-border overflow-hidden z-50"
-            >
-              <div className="p-3 space-y-1">
-                {/* Cart */}
-                <button
-                  onClick={() => {
-                    setIsCartOpen(true);
-                    setShowSettingsMenu(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                >
-                  <div className="relative">
-                    <ShoppingBag className="w-5 h-5 text-primary" />
-                    {totalItems > 0 && (
-                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] rounded-full flex items-center justify-center font-semibold"></span>
-                    )}
-                  </div>
-                  <span className="font-medium text-foreground">Cart {totalItems > 0 && `(${totalItems})`}</span>
-                </button>
-
-                {/* User Menu */}
-                <button
-                  onClick={() => {
-                    setShowSettingsMenu(false);
-                    if (user) {
-                      setShowUserMenu(true);
-                    } else {
-                      setShowAuthModal(true);
-                    }
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                >
-                  <div className="relative">
-                    <User className="w-5 h-5 text-primary" />
-                    {user && (
-                      <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-card"></span>
-                    )}
-                  </div>
-                  <span className="font-medium text-foreground">
-                    {user ? "My Account" : "Sign In"}
-                  </span>
-                </button>
-
-                <div className="border-t border-border my-1"></div>
-
-                {/* Theme Toggle */}
-                <button
-                  onClick={() => {
-                    toggleTheme();
-                    setShowSettingsMenu(false);
-                  }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-muted transition-colors text-left"
-                >
-                  <motion.div
-                    initial={false}
-                    animate={{ rotate: theme === "dark" ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {theme === "dark" ? (
-                      <Sun className="w-5 h-5 text-primary" />
-                    ) : (
-                      <Moon className="w-5 h-5 text-primary" />
-                    )}
-                  </motion.div>
-                  <span className="font-medium text-foreground">
-                    {theme === "dark" ? "Light Mode" : "Dark Mode"}
-                  </span>
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
 
       {/* User Menu Modal */}
       <AnimatePresence>

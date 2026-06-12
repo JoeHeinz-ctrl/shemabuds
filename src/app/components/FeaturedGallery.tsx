@@ -105,7 +105,7 @@ export function FeaturedGallery() {
   }
 
   return (
-    <section className="relative z-10 w-full py-12 md:py-24 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted overflow-hidden">
+    <section data-section="featured" className="relative z-10 w-full pt-12 md:pt-24 pb-8 md:pb-12 px-3 md:px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-background to-muted overflow-hidden">
       <FloatingLeaf size={60} opacity={0.12} className="absolute left-[6%] top-[20%] pointer-events-none hidden lg:block text-olive" delay={0} duration={7} />
       <FloatingLeaf size={60} opacity={0.12} className="absolute right-[6%] bottom-[15%] pointer-events-none hidden lg:block text-sage" delay={2} duration={9} />
       <FloatingLeaf size={45} opacity={0.08} className="absolute left-[12%] bottom-[20%] pointer-events-none hidden lg:block text-secondary" delay={1.5} duration={8} />

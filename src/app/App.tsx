@@ -178,9 +178,13 @@ function AppContent() {
           <Services />
         </div>
         
-        <HowToOrder />
+        <div id="how-to-order">
+          <HowToOrder />
+        </div>
         
-        <MyOrders />
+        <div id="orders">
+          <MyOrders />
+        </div>
         
         <div id="testimonials">
           <Testimonials />

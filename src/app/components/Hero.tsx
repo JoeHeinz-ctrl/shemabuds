@@ -39,7 +39,7 @@ export function Hero() {
 
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
-    }, 15000); // Change image every 10 seconds
+    }, 15000); // Change image every 15 seconds
 
     return () => clearInterval(interval);
   }, [isPaused]);
@@ -111,9 +111,9 @@ export function Hero() {
               boxShadow: "0 12px 48px rgba(212,116,74,0.15), 0 4px 12px rgba(255,255,255,0.35) inset, 0 -2px 0 rgba(212,116,74,0.08) inset",
             }}
           >
-            {/* Subtle Brand Logomark Corner Accents */}
-            <LogomarkCorner size={90} position="top-right" opacity={0.50} colorClass="text-primary" />
-            <LogomarkCorner size={90} position="bottom-left" opacity={0.50} colorClass="text-primary" />
+            {/* Subtle Brand Logomark Corner Accents - Gold/Yellow */}
+            <LogomarkCorner size={90} position="top-right" opacity={0.20} colorClass="text-yellow-500" style={{ color: '#FFD700', filter: 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))' }} />
+            <LogomarkCorner size={90} position="bottom-left" opacity={0.20} colorClass="text-yellow-400" style={{ color: '#FFC107', filter: 'drop-shadow(0 0 8px rgba(255, 193, 7, 0.6))' }} />
 
             {/* Liquid shimmer overlay */}
             <div

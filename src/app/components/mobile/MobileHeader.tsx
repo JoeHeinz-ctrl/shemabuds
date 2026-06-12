@@ -32,10 +32,10 @@ export function MobileHeader() {
         id="mobile-header"
         className="md:hidden fixed top-0 left-0 right-0 z-50 shadow-luxury"
         style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,245,235,0.5) 50%, rgba(255,255,255,0.6) 100%)",
-          backdropFilter: "blur(20px) saturate(120%)",
-          WebkitBackdropFilter: "blur(20px) saturate(120%)",
-          borderBottom: "1px solid rgba(255,255,255,0.3)",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.90) 0%, rgba(255,250,245,0.88) 50%, rgba(255,255,255,0.90) 100%)",
+          backdropFilter: "blur(20px) saturate(130%)",
+          WebkitBackdropFilter: "blur(20px) saturate(130%)",
+          borderBottom: "1px solid rgba(255,255,255,0.4)",
         }}
       >
         {/* Centered Logo Header */}
@@ -85,7 +85,7 @@ export function MobileHeader() {
             }}
             className="text-xs font-semibold text-primary px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors z-10"
           >
-            Explore Deals
+            Gallery
           </motion.button>
         </div>
 

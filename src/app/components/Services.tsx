@@ -126,7 +126,7 @@ export function Services() {
   }
 
   return (
-    <section className="relative px-4 sm:px-6 lg:px-8 z-0 overflow-hidden">
+    <section className="relative px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 z-0">
       {/* Ambient background blobs */}
       <div className="absolute -top-16 -left-16 w-72 md:w-96 h-72 md:h-96 bg-primary/15 rounded-full blur-3xl opacity-50 -z-10 animate-pulse" style={{ animationDuration: '8s' }} />
       <div className="absolute -bottom-20 -right-20 w-80 md:w-96 h-80 md:h-96 bg-accent/15 rounded-full blur-3xl opacity-50 -z-10 animate-pulse" style={{ animationDuration: '10s' }} />
@@ -141,14 +141,14 @@ export function Services() {
 
       <div className="container mx-auto max-w-7xl">
         {/* Showroom — no hard border, no card-shadow; blends into page */}
-        <motion.div layout className="relative overflow-hidden py-6 sm:py-8 px-2 sm:px-4">
+        <div className="relative pt-1 pb-6 sm:pb-8 px-2 sm:px-4">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-6"
+            className="text-center mb-2"
           >
             <h2 className="section-title text-3xl sm:text-4xl md:text-5xl mb-2 text-foreground tracking-tight">
               Our Creations
@@ -158,8 +158,18 @@ export function Services() {
             </p>
           </motion.div>
 
-          {/* Controls Row: Category Navigation */}
-          <motion.div layout className="flex flex-wrap justify-center items-center gap-2 sm:gap-3 mb-6">
+          {/* Controls Row: Category Navigation - Sticky */}
+          <div 
+            className="sticky z-40 -mx-2 sm:-mx-4 px-2 sm:px-4 py-2 mb-6 flex flex-wrap justify-center items-center gap-3 sm:gap-4"
+            style={{
+              top: "3.25rem", // 52px - minimal gap below navbar
+              background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,245,235,0.90) 50%, rgba(255,255,255,0.95) 100%)",
+              backdropFilter: "blur(20px) saturate(120%)",
+              WebkitBackdropFilter: "blur(20px) saturate(120%)",
+              borderBottom: "1px solid rgba(166,124,82,0.15)",
+              boxShadow: "0 4px 12px rgba(166,124,82,0.08)"
+            }}
+          >
             {categoriesWithAll.length > 0 && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -191,7 +201,7 @@ export function Services() {
                 })}
               </motion.div>
             )}
-          </motion.div>
+          </div>
 
           {categoriesWithAll.length === 0 && (
             <div className="text-center py-8">
@@ -264,7 +274,7 @@ export function Services() {
               ))}
             </div>
           </div>}
-        </motion.div>
+        </div>
       </div>
 
 
